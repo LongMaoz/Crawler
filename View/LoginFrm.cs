@@ -48,7 +48,6 @@ namespace WindowsFormsApp1.View
                 this.Hide();
                 MainFrm mainFrm = new MainFrm();
                 mainFrm.Initialize(jObject);
-                mainFrm.Show();
             }
             else
             {

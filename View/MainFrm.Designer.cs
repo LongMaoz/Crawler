@@ -28,9 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.GropBox = new CCWin.SkinControl.SkinGroupBox();
             this.LblBand = new CCWin.SkinControl.SkinLabel();
+            this.Panel = new CCWin.SkinControl.SkinPanel();
+            this.DgrView = new CCWin.SkinControl.SkinDataGridView();
             this.GropBox.SuspendLayout();
+            this.Panel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.DgrView)).BeginInit();
             this.SuspendLayout();
             // 
             // GropBox
@@ -41,6 +49,7 @@
             this.GropBox.AutoSize = true;
             this.GropBox.BackColor = System.Drawing.Color.Transparent;
             this.GropBox.BorderColor = System.Drawing.Color.Black;
+            this.GropBox.Controls.Add(this.Panel);
             this.GropBox.Controls.Add(this.LblBand);
             this.GropBox.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.GropBox.ForeColor = System.Drawing.Color.Crimson;
@@ -70,6 +79,69 @@
             this.LblBand.TabIndex = 1;
             this.LblBand.Text = "Demo";
             // 
+            // Panel
+            // 
+            this.Panel.BackColor = System.Drawing.Color.Transparent;
+            this.Panel.Controls.Add(this.DgrView);
+            this.Panel.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.Panel.DownBack = null;
+            this.Panel.Location = new System.Drawing.Point(11, 60);
+            this.Panel.MouseBack = null;
+            this.Panel.Name = "Panel";
+            this.Panel.NormlBack = null;
+            this.Panel.Size = new System.Drawing.Size(1035, 453);
+            this.Panel.TabIndex = 2;
+            // 
+            // DgrView
+            // 
+            this.DgrView.AllowUserToAddRows = false;
+            this.DgrView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(231)))), ((int)(((byte)(246)))), ((int)(((byte)(253)))));
+            this.DgrView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.DgrView.BackgroundColor = System.Drawing.SystemColors.Window;
+            this.DgrView.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.DgrView.ColumnFont = null;
+            this.DgrView.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(247)))), ((int)(((byte)(246)))), ((int)(((byte)(239)))));
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.DgrView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            this.DgrView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DgrView.ColumnSelectForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Crimson;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(188)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.DgrView.DefaultCellStyle = dataGridViewCellStyle3;
+            this.DgrView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.DgrView.EnableHeadersVisualStyles = false;
+            this.DgrView.GridColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.DgrView.HeadFont = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.DgrView.HeadSelectForeColor = System.Drawing.SystemColors.HighlightText;
+            this.DgrView.Location = new System.Drawing.Point(0, 0);
+            this.DgrView.Name = "DgrView";
+            this.DgrView.ReadOnly = true;
+            this.DgrView.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.DgrView.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.DgrView.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            this.DgrView.RowTemplate.Height = 23;
+            this.DgrView.Size = new System.Drawing.Size(1035, 453);
+            this.DgrView.TabIndex = 1;
+            this.DgrView.TitleBack = null;
+            this.DgrView.TitleBackColorBegin = System.Drawing.Color.White;
+            this.DgrView.TitleBackColorEnd = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(196)))), ((int)(((byte)(242)))));
+            // 
             // MainFrm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -83,6 +155,8 @@
             this.Load += new System.EventHandler(this.MainFrm_Load);
             this.GropBox.ResumeLayout(false);
             this.GropBox.PerformLayout();
+            this.Panel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.DgrView)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -92,5 +166,7 @@
 
         private CCWin.SkinControl.SkinGroupBox GropBox;
         private CCWin.SkinControl.SkinLabel LblBand;
+        private CCWin.SkinControl.SkinPanel Panel;
+        private CCWin.SkinControl.SkinDataGridView DgrView;
     }
 }

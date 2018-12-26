@@ -58,6 +58,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controller\LoginBll.cs" />
+    <Compile Include="Model\CompanyTask.cs" />
     <Compile Include="Model\IFrom.cs" />
     <Compile Include="Model\UserInfoModel.cs" />
     <Compile Include="Program.cs" />

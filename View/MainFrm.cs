@@ -30,6 +30,42 @@ namespace WindowsFormsApp1.View
         {
             this.Userinfo = jObject ;
             this.GropBox.Text = $@"当前登录帐号：{Userinfo["user"]["CompanyName"]}";
+            DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn
+            {
+                HeaderText = @"厂商类型",
+                DataPropertyName = @"TaskCompany",
+                CellTemplate = new DataGridViewTextBoxCell(),
+                DefaultCellStyle = {Alignment = DataGridViewContentAlignment.MiddleCenter} 
+            };
+            this.DgrView.Columns.Add(col);
+
+            DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn
+            {
+                HeaderText = @"显示名称",
+                DataPropertyName = @"CompanyName",
+                CellTemplate = new DataGridViewTextBoxCell(),
+                DefaultCellStyle = {Alignment = DataGridViewContentAlignment.MiddleCenter}
+            };
+            this.DgrView.Columns.Add(col1);
+
+            DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn
+            {
+                HeaderText = @"操作",
+                CellTemplate = new DataGridViewTextBoxCell(),
+            };
+            this.DgrView.Columns.Add(col2);
+
+            this.DgrView.DataSource = new List<CompanyTask>()
+            {
+                new CompanyTask()
+                {
+                    CompanyName="测试",
+                    LoginState = "正常",
+                    TaskCompany = "测试美的",
+                    Count =100
+                }
+            };
+            this.Show();
         }
 
         public void Initialize()
