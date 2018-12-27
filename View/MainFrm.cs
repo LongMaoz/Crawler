@@ -13,7 +13,7 @@ using Newtonsoft.Json.Linq;
 
 namespace WindowsFormsApp1.View
 {
-    public partial class MainFrm : Skin_Mac,IFrom
+    public partial class MainFrm : Skin_Mac, IFrom
     {
         private JObject Userinfo;
         public MainFrm()
@@ -28,32 +28,15 @@ namespace WindowsFormsApp1.View
 
         public void Initialize(JObject jObject)
         {
-            this.Userinfo = jObject ;
+            this.Userinfo = jObject;
             this.GropBox.Text = $@"当前登录帐号：{Userinfo["user"]["CompanyName"]}";
-            DataGridViewTextBoxColumn col = new DataGridViewTextBoxColumn
-            {
-                HeaderText = @"厂商类型",
-                DataPropertyName = @"TaskCompany",
-                CellTemplate = new DataGridViewTextBoxCell(),
-                DefaultCellStyle = {Alignment = DataGridViewContentAlignment.MiddleCenter} 
-            };
-            this.DgrView.Columns.Add(col);
 
-            DataGridViewTextBoxColumn col1 = new DataGridViewTextBoxColumn
-            {
-                HeaderText = @"显示名称",
-                DataPropertyName = @"CompanyName",
-                CellTemplate = new DataGridViewTextBoxCell(),
-                DefaultCellStyle = {Alignment = DataGridViewContentAlignment.MiddleCenter}
-            };
-            this.DgrView.Columns.Add(col1);
-
-            DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn
-            {
-                HeaderText = @"操作",
-                CellTemplate = new DataGridViewTextBoxCell(),
-            };
-            this.DgrView.Columns.Add(col2);
+            //DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn
+            //{
+            //    HeaderText = @"操作",
+            //    CellTemplate = new DataGridViewTextBoxCell(),
+            //};
+            //this.DgrView.Columns.Add(col2);
 
             this.DgrView.DataSource = new List<CompanyTask>()
             {
@@ -63,7 +46,21 @@ namespace WindowsFormsApp1.View
                     LoginState = "正常",
                     TaskCompany = "测试美的",
                     Count =100
-                }
+                },
+                new CompanyTask
+                {
+                    CompanyName="测试1",
+                    LoginState = "正常",
+                    TaskCompany = "测试美的1",
+                    Count =100
+                },
+                new CompanyTask
+                {
+                CompanyName="测试2",
+                LoginState = "正常",
+                TaskCompany = "测试美的2",
+                Count =100
+            }
             };
             this.Show();
         }
@@ -77,6 +74,14 @@ namespace WindowsFormsApp1.View
         private void MainFrm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Application.Exit();
+        }
+
+        private void DgrView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.ColumnIndex != -1 && e.RowIndex != -1 && DgrView.Columns[e.ColumnIndex].HeaderText == @"操作")
+            {
+                DgrView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = @"牛批";
+            }
         }
     }
 }
