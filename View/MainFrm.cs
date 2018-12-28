@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using CCWin;
 using WindowsFormsApp1.Model;
 using Newtonsoft.Json.Linq;
+using WindowsFormsApp1.Controller;
 
 namespace WindowsFormsApp1.View
 {
@@ -30,38 +31,12 @@ namespace WindowsFormsApp1.View
         {
             this.Userinfo = jObject;
             this.GropBox.Text = $@"当前登录帐号：{Userinfo["user"]["CompanyName"]}";
-
-            //DataGridViewTextBoxColumn col2 = new DataGridViewTextBoxColumn
-            //{
-            //    HeaderText = @"操作",
-            //    CellTemplate = new DataGridViewTextBoxCell(),
-            //};
-            //this.DgrView.Columns.Add(col2);
-
-            this.DgrView.DataSource = new List<CompanyTask>()
-            {
-                new CompanyTask()
-                {
-                    CompanyName="测试",
-                    LoginState = "正常",
-                    TaskCompany = "测试美的",
-                    Count =100
-                },
-                new CompanyTask
-                {
-                    CompanyName="测试1",
-                    LoginState = "正常",
-                    TaskCompany = "测试美的1",
-                    Count =100
-                },
-                new CompanyTask
-                {
-                CompanyName="测试2",
-                LoginState = "正常",
-                TaskCompany = "测试美的2",
-                Count =100
-            }
-            };
+            //获取信息
+            var list = MainBll.GetCompanys(Userinfo);
+            this.DgrView.DataSource = list;
+            this.DgrView.Columns["LoginName"].Visible = false;
+            this.DgrView.Columns["PassWord"].Visible = false;
+            this.DgrView.Columns["CompanyType"].Visible = false;
             this.Show();
         }
 
@@ -80,7 +55,7 @@ namespace WindowsFormsApp1.View
         {
             if (e.ColumnIndex != -1 && e.RowIndex != -1 && DgrView.Columns[e.ColumnIndex].HeaderText == @"操作")
             {
-                DgrView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = @"牛批";
+                //DgrView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = @"获取数据";
             }
         }
     }

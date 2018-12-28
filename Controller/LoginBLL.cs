@@ -14,6 +14,8 @@ namespace WindowsFormsApp1.Controller
     {
         public static JObject UserLogin(UserInfoModel userInfo)
         {
+            userInfo.UserName = @"18088888888";
+            userInfo.UserPwd = @"123456";
             userInfo.UserPwd = BaiChang.Security.Secure.Md5(userInfo.UserPwd);
             string url = @"http://www.vk90.com/Passport/Passport.ashx?action=loginByMessenger&Type=PcApp";
             string result = BaiChang.Net.Tekecommunications.Post(url,"name="+userInfo.UserName,"pwd="+userInfo.UserPwd);

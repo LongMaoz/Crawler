@@ -9,24 +9,30 @@ namespace WindowsFormsApp1.Model
     public class CompanyTask
     {
         /// <summary>
-        /// 厂商类型
-        /// </summary>
-        public string TaskCompany { get; set; }
-
-        /// <summary>
-        /// 显示名称
+        /// 厂商名称
         /// </summary>
         public string CompanyName { get; set; }
 
         /// <summary>
-        /// 登录状态
+        /// 登录帐号
         /// </summary>
-        public string LoginState { get; set; }
+        public string LoginName { get; set; }
 
         /// <summary>
-        /// 今日单量
+        ///  登录密码
         /// </summary>
-        public int Count { get; set; }
+        public string PassWord { get; set; }
 
+        /// <summary>
+        ///  类型Type
+        /// </summary>
+        public int CompanyType { get; set; }
+
+        /// <summary>
+        /// 类型名称
+        /// </summary>
+        public string CompanyTypeName { get; set; }
+
+        public int Count { get; set; }
     }
 }

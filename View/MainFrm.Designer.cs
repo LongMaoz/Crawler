@@ -37,7 +37,7 @@
             this.Panel = new CCWin.SkinControl.SkinPanel();
             this.DgrView = new CCWin.SkinControl.SkinDataGridView();
             this.LblBand = new CCWin.SkinControl.SkinLabel();
-            this.TaskCompany = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CompanyTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CompanyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LoginState = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Count = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -105,7 +105,7 @@
             this.DgrView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DgrView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgrView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.TaskCompany,
+            this.CompanyTypeName,
             this.CompanyName,
             this.LoginState,
             this.Count,
@@ -155,13 +155,13 @@
             this.LblBand.TabIndex = 1;
             this.LblBand.Text = "Demo";
             // 
-            // TaskCompany
+            // CompanyTypeName
             // 
-            this.TaskCompany.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.TaskCompany.DataPropertyName = "TaskCompany";
-            this.TaskCompany.HeaderText = "厂商类型";
-            this.TaskCompany.Name = "TaskCompany";
-            this.TaskCompany.ReadOnly = true;
+            this.CompanyTypeName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.CompanyTypeName.DataPropertyName = "CompanyTypeName";
+            this.CompanyTypeName.HeaderText = "厂商类型";
+            this.CompanyTypeName.Name = "CompanyTypeName";
+            this.CompanyTypeName.ReadOnly = true;
             // 
             // CompanyName
             // 
@@ -224,7 +224,7 @@
         private CCWin.SkinControl.SkinLabel LblBand;
         private CCWin.SkinControl.SkinPanel Panel;
         private CCWin.SkinControl.SkinDataGridView DgrView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TaskCompany;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CompanyTypeName;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyName;
         private System.Windows.Forms.DataGridViewTextBoxColumn LoginState;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
