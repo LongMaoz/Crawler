@@ -11,12 +11,18 @@ using CCWin;
 using WindowsFormsApp1.Model;
 using Newtonsoft.Json.Linq;
 using WindowsFormsApp1.Controller;
+using CompanyTaskClass.Company;
+using System.Net;
+using CompanyTaskClass.Tool;
+using System.Text.RegularExpressions;
+using CompanyTaskClass.Model;
 
 namespace WindowsFormsApp1.View
 {
     public partial class MainFrm : Skin_Mac, IFrom
     {
         private JObject Userinfo;
+        private List<CompanyTask> list;
         public MainFrm()
         {
             InitializeComponent();
@@ -32,11 +38,15 @@ namespace WindowsFormsApp1.View
             this.Userinfo = jObject;
             this.GropBox.Text = $@"当前登录帐号：{Userinfo["user"]["CompanyName"]}";
             //获取信息
-            var list = MainBll.GetCompanys(Userinfo);
+            list  = MainBll.GetCompanys(Userinfo);
             this.DgrView.DataSource = list;
             this.DgrView.Columns["LoginName"].Visible = false;
             this.DgrView.Columns["PassWord"].Visible = false;
             this.DgrView.Columns["CompanyType"].Visible = false;
+            this.DgrView.Columns["ID"].Visible = false;
+            this.DgrView.Columns["UserID"].Visible = false;
+            this.DgrView.Columns["Cookies"].Visible = false;
+            this.DgrView.Columns["FromCompany"].Visible = false;
             this.Show();
         }
 
@@ -55,7 +65,12 @@ namespace WindowsFormsApp1.View
         {
             if (e.ColumnIndex != -1 && e.RowIndex != -1 && DgrView.Columns[e.ColumnIndex].HeaderText == @"操作")
             {
-                //DgrView.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = @"获取数据";
+                var temp = list[e.RowIndex];
+                var result = new XingXingTaskTool().GetList(temp);
+                if(result == null)
+                {
+                    new Code().Show();
+                }
             }
         }
     }

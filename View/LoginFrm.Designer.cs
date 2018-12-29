@@ -157,7 +157,7 @@
             this.Btn_Login.BackColor = System.Drawing.Color.Transparent;
             this.Btn_Login.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.Btn_Login.DownBack = null;
-            this.Btn_Login.Location = new System.Drawing.Point(206, 238);
+            this.Btn_Login.Location = new System.Drawing.Point(225, 238);
             this.Btn_Login.MouseBack = null;
             this.Btn_Login.Name = "Btn_Login";
             this.Btn_Login.NormlBack = null;

@@ -30,3 +30,6 @@ D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInpu
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.csproj.CopyComplete
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.exe
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.pdb
+D:\工作目录\项目\WinForm\bin\Debug\CompanyTaskClass.dll
+D:\工作目录\项目\WinForm\bin\Debug\CompanyTaskClass.pdb
+D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.Code.resources

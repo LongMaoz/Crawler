@@ -59,11 +59,16 @@
   <ItemGroup>
     <Compile Include="Controller\LoginBll.cs" />
     <Compile Include="Controller\MainBll.cs" />
-    <Compile Include="Model\CompanyTask.cs" />
     <Compile Include="Model\IFrom.cs" />
     <Compile Include="Model\UserInfoModel.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\Code.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\Code.Designer.cs">
+      <DependentUpon>Code.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\LoginFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -86,6 +91,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="View\Code.resx">
+      <DependentUpon>Code.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="View\LoginFrm.resx">
       <DependentUpon>LoginFrm.cs</DependentUpon>
     </EmbeddedResource>
@@ -105,6 +113,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="CompanyTaskClass\CompanyTaskClass.csproj">
+      <Project>{A9CDABCE-A3ED-4C66-A1DF-89929752106F}</Project>
+      <Name>CompanyTaskClass</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

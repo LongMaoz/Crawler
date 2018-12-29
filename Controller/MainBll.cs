@@ -1,11 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using CompanyTaskClass.Model;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using WindowsFormsApp1.Model;
 
 namespace WindowsFormsApp1.Controller
 {

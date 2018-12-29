@@ -1,0 +1,10 @@
+D:\工作目录\项目\WinForm\CompanyTaskClass\obj\Debug\CompanyTaskClass.csprojAssemblyReference.cache
+D:\工作目录\项目\WinForm\CompanyTaskClass\obj\Debug\CompanyTaskClass.csproj.CoreCompileInputs.cache
+D:\工作目录\项目\WinForm\CompanyTaskClass\bin\Debug\CompanyTaskClass.dll
+D:\工作目录\项目\WinForm\CompanyTaskClass\bin\Debug\CompanyTaskClass.pdb
+D:\工作目录\项目\WinForm\CompanyTaskClass\bin\Debug\Newtonsoft.Json.dll
+D:\工作目录\项目\WinForm\CompanyTaskClass\obj\Debug\CompanyTaskClass.csproj.CopyComplete
+D:\工作目录\项目\WinForm\CompanyTaskClass\obj\Debug\CompanyTaskClass.dll
+D:\工作目录\项目\WinForm\CompanyTaskClass\obj\Debug\CompanyTaskClass.pdb
+D:\工作目录\项目\WinForm\CompanyTaskClass\bin\Debug\BaiChang.dll
+D:\工作目录\项目\WinForm\CompanyTaskClass\bin\Debug\BaiChang.pdb
