@@ -11,11 +11,11 @@ using CCWin;
 using WindowsFormsApp1.Model;
 using Newtonsoft.Json.Linq;
 using WindowsFormsApp1.Controller;
-using CompanyTaskClass.Company;
 using System.Net;
 using CompanyTaskClass.Tool;
 using System.Text.RegularExpressions;
 using CompanyTaskClass.Model;
+using CompanyTaskClass.Interface;
 
 namespace WindowsFormsApp1.View
 {
@@ -38,7 +38,7 @@ namespace WindowsFormsApp1.View
             this.Userinfo = jObject;
             this.GropBox.Text = $@"当前登录帐号：{Userinfo["user"]["CompanyName"]}";
             //获取信息
-            list  = MainBll.GetCompanys(Userinfo);
+            list = MainBll.GetCompanys(Userinfo);
             this.DgrView.DataSource = list;
             this.DgrView.Columns["LoginName"].Visible = false;
             this.DgrView.Columns["PassWord"].Visible = false;
@@ -66,10 +66,119 @@ namespace WindowsFormsApp1.View
             if (e.ColumnIndex != -1 && e.RowIndex != -1 && DgrView.Columns[e.ColumnIndex].HeaderText == @"操作")
             {
                 var temp = list[e.RowIndex];
-                var result = new XingXingTaskTool().GetList(temp);
-                if(result == null)
+                ICompanyTaskTool<CompanyTask> create = CompanyTaskManager.Create(temp.CompanyType);
+                List<TaskModel> result = null;
+                if (create != null)
                 {
-                    new Code().Show();
+                    result = create.GetList(temp);
+                    if (result == null)
+                    {
+                        if (create.GetLoginType() == LoginType.MustCode)
+                        {
+                            this.VerificationCode(temp, e.RowIndex);
+                        }
+                        else if (create.GetLoginType() == LoginType.NoNeedCode)
+                        {
+                            WebFrm webFrm = new WebFrm();
+                            webFrm.Show();
+                        }
+                        else
+                        {
+                            this.NotVerificationCode(create, temp, e.RowIndex);
+                        }
+                    }
+                    else
+                    {
+                        int sum= SupplierAdd(temp, result);
+                        MessageBox.Show("共拉取到" + result.Count + "条数据");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("未找到厂商信息");
+                }
+            }
+        }
+
+        /// <summary>
+        /// 添加到服务器
+        /// </summary>
+        /// <returns></returns>
+        public int SupplierAdd(CompanyTask cmp, List<TaskModel> tsms)
+        {
+            string companyId = Userinfo["user"]["CompanyID"].ToString();
+            string userName = Userinfo["user"]["UserName"].ToString();
+            string url = @"http://www.vk90.com/Api1/companyapi.ashx?action=supplieradd";
+            foreach (var tsm in tsms)
+            {
+                string result = BaiChang.Net.Tekecommunications.Post(url,
+                    "comid=" + companyId, "uKey=" + BaiChang.Security.Secure.Md5(companyId + "_" + userName),
+                    "name=" + tsm.Name, "phone=" + tsm.Phone, "classify=" + cmp.CompanyType,
+                    "brand=" + cmp.CompanyTypeName, "count=" + tsm.ShopCount, "address=" + tsm.Address,
+                    "serviceClassify=" + tsm.ServerType, "expectantTime=" + tsm.OrderTime, "phone2=" + tsm.OthersPhone,
+                    "callphone=" + tsm.CallPhone, "billcode=" + tsm.BillNumber, "infofrom=" + tsm.InformationFrom,
+                    "city=" + " ", "district=" + " ", "town=" + " ", "productType=" + tsm.Type, "barcode=" + tsm.ProductBarcode,
+                    "barcode2=" + tsm.OutsideBarcode, "buyTime=" + tsm.BuyTimes, "collectMoney=" + tsm.HelpMoeny,
+                    "buyaddress=" + tsm.TakeAddress, "repairtype=" + tsm.GuaranteeType, "serviceclassify=" + tsm.ServerType,
+                    "starttime=" + " ", "starttime=" + " ", "starttime=" + " ", "brokenreason=" + tsm.TroubleCause,
+                    "brokenphenomenon=" + tsm.TroubleType, "remarks=" + tsm.CustomerValue);
+            }
+            return 7;
+        }
+
+        /// <summary>
+        /// 无需验证码执行
+        /// </summary>
+        public bool NotVerificationCode(ICompanyTaskTool<CompanyTask> create, CompanyTask companyTask, int rowIndex)
+        {
+            var loginResult = create.GetLoginResultmodel(new JObject() { }, companyTask);
+            return false;
+        }
+
+        /// <summary>
+        /// 需要验证码执行弹窗
+        /// </summary>
+        /// <param name="companyTask"></param>
+        /// <param name="rowIndex"></param>
+        public void VerificationCode(CompanyTask companyTask, int rowIndex)
+        {
+            var code = new Code();
+            code.UpdateDgrView += UpdateDgrView;
+            if (code.Initialize(companyTask, rowIndex))
+                code.Show();
+            else
+                code.Close();
+        }
+
+        /// <summary>
+        /// 更新视图
+        /// </summary>
+        /// <param name="companyTask"></param>
+        /// <param name="rowindex"></param>
+        public void UpdateDgrView(CompanyTask companyTask, int rowindex)
+        {
+            companyTask.LoginState = true;
+            this.DgrView.InvalidateRow(rowindex);
+        }
+
+        /// <summary>
+        /// 格式化视图数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DgrView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (this.DgrView.Columns[e.ColumnIndex].HeaderText == @"登录状态") //哪一列
+            {
+                if (Boolean.Parse(e.Value.ToString()))
+                {
+                    e.Value = "已登录";
+                    e.CellStyle.ForeColor = Color.Green;
+                }
+                else
+                {
+                    e.Value = "未登录";
+                    e.CellStyle.ForeColor = Color.Red;
                 }
             }
         }

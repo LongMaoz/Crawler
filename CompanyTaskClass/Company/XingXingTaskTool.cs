@@ -1,6 +1,7 @@
 ﻿using CompanyTaskClass.Interface;
 using CompanyTaskClass.Model;
 using CompanyTaskClass.Tool;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +12,8 @@ using System.Threading.Tasks;
 
 namespace CompanyTaskClass.Company
 {
-    /// <summary>
-    /// KangbaoTaskTool 的摘要说明
-    /// </summary>
-    public class XingXingTaskTool : ICompanyTaskTool<TaskModel>
+    public class XingXingTaskTool : ICompanyTaskTool<CompanyTask>
     {
-        public XingXingTaskTool()
-        {
-
-        }
-
-        public LoginResultmodel GetLoginResultmodel(CompanyTask companyTask)
-        {
-            return null;
-        }
-
         public List<TaskModel> GetList(CompanyTask companyTask)
         {
             string[] strcookies = companyTask.GetCookies("JSESSIONID").Split(',');
@@ -73,22 +61,19 @@ namespace CompanyTaskClass.Company
             else return null;
         }
 
-        //public int GetCount(CompanyTask companyTask)
-        //{
-        //    var number = -1;
-        //    var taskList = GetList(companyTask);
-        //    if (taskList != null)
-        //    {
-        //        number = 0;
-        //        foreach (var task in taskList)
-        //        {
-        //            if (!TaskRedisMg.Instance.IsExist(companyTask.UserID, companyTask.FromCompany, task.MessageId))
-        //            {
-        //                number++;
-        //            }
-        //        }
-        //    }
-        //    return number;
-        //}
+        public LoginResultmodel GetLoginResultmodel(JObject @object, CompanyTask companyTask)
+        {
+            throw new NotImplementedException();
+        }
+
+        public LoginType GetLoginType()
+        {
+            throw new NotImplementedException();
+        }
+
+        public JObject GetVerificationCode()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

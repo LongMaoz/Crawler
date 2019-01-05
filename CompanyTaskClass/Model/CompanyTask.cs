@@ -15,6 +15,8 @@ namespace CompanyTaskClass.Model
 
         public int UserID { get; set; }
 
+        public bool LoginState { get; set; }
+
         /// <summary>
         /// 厂商名称
         /// </summary>

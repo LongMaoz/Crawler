@@ -1,4 +1,5 @@
 ﻿using CompanyTaskClass.Model;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,10 @@ namespace CompanyTaskClass.Interface
 {
     public interface ICompanyTaskTool<T>
     {
-        LoginResultmodel GetLoginResultmodel(CompanyTask companyTask);
-        List<T> GetList(CompanyTask companyTask);
-        //int GetCount(CompanyTask companyTask);
+        LoginResultmodel GetLoginResultmodel(JObject @object,CompanyTask companyTask);
+        List<TaskModel> GetList(CompanyTask companyTask);
+        JObject GetVerificationCode();
+        LoginType GetLoginType();
+   
     }
 }
