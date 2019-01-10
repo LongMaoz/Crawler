@@ -14,7 +14,7 @@
     <Deterministic>true</Deterministic>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -33,9 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="BaiChang">
-      <HintPath>..\..\..\..\常见引用\BaiChang.dll</HintPath>
-    </Reference>
     <Reference Include="CSkin">
       <HintPath>..\..\..\..\常见引用\CSkin 4.0\CSkin.dll</HintPath>
     </Reference>
@@ -123,6 +120,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\BaiChang\BaiChang.csproj">
+      <Project>{e6420a1a-ce8d-4257-995b-9e6cb16709d5}</Project>
+      <Name>BaiChang</Name>
+    </ProjectReference>
     <ProjectReference Include="CompanyTaskClass\CompanyTaskClass.csproj">
       <Project>{A9CDABCE-A3ED-4C66-A1DF-89929752106F}</Project>
       <Name>CompanyTaskClass</Name>

@@ -16,6 +16,7 @@ using CompanyTaskClass.Tool;
 using System.Text.RegularExpressions;
 using CompanyTaskClass.Model;
 using CompanyTaskClass.Interface;
+using CompanyTaskClass.DAL;
 
 namespace WindowsFormsApp1.View
 {
@@ -37,6 +38,8 @@ namespace WindowsFormsApp1.View
         {
             this.Userinfo = jObject;
             this.GropBox.Text = $@"当前登录帐号：{Userinfo["user"]["CompanyName"]}";
+            //初始化本地数据表
+            SqliteDbHelper.InitializeDatabase(Userinfo["user"]["CompanyName"].ToString());
             //获取信息
             list = MainBll.GetCompanys(Userinfo);
             this.DgrView.DataSource = list;
@@ -90,7 +93,7 @@ namespace WindowsFormsApp1.View
                     else
                     {
                         int sum= SupplierAdd(temp, result);
-                        MessageBox.Show("共拉取到" + result.Count + "条数据");
+                        MessageBox.Show("共拉取到" + sum + "条新数据");
                     }
                 }
                 else
@@ -108,22 +111,33 @@ namespace WindowsFormsApp1.View
         {
             string companyId = Userinfo["user"]["CompanyID"].ToString();
             string userName = Userinfo["user"]["UserName"].ToString();
-            string url = @"http://www.vk90.com/Api1/companyapi.ashx?action=supplieradd";
+            string url = @"http://www.vk90.com/Api1/companyapi.ashx?op=supplieradd";
+            var taskReaded = TaskReadedDao.CreateDao(Userinfo["user"]["CompanyName"].ToString());
+            int num = 0;
             foreach (var tsm in tsms)
             {
-                string result = BaiChang.Net.Tekecommunications.Post(url,
-                    "comid=" + companyId, "uKey=" + BaiChang.Security.Secure.Md5(companyId + "_" + userName),
-                    "name=" + tsm.Name, "phone=" + tsm.Phone, "classify=" + cmp.CompanyType,
-                    "brand=" + cmp.CompanyTypeName, "count=" + tsm.ShopCount, "address=" + tsm.Address,
-                    "serviceClassify=" + tsm.ServerType, "expectantTime=" + tsm.OrderTime, "phone2=" + tsm.OthersPhone,
-                    "callphone=" + tsm.CallPhone, "billcode=" + tsm.BillNumber, "infofrom=" + tsm.InformationFrom,
-                    "city=" + " ", "district=" + " ", "town=" + " ", "productType=" + tsm.Type, "barcode=" + tsm.ProductBarcode,
-                    "barcode2=" + tsm.OutsideBarcode, "buyTime=" + tsm.BuyTimes, "collectMoney=" + tsm.HelpMoeny,
-                    "buyaddress=" + tsm.TakeAddress, "repairtype=" + tsm.GuaranteeType, "serviceclassify=" + tsm.ServerType,
-                    "starttime=" + " ", "starttime=" + " ", "starttime=" + " ", "brokenreason=" + tsm.TroubleCause,
-                    "brokenphenomenon=" + tsm.TroubleType, "remarks=" + tsm.CustomerValue);
+                if (!taskReaded.IsExist(cmp.CompanyType,tsm.MessageId))
+                {
+                    string result = BaiChang.Net.Tekecommunications.Post(url,
+                   "comid=" + companyId, "uKey=" + BaiChang.Security.Secure.Md5(companyId + "_" + userName),
+                   "name=" + tsm.Name, "phone=" + tsm.Phone, "classify=" + cmp.CompanyType,
+                   "brand=" + cmp.CompanyTypeName, "count=" + tsm.ShopCount, "address=" + tsm.Address,
+                   "serviceClassify=" + tsm.ServerType, "expectantTime=" + tsm.OrderTime, "phone2=" + tsm.OthersPhone,
+                   "callphone=" + tsm.CallPhone, "billcode=" + tsm.BillNumber, "infofrom=" + tsm.InformationFrom,
+                   "city=" + " ", "district=" + " ", "town=" + " ", "productType=" + tsm.Type, "barcode=" + tsm.ProductBarcode,
+                   "barcode2=" + tsm.OutsideBarcode, "buyTime=" + tsm.BuyTimes, "collectMoney=" + tsm.HelpMoeny,
+                   "buyaddress=" + tsm.TakeAddress, "repairtype=" + tsm.GuaranteeType, "serviceclassify=" + tsm.ServerType,
+                   "starttime=" + " ", "starttime=" + " ", "starttime=" + " ", "brokenreason=" + tsm.TroubleCause,
+                   "brokenphenomenon=" + tsm.TroubleType, "remarks=" + tsm.CustomerValue,"messageid="+tsm.MessageId);
+                    taskReaded.Add(new TaskReaded() {
+                        Type = cmp.CompanyType,
+                        MessageID = tsm.MessageId,
+                    });
+                    num++;
+                }
             }
-            return 7;
+            cmp.Count += num;
+            return num;
         }
 
         /// <summary>

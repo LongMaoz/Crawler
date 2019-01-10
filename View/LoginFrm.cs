@@ -11,6 +11,7 @@ using WindowsFormsApp1.Controller;
 using CCWin;
 using WindowsFormsApp1.Model;
 using Newtonsoft.Json.Linq;
+using CompanyTaskClass.Tool;
 
 namespace WindowsFormsApp1.View
 {

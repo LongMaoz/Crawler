@@ -34,3 +34,10 @@ D:\工作目录\项目\WinForm\bin\Debug\CompanyTaskClass.dll
 D:\工作目录\项目\WinForm\bin\Debug\CompanyTaskClass.pdb
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.Code.resources
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.WebFrm.resources
+D:\工作目录\项目\WinForm\bin\Debug\BaiChang.dll
+D:\工作目录\项目\WinForm\bin\Debug\MySql.Data.dll
+D:\工作目录\项目\WinForm\bin\Debug\System.Data.SQLite.dll
+D:\工作目录\项目\WinForm\bin\Debug\CompanyTaskClass.dll.config
+D:\工作目录\项目\WinForm\bin\Debug\System.Data.SQLite.xml
+D:\工作目录\项目\WinForm\bin\Debug\System.Data.SQLite.dll.config
+D:\工作目录\项目\WinForm\bin\Debug\SQLite.Interop.dll
