@@ -14,6 +14,5 @@ namespace CompanyTaskClass.Interface
         List<TaskModel> GetList(CompanyTask companyTask);
         JObject GetVerificationCode();
         LoginType GetLoginType();
-   
     }
 }

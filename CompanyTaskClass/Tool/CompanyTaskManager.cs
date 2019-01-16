@@ -17,12 +17,14 @@ namespace CompanyTaskClass.Tool
             if (type == 4)
                 return new HisenseCompanyTaskTool();
            // return CompanyTaskManager<HisenseCompanyTaskTool>();
-            if (type ==50)
-                return new XingXingTaskTool();
             if (type == 18)
                 return new QishuaiTaskTool();
+            if (type == 25)
+                return new JDTaskTool();
             if (type == 35)
                 return new GuoMeiTaskTool();
+            if (type == 50)
+                return new XingXingTaskTool();
             return null;
         }
     }

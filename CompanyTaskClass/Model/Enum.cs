@@ -9,7 +9,8 @@ namespace CompanyTaskClass.Model
     public enum LoginType
     {
         MustCode=1,
-        NoNeedCode =2
+        NoNeedCode =2,
+        JavaScriptCode =3
     }
 
 

@@ -68,7 +68,7 @@ namespace CompanyTaskClass.Company
 
         public LoginType GetLoginType()
         {
-            throw new NotImplementedException();
+            return LoginType.JavaScriptCode;
         }
 
         public JObject GetVerificationCode()

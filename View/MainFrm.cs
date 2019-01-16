@@ -17,6 +17,7 @@ using System.Text.RegularExpressions;
 using CompanyTaskClass.Model;
 using CompanyTaskClass.Interface;
 using CompanyTaskClass.DAL;
+using CompanyTaskClass.Company;
 
 namespace WindowsFormsApp1.View
 {
@@ -66,40 +67,47 @@ namespace WindowsFormsApp1.View
 
         private void DgrView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.ColumnIndex != -1 && e.RowIndex != -1 && DgrView.Columns[e.ColumnIndex].HeaderText == @"操作")
+            try
             {
-                var temp = list[e.RowIndex];
-                ICompanyTaskTool<CompanyTask> create = CompanyTaskManager.Create(temp.CompanyType);
-                List<TaskModel> result = null;
-                if (create != null)
+                if (e.ColumnIndex != -1 && e.RowIndex != -1 && DgrView.Columns[e.ColumnIndex].HeaderText == @"操作")
                 {
-                    result = create.GetList(temp);
-                    if (result == null)
+                    var temp = list[e.RowIndex];
+                    ICompanyTaskTool<CompanyTask> companyTaskTool = CompanyTaskManager.Create(temp.CompanyType);
+                    List<TaskModel> result = null;
+                    if (companyTaskTool == null)
                     {
-                        if (create.GetLoginType() == LoginType.MustCode)
+                        MessageBox.Show("未找到厂商信息");
+                    }
+                    if (companyTaskTool != null)
+                    {
+                        result = companyTaskTool.GetList(temp);
+                    }
+                    if (companyTaskTool != null && result == null)
+                    {
+                        switch (companyTaskTool.GetLoginType())
                         {
-                            this.VerificationCode(temp, e.RowIndex);
-                        }
-                        else if (create.GetLoginType() == LoginType.NoNeedCode)
-                        {
-                            WebFrm webFrm = new WebFrm();
-                            webFrm.Show();
-                        }
-                        else
-                        {
-                            this.NotVerificationCode(create, temp, e.RowIndex);
+                            case LoginType.MustCode:
+                                this.VerificationCode(temp, e.RowIndex);
+                                break;
+                            case LoginType.NoNeedCode:
+                                this.NotVerificationCode(companyTaskTool, temp, e.RowIndex);
+                                break;
+                            case LoginType.JavaScriptCode:
+                                this.VerificationJavaScript(companyTaskTool,temp, e.RowIndex);
+                                break;
                         }
                     }
-                    else
+                    if (companyTaskTool != null && result != null)
                     {
-                        int sum= SupplierAdd(temp, result);
+                        int sum = SupplierAdd(temp, result);
                         MessageBox.Show("共拉取到" + sum + "条新数据");
                     }
                 }
-                else
-                {
-                    MessageBox.Show("未找到厂商信息");
-                }
+            }
+            catch (Exception ex)
+            {
+
+                MessageBox.Show(ex.Message,"错误",MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -116,7 +124,7 @@ namespace WindowsFormsApp1.View
             int num = 0;
             foreach (var tsm in tsms)
             {
-                if (!taskReaded.IsExist(cmp.CompanyType,tsm.MessageId))
+                if (!taskReaded.IsExist(cmp.CompanyType, tsm.MessageId))
                 {
                     string result = BaiChang.Net.Tekecommunications.Post(url,
                    "comid=" + companyId, "uKey=" + BaiChang.Security.Secure.Md5(companyId + "_" + userName),
@@ -128,8 +136,9 @@ namespace WindowsFormsApp1.View
                    "barcode2=" + tsm.OutsideBarcode, "buyTime=" + tsm.BuyTimes, "collectMoney=" + tsm.HelpMoeny,
                    "buyaddress=" + tsm.TakeAddress, "repairtype=" + tsm.GuaranteeType, "serviceclassify=" + tsm.ServerType,
                    "starttime=" + " ", "starttime=" + " ", "starttime=" + " ", "brokenreason=" + tsm.TroubleCause,
-                   "brokenphenomenon=" + tsm.TroubleType, "remarks=" + tsm.CustomerValue,"messageid="+tsm.MessageId);
-                    taskReaded.Add(new TaskReaded() {
+                   "brokenphenomenon=" + tsm.TroubleType, "remarks=" + tsm.CustomerValue, "messageid=" + tsm.MessageId);
+                    taskReaded.Add(new TaskReaded()
+                    {
                         Type = cmp.CompanyType,
                         MessageID = tsm.MessageId,
                     });
@@ -143,9 +152,9 @@ namespace WindowsFormsApp1.View
         /// <summary>
         /// 无需验证码执行
         /// </summary>
-        public bool NotVerificationCode(ICompanyTaskTool<CompanyTask> create, CompanyTask companyTask, int rowIndex)
+        public bool NotVerificationCode(ICompanyTaskTool<CompanyTask> companyTaskTool, CompanyTask companyTask, int rowIndex)
         {
-            var loginResult = create.GetLoginResultmodel(new JObject() { }, companyTask);
+            var loginResult = companyTaskTool.GetLoginResultmodel(new JObject() { }, companyTask);
             return false;
         }
 
@@ -158,10 +167,18 @@ namespace WindowsFormsApp1.View
         {
             var code = new Code();
             code.UpdateDgrView += UpdateDgrView;
-            if (code.Initialize(companyTask, rowIndex))
-                code.Show();
-            else
-                code.Close();
+            code.Initialize(companyTask, rowIndex);
+        }
+
+        /// <summary>
+        /// 需要JavaScript执行弹窗
+        /// </summary>
+        /// <param name="companyTask"></param>
+        /// <param name="rowIndex"></param>
+        public void VerificationJavaScript(ICompanyTaskTool<CompanyTask> companyTaskTool, CompanyTask companyTask, int rowIndex)
+        {
+            WebFrm webFrm = new WebFrm();
+            webFrm.Initialize(companyTaskTool,companyTask);
         }
 
         /// <summary>
@@ -196,5 +213,6 @@ namespace WindowsFormsApp1.View
                 }
             }
         }
+
     }
 }

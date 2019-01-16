@@ -42,14 +42,14 @@ namespace WindowsFormsApp1.View
             this.BtnOk.Text = @"确定";
         }
 
-        public bool Initialize(CompanyTask companyTask, int rowIndex)
+        public void Initialize(CompanyTask companyTask, int rowIndex)
         {
             this.companyTask = companyTask;
             this.rowindex = rowIndex;
             var createCompany = CompanyTaskManager.Create(companyTask.CompanyType);
             @object = createCompany.GetVerificationCode();
             this.panel1.BackgroundImage = VerificationCodeTool.ReturnPhoto(@object["img"].Value<byte[]>());
-            return true;
+            this.Show();
         }
 
         private void BtnOk_Click(object sender, EventArgs e)

@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+
+</head>
+
+<body>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="td.js"></script>
+    <script type="text/javascript">
+
+        function login() {
+            var id = window.external.GetId();
+            var seqSid = window.external.GetseqSid();
+            var eid = $("#eid").val();
+            var sessionId = $("#sessionId").val();
+            window.external.Login(id,eid,sessionId,seqSid)
+        }
+
+        function loginGetEid(count) {
+            if (count >= 4) {
+                return;
+            }
+            try {
+                if (typeof (getJdEid) == "function") {
+                    getJdEid(function (eid, fp, udfp) {
+                        $("#eid").prop("value", eid);
+                        $("#sessionId").prop("value", fp);
+                        $("#seqSid").prop("value", window._jdtdmap_sessionId);
+                        login();
+                    });
+                } else {
+                    count++;
+                    setTimeout('loginGetEid(' + count + ')', 300);
+                }
+            } catch (e) {
+                $("#eid").prop("value", "unknown");
+                $("#sessionId").prop("value", "unknown");
+            }
+        }
+
+        function OpenPingtu(){
+            location.href="PingTu.html"
+        }
+    </script>
+    <input type="hidden" id="eid" />
+    <input type="hidden" id="sessionId" />
+    <input type="hidden" id="seqSid" />
+    <button onclick="login()">点击登录</button>
+    <button onclick="window.external.login1()">
+        javascript访问C#代码</button>
+</body>
+
+</html>
