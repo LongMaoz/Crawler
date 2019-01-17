@@ -85,9 +85,9 @@
     <Compile Include="Tool\CompanyTaskManager.cs" />
     <Compile Include="Tool\CompanyTaskTool.cs" />
     <Compile Include="Company\HisenseCompanyTaskTool.cs" />
-    <Compile Include="Tool\Initialize.cs" />
     <Compile Include="Tool\SqliteDbHelper.cs" />
     <Compile Include="Tool\SqliteExcutor.cs" />
+    <Compile Include="Tool\UpdateTool.cs" />
     <Compile Include="Tool\VerificationCodeTool.cs" />
   </ItemGroup>
   <ItemGroup>

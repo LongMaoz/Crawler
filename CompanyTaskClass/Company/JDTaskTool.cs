@@ -254,7 +254,7 @@ namespace CompanyTaskClass.Company
         {
             var obj = new JObject();
             //obj.Add("URL", @"\View\JD\Demo.html");
-            obj.Add("URL", @"https://www5.vk90.com:455/task/company/jdlogin/index.aspx?id=");
+            obj.Add("URL", @"https://www.vk90.com/api1/jdlogin/index.aspx?id=");
             return obj;
         }
 

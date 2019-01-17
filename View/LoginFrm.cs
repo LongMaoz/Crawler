@@ -29,6 +29,17 @@ namespace WindowsFormsApp1.View
             this.LblName.Text = @"帐号";
             this.LblPwd.Text = @"密码";
             this.Btn_Login.Text = @"登录";
+            if (LoginBll.CheckUpdate())
+            {
+                this.Btn_Login.Text = "更新";
+                this.Btn_Login.Click -= Btn_Login_Click;
+                this.Btn_Login.Click += Btn_Update;
+            }
+        }
+
+        private void Btn_Update(object sender, EventArgs e)
+        {
+            MessageBox.Show("有更新");
         }
 
         private void LoginFrn_Load(object sender, EventArgs e)

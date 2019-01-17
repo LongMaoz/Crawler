@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using WindowsFormsApp1.Model;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using CompanyTaskClass.Tool;
 
 namespace WindowsFormsApp1.Controller
 {
@@ -18,9 +19,23 @@ namespace WindowsFormsApp1.Controller
             userInfo.UserPwd = @"123456";
             userInfo.UserPwd = BaiChang.Security.Secure.Md5(userInfo.UserPwd);
             string url = @"http://www.vk90.com/Passport/Passport.ashx?action=loginByMessenger&Type=PcApp";
-            string result = BaiChang.Net.Tekecommunications.Post(url,"name="+userInfo.UserName,"pwd="+userInfo.UserPwd);
+            string result = BaiChang.Net.Tekecommunications.Post(url, "name=" + userInfo.UserName, "pwd=" + userInfo.UserPwd);
             JObject jObject = JsonConvert.DeserializeObject<JObject>(result);
             return jObject;
+        }
+
+        public static bool CheckUpdate()
+        {
+            //var result = new UpdateTool().CheckUpdate();
+            //if (result["msg"].ToString() == "0")
+            //{
+            //    return false;
+            //}
+            //else
+            //{
+            //    return true;
+            //}
+            return true;
         }
     }
 }

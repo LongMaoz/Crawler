@@ -17,6 +17,9 @@ namespace WindowsFormsApp1.View
     {
         private ICompanyTaskTool<CompanyTask> companyTaskTool;
         private CompanyTask companyTask;
+        private int RowIndex;
+        public delegate void MainForm(CompanyTask companyTask, int rowIndex);
+        public event MainForm UpdateDgrView;
         public WebFrm()
         {
             InitializeComponent();
@@ -27,10 +30,11 @@ namespace WindowsFormsApp1.View
             throw new NotImplementedException();
         }
 
-        public void Initialize(ICompanyTaskTool<CompanyTask> companyTaskTool,CompanyTask companyTask)
+        public void Initialize(ICompanyTaskTool<CompanyTask> companyTaskTool,CompanyTask companyTask,int rowIndex)
         {
             this.companyTaskTool = companyTaskTool;
             this.companyTask = companyTask;
+            this.RowIndex = rowIndex;
             this.Show();
         }
 
@@ -40,62 +44,16 @@ namespace WindowsFormsApp1.View
             this.webBrowser1.Navigate(companyTaskTool.GetVerificationCode()["URL"].ToString()+companyTask.ID);
         }
 
-        public int GetId()
+        public void LoginState(string result)
         {
-            return companyTask.ID;
-        }
-
-        public string GetseqSid()
-        {
-            string url = "https://seq.jd.com/jseqf.html?bizId=passport_jd_com_login_pc&platform=js&version=1";
-            string result = BaiChang.Net.Tekecommunications.Get(url);
-            string seqSid = result.Split('"')[1];
-            return seqSid;
-        }
-
-        public void Login(string id,string eid,string sessionId,string seqSid)
-        {
-            var obj = new JObject();
-            obj.Add("id", id);
-            obj.Add("eid", eid);
-            obj.Add("sessionId", sessionId);
-            obj.Add("seqSid", seqSid);
-            var loginResult = companyTaskTool.GetLoginResultmodel(obj, companyTask);
-            if (loginResult.err == "pingtu" || loginResult.err == "验证码错误")
+            JObject @object = JsonConvert.DeserializeObject<JObject>(result);
+            companyTask.SetCookies("thor", @object["thor"].ToString());
+            if (!string.IsNullOrWhiteSpace(@object["thor"].ToString()))
             {
-                this.CallingJavaSrcipt("OpenPingtu", null );
-            }
-        }
-
-        public string Submit(string obj)
-        {
-            var temp = JsonConvert.DeserializeObject<JObject>(obj);
-            string url = "https://iv.jd.com/slide/s.html?d=" + temp["d"] + "&c=" + temp["c"] + "&w=" + temp["w"] + "&appId=" + temp["appId"] + "&scene=" + temp["scene"] + "&product=" + temp["product"] + "&e=" + temp["e"] + "&s=" + temp["s"] + "o=" + temp["o"];
-            HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            request.Host = "iv.jd.com";
-            request.Referer = "https://passport.jd.com/new/login.aspx";
-            string cookiestring;
-            string json = CompanyTaskTool.Get(request, Encoding.UTF8, out cookiestring, "");
-            //hashtable = JsonConvert.DeserializeObject<Hashtable>(json);
-            //Bg = hashtable["bg"].ToString();
-            //Patch = hashtable["patch"].ToString();
-            return json;
-        }
-
-        public string LoginDo(string code)
-        {
-            var obj = new JObject();
-            obj.Add("code", code);
-            var result = companyTaskTool.GetLoginResultmodel(obj,companyTask);
-            if (result.err == "")
-            {
-                var cookies = companyTask.SetCookies("thor", result.cookie);
-                //保存到数据库
-                return "登录成功";
-            }
-            else
-            {
-                return result.err;
+                this.UpdateDgrView(companyTask, RowIndex);
+                this.Close();
+            }else{
+                MessageBox.Show(@object["msg"].ToString());
             }
         }
 

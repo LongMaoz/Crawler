@@ -230,7 +230,7 @@
         private CCWin.SkinControl.SkinPanel Panel;
         private CCWin.SkinControl.SkinDataGridView DgrView;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyTypeName;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CompanyName;
+        private new System.Windows.Forms.DataGridViewTextBoxColumn CompanyName;
         private System.Windows.Forms.DataGridViewTextBoxColumn LoginState;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private System.Windows.Forms.DataGridViewButtonColumn Action;

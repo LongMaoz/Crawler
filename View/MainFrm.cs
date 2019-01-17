@@ -178,7 +178,8 @@ namespace WindowsFormsApp1.View
         public void VerificationJavaScript(ICompanyTaskTool<CompanyTask> companyTaskTool, CompanyTask companyTask, int rowIndex)
         {
             WebFrm webFrm = new WebFrm();
-            webFrm.Initialize(companyTaskTool,companyTask);
+            webFrm.UpdateDgrView += UpdateDgrView;
+            webFrm.Initialize(companyTaskTool,companyTask,rowIndex);
         }
 
         /// <summary>
