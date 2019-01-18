@@ -13,13 +13,13 @@ using WindowsFormsApp1.Model;
 
 namespace WindowsFormsApp1.View
 {
+
     public partial class WebFrm : Form, IFrom
     {
         private ICompanyTaskTool<CompanyTask> companyTaskTool;
         private CompanyTask companyTask;
         private int RowIndex;
         private GeckoWebBrowser geckoWebBrowser;
-
         public delegate void MainForm(CompanyTask companyTask, int rowIndex);
         public event MainForm UpdateDgrView;
         public WebFrm()
@@ -42,10 +42,12 @@ namespace WindowsFormsApp1.View
 
         private void WebFrm_Load(object sender, EventArgs e)
         {
-            Xpcom.Initialize("Firefox64");
+            Xpcom.Initialize("Firefox");
             geckoWebBrowser = new GeckoWebBrowser { Dock = DockStyle.Fill };
+            geckoWebBrowser.AddMessageEventListener("LoginState", LoginState);
             this.Controls.Add(geckoWebBrowser);
-            geckoWebBrowser.Navigate(companyTaskTool.GetVerificationCode()["URL"].ToString() + companyTask.ID);
+            //geckoWebBrowser.Navigate(companyTaskTool.GetVerificationCode()["URL"].ToString() + companyTask.ID);
+            geckoWebBrowser.Navigate("https://www.vk90.com/api1/jdlogin/test.html");
         }
 
         public void LoginState(string result)

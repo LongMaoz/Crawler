@@ -1,0 +1,8 @@
+D:\工作目录\项目\WinForm\obj\Release\WindowsFormsApp1.csprojAssemblyReference.cache
+D:\工作目录\项目\WinForm\obj\Release\WindowsFormsApp1.Properties.Resources.resources
+D:\工作目录\项目\WinForm\obj\Release\WindowsFormsApp1.View.Code.resources
+D:\工作目录\项目\WinForm\obj\Release\WindowsFormsApp1.View.LoginFrm.resources
+D:\工作目录\项目\WinForm\obj\Release\WindowsFormsApp1.View.MainFrm.resources
+D:\工作目录\项目\WinForm\obj\Release\WindowsFormsApp1.View.WebFrm.resources
+D:\工作目录\项目\WinForm\obj\Release\WindowsFormsApp1.csproj.GenerateResource.cache
+D:\工作目录\项目\WinForm\obj\Release\WindowsFormsApp1.csproj.CoreCompileInputs.cache

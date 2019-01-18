@@ -43,5 +43,3 @@ D:\工作目录\项目\WinForm\bin\Debug\System.Data.SQLite.dll.config
 D:\工作目录\项目\WinForm\bin\Debug\SQLite.Interop.dll
 D:\工作目录\项目\WinForm\bin\Debug\Geckofx-Core.dll
 D:\工作目录\项目\WinForm\bin\Debug\Geckofx-Winforms.dll
-D:\工作目录\项目\WinForm\bin\Debug\Geckofx-Core.pdb
-D:\工作目录\项目\WinForm\bin\Debug\Geckofx-Winforms.pdb
