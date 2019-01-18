@@ -1,6 +1,7 @@
 ﻿using CompanyTaskClass.Interface;
 using CompanyTaskClass.Model;
 using CompanyTaskClass.Tool;
+using Gecko;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -12,12 +13,13 @@ using WindowsFormsApp1.Model;
 
 namespace WindowsFormsApp1.View
 {
-    [ComVisible(true)]
     public partial class WebFrm : Form, IFrom
     {
         private ICompanyTaskTool<CompanyTask> companyTaskTool;
         private CompanyTask companyTask;
         private int RowIndex;
+        private GeckoWebBrowser geckoWebBrowser;
+
         public delegate void MainForm(CompanyTask companyTask, int rowIndex);
         public event MainForm UpdateDgrView;
         public WebFrm()
@@ -40,8 +42,10 @@ namespace WindowsFormsApp1.View
 
         private void WebFrm_Load(object sender, EventArgs e)
         {
-            webBrowser1.ObjectForScripting = this;
-            this.webBrowser1.Navigate(companyTaskTool.GetVerificationCode()["URL"].ToString()+companyTask.ID);
+            Xpcom.Initialize("Firefox64");
+            geckoWebBrowser = new GeckoWebBrowser { Dock = DockStyle.Fill };
+            this.Controls.Add(geckoWebBrowser);
+            geckoWebBrowser.Navigate(companyTaskTool.GetVerificationCode()["URL"].ToString() + companyTask.ID);
         }
 
         public void LoginState(string result)
@@ -59,7 +63,6 @@ namespace WindowsFormsApp1.View
 
         public void CallingJavaSrcipt(string functionName, object[] @object)
         {
-            webBrowser1.Document.InvokeScript(functionName, @object);
         }
     }
 }

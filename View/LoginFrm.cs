@@ -31,9 +31,9 @@ namespace WindowsFormsApp1.View
             this.Btn_Login.Text = @"登录";
             if (LoginBll.CheckUpdate())
             {
-                this.Btn_Login.Text = "更新";
-                this.Btn_Login.Click -= Btn_Login_Click;
-                this.Btn_Login.Click += Btn_Update;
+                //this.Btn_Login.Text = "更新";
+                //this.Btn_Login.Click -= Btn_Login_Click;
+                //this.Btn_Login.Click += Btn_Update;
             }
         }
 

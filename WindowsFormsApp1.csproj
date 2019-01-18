@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -35,6 +37,12 @@
   <ItemGroup>
     <Reference Include="CSkin">
       <HintPath>..\..\..\..\常见引用\CSkin 4.0\CSkin.dll</HintPath>
+    </Reference>
+    <Reference Include="Geckofx-Core, Version=60.0.26.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
+      <HintPath>packages\Geckofx60.64.60.0.26\lib\net45\Geckofx-Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Geckofx-Winforms, Version=60.0.26.0, Culture=neutral, PublicKeyToken=3209ac31600d1857, processorArchitecture=MSIL">
+      <HintPath>packages\Geckofx60.64.60.0.26\lib\net45\Geckofx-Winforms.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -106,6 +114,8 @@
     <EmbeddedResource Include="View\WebFrm.resx">
       <DependentUpon>WebFrm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="Firefox\omni.ja" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -129,5 +139,37 @@
       <Name>CompanyTaskClass</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Firefox\AccessibleHandler.dll" />
+    <Content Include="Firefox\AccessibleMarshal.dll" />
+    <Content Include="Firefox\d3dcompiler_47.dll" />
+    <Content Include="Firefox\freebl3.dll" />
+    <Content Include="Firefox\IA2Marshal.dll" />
+    <Content Include="Firefox\icudt58.dll" />
+    <Content Include="Firefox\icuin58.dll" />
+    <Content Include="Firefox\icuuc58.dll" />
+    <Content Include="Firefox\lgpllibs.dll" />
+    <Content Include="Firefox\libEGL.dll" />
+    <Content Include="Firefox\libGLESv2.dll" />
+    <Content Include="Firefox\mozavcodec.dll" />
+    <Content Include="Firefox\mozavutil.dll" />
+    <Content Include="Firefox\mozglue.dll" />
+    <Content Include="Firefox\nss3.dll" />
+    <Content Include="Firefox\nssckbi.dll" />
+    <Content Include="Firefox\nssdbm3.dll" />
+    <Content Include="Firefox\plugin-container.exe" />
+    <Content Include="Firefox\plugin-hang-ui.exe" />
+    <Content Include="Firefox\qipcap64.dll" />
+    <Content Include="Firefox\sandboxbroker.dll" />
+    <Content Include="Firefox\softokn3.dll" />
+    <Content Include="Firefox\xul.dll" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="packages\Geckofx60.64.60.0.26\build\Geckofx60.64.targets" Condition="Exists('packages\Geckofx60.64.60.0.26\build\Geckofx60.64.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Geckofx60.64.60.0.26\build\Geckofx60.64.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Geckofx60.64.60.0.26\build\Geckofx60.64.targets'))" />
+  </Target>
 </Project>
