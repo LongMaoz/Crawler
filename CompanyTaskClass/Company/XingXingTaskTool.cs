@@ -21,16 +21,21 @@ namespace CompanyTaskClass.Company
             {
                 return null;
             }
-            string cookies;
-            Cookie cookie = new Cookie("JSESSIONID", strcookies[0]);
-            cookie.Domain = "zjxx.etwowin.com.cn";
-            Cookie cookie2 = new Cookie("token", strcookies[1]);
-            cookie2.Domain = "zjxx.etwowin.com.cn";
-            List<Cookie> cookieCon = new List<Cookie>();
-            cookieCon.Add(cookie);
-            cookieCon.Add(cookie2);
+            Cookie cookie = new Cookie("JSESSIONID", strcookies[0])
+            {
+                Domain = "zjxx.etwowin.com.cn"
+            };
+            Cookie cookie2 = new Cookie("token", strcookies[1])
+            {
+                Domain = "zjxx.etwowin.com.cn"
+            };
+            List<Cookie> cookieCon = new List<Cookie>
+            {
+                cookie,
+                cookie2
+            };
             string str = CompanyTaskTool.Get("http://zjxx.etwowin.com.cn/admin/mysite/list.jhtml?stat=3", Encoding.UTF8,
-                out cookies, cookieCon);
+                out string cookies, cookieCon);
             var regtable = new Regex("id=\"listTable\"([\\W\\w]*?)</form>").Matches(str);
             if (regtable.Count > 0)
             {
@@ -41,8 +46,10 @@ namespace CompanyTaskClass.Company
                     var td = new Regex("<td([\\W\\w]*?)>([\\W\\w]*?)</td>").Matches(tr.Groups[2].Value);
                     if (td.Count > 9)
                     {
-                        TaskModel taskModel = new TaskModel();
-                        taskModel.ShopModel = td[2].Groups[2].Value.Trim();
+                        TaskModel taskModel = new TaskModel
+                        {
+                            ShopModel = td[2].Groups[2].Value.Trim()
+                        };
                         var rega = new Regex("<a([\\w\\W]*?)>([\\W\\w]*?)</a>");
                         taskModel.MessageId = rega.Matches(td[3].Groups[2].Value).Count > 0
                             ? rega.Matches(td[3].Groups[2].Value)[0].Groups[2].Value
@@ -73,7 +80,11 @@ namespace CompanyTaskClass.Company
 
         public JObject GetVerificationCode()
         {
-            throw new NotImplementedException();
+            var obj = new JObject
+            {
+                { "URL", @"http://www.vk90.com/api1/JsDealwith/Etwowin.aspx?id=" }
+            };
+            return obj;
         }
     }
 }

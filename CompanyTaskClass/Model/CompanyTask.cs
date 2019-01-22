@@ -15,7 +15,7 @@ namespace CompanyTaskClass.Model
 
         public int UserID { get; set; }
 
-        public bool LoginState { get; set; }
+        public LoginState LoginState { get; set; }
 
         /// <summary>
         /// 厂商名称
@@ -109,5 +109,7 @@ namespace CompanyTaskClass.Model
                 }
             }
         }
+
+        public string CurrentOrg { set; get; }
     }
 }

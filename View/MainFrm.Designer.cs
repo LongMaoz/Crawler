@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
@@ -35,6 +36,7 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.GropBox = new CCWin.SkinControl.SkinGroupBox();
+            this.BtnPullOrder = new CCWin.SkinControl.SkinButton();
             this.Panel = new CCWin.SkinControl.SkinPanel();
             this.DgrView = new CCWin.SkinControl.SkinDataGridView();
             this.LblBand = new CCWin.SkinControl.SkinLabel();
@@ -56,6 +58,7 @@
             this.GropBox.AutoSize = true;
             this.GropBox.BackColor = System.Drawing.Color.Transparent;
             this.GropBox.BorderColor = System.Drawing.Color.Black;
+            this.GropBox.Controls.Add(this.BtnPullOrder);
             this.GropBox.Controls.Add(this.Panel);
             this.GropBox.Controls.Add(this.LblBand);
             this.GropBox.Font = new System.Drawing.Font("宋体", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -72,6 +75,22 @@
             this.GropBox.TitleBorderColor = System.Drawing.Color.Black;
             this.GropBox.TitleRectBackColor = System.Drawing.Color.White;
             this.GropBox.TitleRoundStyle = CCWin.SkinClass.RoundStyle.All;
+            // 
+            // BtnPullOrder
+            // 
+            this.BtnPullOrder.BackColor = System.Drawing.Color.Transparent;
+            this.BtnPullOrder.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.BtnPullOrder.DownBack = null;
+            this.BtnPullOrder.ForeColor = System.Drawing.Color.Black;
+            this.BtnPullOrder.Location = new System.Drawing.Point(908, 20);
+            this.BtnPullOrder.MouseBack = null;
+            this.BtnPullOrder.Name = "BtnPullOrder";
+            this.BtnPullOrder.NormlBack = null;
+            this.BtnPullOrder.Size = new System.Drawing.Size(138, 32);
+            this.BtnPullOrder.TabIndex = 3;
+            this.BtnPullOrder.Text = "skinButton1";
+            this.BtnPullOrder.UseVisualStyleBackColor = false;
+            this.BtnPullOrder.Click += new System.EventHandler(this.BtnPullOrder_Click);
             // 
             // Panel
             // 
@@ -195,8 +214,9 @@
             // Action
             // 
             this.Action.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Action.DataPropertyName = "Action";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.NullValue = "获取";
+            dataGridViewCellStyle4.NullValue = "登录";
             this.Action.DefaultCellStyle = dataGridViewCellStyle4;
             this.Action.HeaderText = "操作";
             this.Action.Name = "Action";
@@ -229,8 +249,9 @@
         private CCWin.SkinControl.SkinLabel LblBand;
         private CCWin.SkinControl.SkinPanel Panel;
         private CCWin.SkinControl.SkinDataGridView DgrView;
+        private CCWin.SkinControl.SkinButton BtnPullOrder;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyTypeName;
-        private new System.Windows.Forms.DataGridViewTextBoxColumn CompanyName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CompanyName;
         private System.Windows.Forms.DataGridViewTextBoxColumn LoginState;
         private System.Windows.Forms.DataGridViewTextBoxColumn Count;
         private System.Windows.Forms.DataGridViewButtonColumn Action;

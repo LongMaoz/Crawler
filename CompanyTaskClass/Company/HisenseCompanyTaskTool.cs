@@ -55,15 +55,16 @@ namespace CompanyTaskClass.Company
             var b = Encoding.Default.GetBytes(password);
             //转成 Base64 形式的 System.String  
             password = Convert.ToBase64String(b);
-            LoginResultmodel resultmodel = new LoginResultmodel();
-            resultmodel.cookie = gigip;
+            LoginResultmodel resultmodel = new LoginResultmodel
+            {
+                cookie = gigip
+            };
             string validateLdapUrl = string.Format("http://crm.hisense.com/HisenseCRM/LoginCRM.do?method=validateLdap&j_validate={0}&username={1}&password={2}"
                 , captcha, name, password);
             var requestLdap = WebRequest.Create(validateLdapUrl) as HttpWebRequest;
             requestLdap.ContentType = "application/x-www-form-urlencoded";
             requestLdap.CookieContainer = cookieContainer;
-            string cookie;
-            var strLdap = CompanyTaskTool.Post(requestLdap, Encoding.UTF8, out cookie);
+            string strLdap = CompanyTaskTool.Post(requestLdap, Encoding.UTF8, out string cookie);
             if (!string.IsNullOrEmpty(cookie))
             {
                 var sessReg = new Regex("JSESSIONID=([\\w\\W]*?);").Matches(cookie);
@@ -121,14 +122,13 @@ namespace CompanyTaskClass.Company
             JObject @object = new JObject();
             string sessid = "";
             string big = "";
-            string cookiestring;
             var loginRequest = WebRequest.Create("http://crm.hisense.com/HisenseCRM/login.do?method=begin") as HttpWebRequest;
             loginRequest.CookieContainer = new CookieContainer();
             if (sessid != null)
                 loginRequest.CookieContainer.Add(new Cookie("JSESSIONID", sessid, "/", "crm.hisense.com"));
             if (big != null)
                 loginRequest.CookieContainer.Add(new Cookie("BIGipServerPOOL_CRM_ALL", big, "/", "crm.hisense.com"));
-            CompanyTaskTool.Get(loginRequest, Encoding.UTF8, out cookiestring);
+            CompanyTaskTool.Get(loginRequest, Encoding.UTF8, out string cookiestring);
             if (!string.IsNullOrEmpty(cookiestring))
             {
                 var sessReg = new Regex("JSESSIONID=([\\w\\W]*?);").Matches(cookiestring);
@@ -155,8 +155,7 @@ namespace CompanyTaskClass.Company
                 request.CookieContainer.Add(new Cookie("JSESSIONID", sessid, "/", "crm.hisense.com"));
             if (big != null)
                 request.CookieContainer.Add(new Cookie("BIGipServerPOOL_CRM_ALL", big, "/", "crm.hisense.com"));
-            string cookiestr;
-            var bytes = CompanyTaskTool.GetFile(request, Encoding.UTF8, out cookiestr);
+            var bytes = CompanyTaskTool.GetFile(request, Encoding.UTF8, out string cookiestr);
             @object.Add("img", bytes);
             return @object;
         }
@@ -179,11 +178,10 @@ namespace CompanyTaskClass.Company
 
             var requestLink = (HttpWebRequest)WebRequest.Create("http://crm.hisense.com/HisenseCRM/main/pages/indexCRMLink.jsp");
             requestLink.CookieContainer = cookieContainer;
-            string cookie;
             string strResultlogin3;
             try
             {
-                strResultlogin3 = CompanyTaskTool.Get(requestLink, Encoding.UTF8, out cookie);
+                strResultlogin3 = CompanyTaskTool.Get(requestLink, Encoding.UTF8, out string cookie);
                 if (strResultlogin3.IndexOf("登&nbsp;&nbsp;录") > -1 && strResultlogin3.IndexOf("重置密码") > -1)
                     return null;
             }
@@ -192,12 +190,11 @@ namespace CompanyTaskClass.Company
                 return null;
             }
 
-            string cookies;
             var geturl =
                 "http://crm.hisense.com/HisenseCRM/menu.do?method=setMenuLoaction&href=/HisenseCRM/acceptAssign.do?method=acceptAssign&menuName=AcceptAssign";
             var request = (HttpWebRequest)WebRequest.Create(geturl);
             request.CookieContainer = cookieContainer;
-            var txthaixin = CompanyTaskTool.Get(request, Encoding.GetEncoding("GBK"), out cookies);
+            var txthaixin = CompanyTaskTool.Get(request, Encoding.GetEncoding("GBK"), out string cookies);
             var mc1 = new Regex("<table id=\"myTable\"([\\W\\w]*?)>([\\W\\w]*?)</table>").Matches(txthaixin);
             if (mc1.Count == 0) return null;
             var hisenseslist = new List<TaskModel>();
@@ -208,24 +205,25 @@ namespace CompanyTaskClass.Company
                 var mc = Regex.Matches(textValue, "<tr([\\W\\w]*?)</tr>");
                 foreach (Match m in mc)
                 {
-                    var str = "";
                     var mcrow = Regex.Matches(m.Groups[1].Value, "<td([\\W\\w]*?)>([\\W\\w]*?)</td>");
                     if (mcrow.Count > 21)
                     {
-                        var hisense = new TaskModel();
-                        hisense.MessageId = mcrow[1].Groups[2].Value;
-                        hisense.Name = mcrow[5].Groups[2].Value;//姓名
-                        hisense.CallPhone = mcrow[7].Groups[2].Value;//联系电话
-                        hisense.Phone = mcrow[8].Groups[2].Value;//手机号
-                        hisense.Address = mcrow[9].Groups[2].Value;//用户地址
-                        hisense.ShopModel = mcrow[11].Groups[2].Value;//产品型号
-                        hisense.ShopSmallclass = mcrow[14].Groups[2].Value;
-                        hisense.ServerType = mcrow[15].Groups[2].Value;
-                        //hisense.WeixiuXingzhi = "";
-                        hisense.OrderTime = mcrow[16].Groups[2].Value + " " + mcrow[12].Groups[2].Value;///预约时间
-                        //hisense.Guzhangxianxiang = mcrow[1].Groups[2].Value;
-                        //hisense.Guzhangyuanyin = mcrow[1].Groups[2].Value;
-                        hisense.ProductValue = mcrow[22].Groups[2].Value;
+                        var hisense = new TaskModel
+                        {
+                            MessageId = mcrow[1].Groups[2].Value,
+                            Name = mcrow[5].Groups[2].Value,//姓名
+                            CallPhone = mcrow[7].Groups[2].Value,//联系电话
+                            Phone = mcrow[8].Groups[2].Value,//手机号
+                            Address = mcrow[9].Groups[2].Value,//用户地址
+                            ShopModel = mcrow[11].Groups[2].Value,//产品型号
+                            ShopSmallclass = mcrow[14].Groups[2].Value,
+                            ServerType = mcrow[15].Groups[2].Value,
+                            //hisense.WeixiuXingzhi = "";
+                            OrderTime = mcrow[16].Groups[2].Value + " " + mcrow[12].Groups[2].Value,///预约时间
+                            //hisense.Guzhangxianxiang = mcrow[1].Groups[2].Value;
+                            //hisense.Guzhangyuanyin = mcrow[1].Groups[2].Value;
+                            ProductValue = mcrow[22].Groups[2].Value
+                        };
                         hisenseslist.Add(hisense);
                     }
                 }

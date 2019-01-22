@@ -80,6 +80,12 @@
     <Compile Include="View\LoginFrm.Designer.cs">
       <DependentUpon>LoginFrm.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\LoginList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\LoginList.Designer.cs">
+      <DependentUpon>LoginList.cs</DependentUpon>
+    </Compile>
     <Compile Include="View\MainFrm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -107,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\LoginFrm.resx">
       <DependentUpon>LoginFrm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\LoginList.resx">
+      <DependentUpon>LoginList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\MainFrm.resx">
       <DependentUpon>MainFrm.cs</DependentUpon>
@@ -146,9 +155,6 @@
     <Content Include="Firefox\d3dcompiler_47.dll" />
     <Content Include="Firefox\freebl3.dll" />
     <Content Include="Firefox\IA2Marshal.dll" />
-    <Content Include="Firefox\icudt58.dll" />
-    <Content Include="Firefox\icuin58.dll" />
-    <Content Include="Firefox\icuuc58.dll" />
     <Content Include="Firefox\lgpllibs.dll" />
     <Content Include="Firefox\libEGL.dll" />
     <Content Include="Firefox\libGLESv2.dll" />
@@ -161,7 +167,6 @@
     <Content Include="Firefox\plugin-container.exe" />
     <Content Include="Firefox\plugin-hang-ui.exe" />
     <Content Include="Firefox\qipcap.dll" />
-    <Content Include="Firefox\sandboxbroker.dll" />
     <Content Include="Firefox\softokn3.dll" />
     <Content Include="Firefox\xul.dll" />
   </ItemGroup>

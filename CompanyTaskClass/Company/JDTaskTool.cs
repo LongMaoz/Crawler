@@ -19,86 +19,17 @@ namespace CompanyTaskClass.Company
     {
         public List<TaskModel> GetList(CompanyTask companyTask)
         {
-            string cookiesstr = companyTask.GetCookies("thor");
-            string cookies;
-            if (cookiesstr == "")
+            switch (companyTask.CurrentOrg)
             {
-                return null;
+                case "popjiaju":
+                    return GetList_JDPopjiaju(companyTask);
+                case "jiadiao":
+                    return GetList_JDJiadian(companyTask);
+                case "popservice":
+                    return GetList_JDPopService(companyTask);
+                default:
+                    return null;
             }
-            Cookie cookie = new Cookie("thor", cookiesstr);
-            cookie.Domain = ".jd.com";
-            var request2 = WebRequest.Create("http://jdfw.jd.com/common/inforLinkage/getPerson") as HttpWebRequest;
-            request2.CookieContainer = new CookieContainer();
-            request2.Referer = "http://jdfw.jd.com/receipt/search?serviceType=0&esSwitch=1";
-            request2.CookieContainer.Add(cookie);
-            string getPerson = CompanyTaskTool.Post(request2, Encoding.UTF8, out cookies);
-            Hashtable hashtable2 = new Hashtable();
-            try
-            {
-                hashtable2 = JsonConvert.DeserializeObject<Hashtable>(getPerson);
-            }
-            catch (Exception)
-            {
-
-                return null;
-            }
-            string outletsId = hashtable2["infoLink"] + "";
-            string subCompanyId = hashtable2["orgNo"] + "";
-            string wareInfoId = hashtable2["wareHouseNo"] + "";
-            var request_4 = WebRequest.Create("http://jdfw.jd.com/receipt/query.json") as HttpWebRequest;
-            request_4.Host = "jdfw.jd.com";
-            request_4.ContentType = "application/x-www-form-urlencoded";
-            request_4.CookieContainer = new CookieContainer();
-            request_4.CookieContainer.Add(cookie);
-            request_4.Referer = "http://jdfw.jd.com/receipt/search?serviceType=0&esSwitch=1";
-            //待接收,待预约
-            string param = string.Format("freeinstall=&startStatus=&endStatus=&timeout=&esSwitch=1&subCompanyId={0}&wareInfoId={1}&todayOtherReservationConditionName=&outletsId={2}&productBrand=&productType1=&productType2=&productType3=&orderId=&ordernoGroup=&serviceType=0&customerName=&customerTel=&customerPhone=&serviceStreet=&customerPin=&wareId=&productName=&orderStatus=&reviewStatus=&createOrderTimeBegin=&createOrderTimeEnd=&reservationDateBegin=&reservationDateEnd=&firstReservationTimeBegin=&firstReservationTimeEnd=&changedReservationDateBegin=&changedReservationDateEnd=&invoiceNumber=&fastDealNum=4&feedbackStatus=&deliveryModel=&oneShopFlag=&otherReservationNum=&orderOrderStatus=&expectAtHomeDateBegin=&expectAtHomeDateEnd=&atHomeFinishDateBegin=&atHomeFinishDateEnd=&orderDistributionDateBegin=&orderDistributionDateEnd=&deliveryDateStart=&deliveryDateEnd=&homePageDistinguish=&fastDealNumByColor=&reportLessFlag=&sortKind=4&grabStatus=&grabType=&isFast=&page=1&rows=50&sort=returnTime&order=desc"
-                , subCompanyId, wareInfoId, outletsId);
-            string str_4 = CompanyTaskTool.Post(request_4, Encoding.UTF8, out cookies, param);
-            var request_5 = WebRequest.Create("http://jdfw.jd.com/receipt/query.json") as HttpWebRequest;
-            request_5.Host = "jdfw.jd.com";
-            request_5.ContentType = "application/x-www-form-urlencoded";
-            request_5.CookieContainer = new CookieContainer();
-            request_5.CookieContainer.Add(cookie);
-            request_5.Referer = "http://jdfw.jd.com/receipt/search?serviceType=0&esSwitch=1";
-            param = string.Format("freeinstall=&startStatus=&endStatus=&timeout=&esSwitch=1&subCompanyId={0}&wareInfoId={1}&todayOtherReservationConditionName=&outletsId={2}&productBrand=&productType1=&productType2=&productType3=&orderId=&ordernoGroup=&serviceType=0&customerName=&customerTel=&customerPhone=&serviceStreet=&customerPin=&wareId=&productName=&orderStatus=&reviewStatus=&createOrderTimeBegin=&createOrderTimeEnd=&reservationDateBegin=&reservationDateEnd=&firstReservationTimeBegin=&firstReservationTimeEnd=&changedReservationDateBegin=&changedReservationDateEnd=&invoiceNumber=&fastDealNum=5&feedbackStatus=&deliveryModel=&oneShopFlag=&otherReservationNum=&orderOrderStatus=&expectAtHomeDateBegin=&expectAtHomeDateEnd=&atHomeFinishDateBegin=&atHomeFinishDateEnd=&orderDistributionDateBegin=&orderDistributionDateEnd=&deliveryDateStart=&deliveryDateEnd=&homePageDistinguish=&fastDealNumByColor=&reportLessFlag=&sortKind=4&grabStatus=&grabType=&isFast=&page=1&rows=10&sort=returnTime&order=desc"
-                , subCompanyId, wareInfoId, outletsId, 5);
-            string str_5 = CompanyTaskTool.Post(request_5, Encoding.UTF8, out cookies, param);
-            Hashtable hashtable_4 = new Hashtable();
-            Hashtable hashtable_5 = new Hashtable();
-            try
-            {
-                hashtable_4 = JsonConvert.DeserializeObject<Hashtable>(str_4);
-                hashtable_5 = JsonConvert.DeserializeObject<Hashtable>(str_5);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-            List<Hashtable> hashtables = JsonConvert.DeserializeObject<List<Hashtable>>(hashtable_4["rows"].ToString());
-            hashtables.AddRange(JsonConvert.DeserializeObject<List<Hashtable>>(hashtable_5["rows"].ToString()));
-            List<TaskModel> taskModels = new List<TaskModel>();
-            int a = 0;
-            foreach (Hashtable row in hashtables)
-            {
-                a++;
-                TaskModel taskModel = new TaskModel();
-                taskModel.Number = a;
-                taskModel.MessageId = row["orderno"] + "";
-                taskModel.OrderTime = CompanyTaskTool.ConvertStringToDateTime(row["reservationDate"] + "").ToString().Replace("1970/1/1 8:00:00", "");
-                taskModel.Name = row["customerName"] + "";
-                taskModel.Address = row["serviceStreet"] + "";
-                taskModel.ShopAttribute = row["productBrandName"] + "";
-                taskModel.ShopBigclass = row["productType1Name"] + "" + row["productType2Name"] + "";
-                taskModel.ShopSmallclass = row["productTypeName"] + "";
-                taskModel.ShopModel = row["productName"] + "";
-                taskModel.ServerType = row["serviceTypeName"] + "";
-                taskModel.DetailId = row["ordernoSecret"] + "";
-                taskModel.BusinessValue = row["orderId"] + "";
-                taskModel.CustomerValue = "安装服务单";
-                taskModels.Add(taskModel);
-            }
-            return taskModels;
         }
 
         public LoginResultmodel GetLoginResultmodel(JObject @object, CompanyTask companyTask)
@@ -108,11 +39,9 @@ namespace CompanyTaskClass.Company
                 return GetJDResult(@object);
             }
             LoginResultmodel longinResult = new LoginResultmodel();
-            string cookies;
-            Random random = new Random();
             string str =
                   CompanyTaskTool.Get("https://passport.jd.com/new/login.aspx",
-                      Encoding.UTF8, out cookies).Replace("\r\n", "");
+                      Encoding.UTF8, out string cookies).Replace("\r\n", "");
             string reg = @"<input type=""hidden""[\w\W]+?name=""([\w\W]+?)""[\w\W]+?value=""([\w\W]*?)""";
             MatchCollection mc = Regex.Matches(str, reg);
             Hashtable ht = new Hashtable();
@@ -134,6 +63,7 @@ namespace CompanyTaskClass.Company
                 ht["authcode"] = "";
                 string json = JsonConvert.SerializeObject(ht);
                 Session.Instance["jd_login_input_hidden"] = json;
+                Random random = new Random();
                 string url = "https://passport.jd.com/uc/showAuthCode?r=" + random.Next() + "&version=2015";
                 var request = WebRequest.Create(url) as HttpWebRequest;
                 request.CookieContainer = new CookieContainer();
@@ -142,15 +72,21 @@ namespace CompanyTaskClass.Company
                 Cookie cookie = null;
                 if (qr_t.Count > 0)
                 {
-                    cookie = new Cookie("qr_t", qr_t[0].Groups[1].Value);
-                    cookie.Domain = "passport.jd.com";
+                    cookie = new Cookie("qr_t", qr_t[0].Groups[1].Value)
+                    {
+                        Domain = "passport.jd.com"
+                    };
                     request.CookieContainer.Add(cookie);
                 }
 
-                Cookie cookie2 = new Cookie("alc", new Regex("alc=(.*?);").Matches(cookies)[0].Groups[1].Value);
-                cookie2.Domain = "passport.jd.com";
-                Cookie cookie3 = new Cookie("_t", new Regex(",_t=(.*?);").Matches(cookies)[0].Groups[1].Value);
-                cookie3.Domain = "passport.jd.com";
+                Cookie cookie2 = new Cookie("alc", new Regex("alc=(.*?);").Matches(cookies)[0].Groups[1].Value)
+                {
+                    Domain = "passport.jd.com"
+                };
+                Cookie cookie3 = new Cookie("_t", new Regex(",_t=(.*?);").Matches(cookies)[0].Groups[1].Value)
+                {
+                    Domain = "passport.jd.com"
+                };
 
                 request.CookieContainer.Add(cookie2);
                 request.CookieContainer.Add(cookie3);
@@ -243,8 +179,7 @@ namespace CompanyTaskClass.Company
                 return longinResult;
             }
         }
-
-
+        
         public LoginType GetLoginType()
         {
             return LoginType.JavaScriptCode;
@@ -252,28 +187,33 @@ namespace CompanyTaskClass.Company
 
         public JObject GetVerificationCode()
         {
-            var obj = new JObject();
-            //obj.Add("URL", @"\View\JD\Demo.html");
-            obj.Add("URL", @"https://www.vk90.com/api1/jdlogin/index.aspx?id=");
+            var obj = new JObject
+            {
+                { "URL", @"https://www.vk90.com/api1/jdlogin/index.aspx?id=" }
+            };
             return obj;
         }
 
         private LoginResultmodel GetJDResult(JObject @object)
         {
             LoginResultmodel longinResult = new LoginResultmodel();
-            string cookies;
             List<Cookie> cookieCon = new List<Cookie>();
-            var qr_t = Session.Instance["jdcookieqr_t"] as string;
-            if (qr_t != null)
+            if (Session.Instance["jdcookieqr_t"] is string qr_t)
             {
-                Cookie cookie = new Cookie("qr_t", qr_t);
-                cookie.Domain = "passport.jd.com";
+                Cookie cookie = new Cookie("qr_t", qr_t)
+                {
+                    Domain = "passport.jd.com"
+                };
                 cookieCon.Add(cookie);
             }
-            Cookie cookie2 = new Cookie("alc", Session.Instance["jdcookiealc"].ToString());
-            cookie2.Domain = "passport.jd.com";
-            Cookie cookie3 = new Cookie("_t", Session.Instance["jdcookie_t"].ToString());
-            cookie3.Domain = "passport.jd.com";
+            Cookie cookie2 = new Cookie("alc", Session.Instance["jdcookiealc"].ToString())
+            {
+                Domain = "passport.jd.com"
+            };
+            Cookie cookie3 = new Cookie("_t", Session.Instance["jdcookie_t"].ToString())
+            {
+                Domain = "passport.jd.com"
+            };
             cookieCon.Add(cookie2);
             cookieCon.Add(cookie3);
             //POST参数：uuid, eid, fp, _t, loginType, loginname, nloginpwd, authcode, pubKey, sa_token, seqSid, userSlideAuthCode
@@ -294,7 +234,7 @@ namespace CompanyTaskClass.Company
             //double time2 = GetTimestamp(DateTime.Now) + random.Next();
             string url2 = "https://passport.jd.com/uc/loginService?uuid=" + ht["uuid"] +
                           "&ReturnUrl=http%3A%2F%2Fjdfw.jd.com%2F&r=" + random.Next() + "&version=2015";
-            string str3 = CompanyTaskTool.Post(url2, Encoding.GetEncoding("GBK"), out cookies, cookieCon,
+            string str3 = CompanyTaskTool.Post(url2, Encoding.GetEncoding("GBK"), out string cookies, cookieCon,
                 "application/x-www-form-urlencoded; charset=UTF-8", parameters);
             if (str3.IndexOf("success") == -1)
             {
@@ -344,6 +284,318 @@ namespace CompanyTaskClass.Company
             longinResult.err = "";
             longinResult.cookie = thor[0].Groups[1].Value;
             return longinResult;
+        }
+
+        /// <summary>
+        /// 家电
+        /// </summary>
+        /// <param name="companyTask"></param>
+        /// <returns></returns>
+        private List<TaskModel> GetList_JDJiadian(CompanyTask companyTask)
+        {
+            if (companyTask.GetCookies("thor") == "")
+            {
+                return null;
+            }
+            Cookie cookie = new Cookie("thor", companyTask.GetCookies("thor"))
+            {
+                Domain = ".jd.com"
+            };
+            var request2 = WebRequest.Create("http://jdfw.jd.com/common/inforLinkage/getPerson") as HttpWebRequest;
+            request2.CookieContainer = new CookieContainer();
+            request2.Referer = "http://jdfw.jd.com/receipt/search?serviceType=0&esSwitch=1";
+            request2.CookieContainer.Add(cookie);
+            string getPerson = CompanyTaskTool.Post(request2, Encoding.UTF8, out string cookies);
+            Hashtable hashtable2 = new Hashtable();
+            try
+            {
+                hashtable2 = JsonConvert.DeserializeObject<Hashtable>(getPerson);
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+            string outletsId = hashtable2["infoLink"] + "";
+            string subCompanyId = hashtable2["orgNo"] + "";
+            string wareInfoId = hashtable2["wareHouseNo"] + "";
+            var request_4 = WebRequest.Create("http://jdfw.jd.com/receipt/query.json") as HttpWebRequest;
+            request_4.Host = "jdfw.jd.com";
+            request_4.ContentType = "application/x-www-form-urlencoded";
+            request_4.CookieContainer = new CookieContainer();
+            request_4.CookieContainer.Add(cookie);
+            request_4.Referer = "http://jdfw.jd.com/receipt/search?serviceType=0&esSwitch=1";
+            //待接收,待预约
+            string param = string.Format("freeinstall=&startStatus=&endStatus=&timeout=&esSwitch=1&subCompanyId={0}&wareInfoId={1}&todayOtherReservationConditionName=&outletsId={2}&productBrand=&productType1=&productType2=&productType3=&orderId=&ordernoGroup=&serviceType=0&customerName=&customerTel=&customerPhone=&serviceStreet=&customerPin=&wareId=&productName=&orderStatus=&reviewStatus=&createOrderTimeBegin=&createOrderTimeEnd=&reservationDateBegin=&reservationDateEnd=&firstReservationTimeBegin=&firstReservationTimeEnd=&changedReservationDateBegin=&changedReservationDateEnd=&invoiceNumber=&fastDealNum=4&feedbackStatus=&deliveryModel=&oneShopFlag=&otherReservationNum=&orderOrderStatus=&expectAtHomeDateBegin=&expectAtHomeDateEnd=&atHomeFinishDateBegin=&atHomeFinishDateEnd=&orderDistributionDateBegin=&orderDistributionDateEnd=&deliveryDateStart=&deliveryDateEnd=&homePageDistinguish=&fastDealNumByColor=&reportLessFlag=&sortKind=4&grabStatus=&grabType=&isFast=&page=1&rows=50&sort=returnTime&order=desc"
+                , subCompanyId, wareInfoId, outletsId);
+            string str_4 = CompanyTaskTool.Post(request_4, Encoding.UTF8, out cookies, param);
+            var request_5 = WebRequest.Create("http://jdfw.jd.com/receipt/query.json") as HttpWebRequest;
+            request_5.Host = "jdfw.jd.com";
+            request_5.ContentType = "application/x-www-form-urlencoded";
+            request_5.CookieContainer = new CookieContainer();
+            request_5.CookieContainer.Add(cookie);
+            request_5.Referer = "http://jdfw.jd.com/receipt/search?serviceType=0&esSwitch=1";
+            param = string.Format("freeinstall=&startStatus=&endStatus=&timeout=&esSwitch=1&subCompanyId={0}&wareInfoId={1}&todayOtherReservationConditionName=&outletsId={2}&productBrand=&productType1=&productType2=&productType3=&orderId=&ordernoGroup=&serviceType=0&customerName=&customerTel=&customerPhone=&serviceStreet=&customerPin=&wareId=&productName=&orderStatus=&reviewStatus=&createOrderTimeBegin=&createOrderTimeEnd=&reservationDateBegin=&reservationDateEnd=&firstReservationTimeBegin=&firstReservationTimeEnd=&changedReservationDateBegin=&changedReservationDateEnd=&invoiceNumber=&fastDealNum=5&feedbackStatus=&deliveryModel=&oneShopFlag=&otherReservationNum=&orderOrderStatus=&expectAtHomeDateBegin=&expectAtHomeDateEnd=&atHomeFinishDateBegin=&atHomeFinishDateEnd=&orderDistributionDateBegin=&orderDistributionDateEnd=&deliveryDateStart=&deliveryDateEnd=&homePageDistinguish=&fastDealNumByColor=&reportLessFlag=&sortKind=4&grabStatus=&grabType=&isFast=&page=1&rows=10&sort=returnTime&order=desc"
+                , subCompanyId, wareInfoId, outletsId, 5);
+            string str_5 = CompanyTaskTool.Post(request_5, Encoding.UTF8, out cookies, param);
+            Hashtable hashtable_4 = new Hashtable();
+            Hashtable hashtable_5 = new Hashtable();
+            try
+            {
+                hashtable_4 = JsonConvert.DeserializeObject<Hashtable>(str_4);
+                hashtable_5 = JsonConvert.DeserializeObject<Hashtable>(str_5);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            List<Hashtable> hashtables = JsonConvert.DeserializeObject<List<Hashtable>>(hashtable_4["rows"].ToString());
+            hashtables.AddRange(JsonConvert.DeserializeObject<List<Hashtable>>(hashtable_5["rows"].ToString()));
+            List<TaskModel> taskModels = new List<TaskModel>();
+            int a = 0;
+            foreach (Hashtable row in hashtables)
+            {
+                a++;
+                TaskModel taskModel = new TaskModel
+                {
+                    Number = a,
+                    MessageId = row["orderno"] + "",
+                    OrderTime = CompanyTaskTool.ConvertStringToDateTime(row["reservationDate"] + "").ToString().Replace("1970/1/1 8:00:00", ""),
+                    Name = row["customerName"] + "",
+                    Address = row["serviceStreet"] + "",
+                    ShopAttribute = row["productBrandName"] + "",
+                    ShopBigclass = row["productType1Name"] + "" + row["productType2Name"] + "",
+                    ShopSmallclass = row["productTypeName"] + "",
+                    ShopModel = row["productName"] + "",
+                    ServerType = row["serviceTypeName"] + "",
+                    DetailId = row["ordernoSecret"] + "",
+                    BusinessValue = row["orderId"] + "",
+                    CustomerValue = "安装服务单"
+                };
+                taskModels.Add(taskModel);
+            }
+
+            return taskModels;
+        }
+
+        /// <summary>
+        /// 家居
+        /// </summary>
+        /// <param name="companyTask"></param>
+        /// <returns></returns>
+        private List<TaskModel> GetList_JDPopjiaju(CompanyTask companyTask)
+        {
+            string cookiesstr = companyTask.GetCookies("thor");
+            if (cookiesstr == "")
+            {
+                return null;
+            }
+            Cookie cookie = new Cookie("thor", cookiesstr)
+            {
+                Domain = ".jd.com"
+            };
+            var request2 = WebRequest.Create("http://jdfw.jd.com/common/inforLinkage/getPerson") as HttpWebRequest;
+            request2.CookieContainer = new CookieContainer();
+            request2.Referer = "http://jdfw.jd.com/receipt/search?serviceType=0&esSwitch=1";
+            request2.CookieContainer.Add(cookie);
+            string str4 = CompanyTaskTool.Post(request2, Encoding.UTF8, out string cookies);
+            Hashtable hashtable2 = new Hashtable();
+            try
+            {
+                hashtable2 = JsonConvert.DeserializeObject<Hashtable>(str4);
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+            string outletsId = hashtable2["infoLink"] + "";
+            string subCompanyId = hashtable2["orgNo"] + "";
+            string wareInfoId = hashtable2["wareHouseNo"] + "";
+            //新订单，已分配，已接收
+            string pageString = string.Format("eclpBusinessNo=&businessNo=&businessName=&billNosString=&jdOrderIdString=&eclpOrderId=&ldOrderId=&subCompanyId={0}&operationsCenterId=&outletsNo={1}&billWay=&isAppliance=0&billStatuses=1%2C3%2C5&logisticsStatus=&createDateBegin=&createDateEnd=&deliverTimeStart=&deliverTimeEnd=&reservationDateBegin=&reservationDateEnd=&otherReservationDateBegin=&otherReservationDateEnd=&deliverDateBegin=&deliverDateEnd=&collectParcelTimeBegin=&collectParcelTimeEnd=&shipTimeBegin=&shipTimeEnd=&arrivalTimeBegin=&arrivalTimeEnd=&siteLadeTimeBegin=&siteLadeTimeEnd=&atHomeFinishTimeBegin=&atHomeFinishTimeEnd=&estArrivalTimeBegin=&estArrivalTimeEnd=&logisticsType=&productSku=&outletsMainName=&firstLevelCatoryid=&secondLevelCatoryid=&thirdLevelCatoryid=&productBrandName=&productBrandId=&customerName=&customerPhone=&customerAddress=&feedResult=&businessType=&isEgBuy=0&page=1&rows=10&sort=billId&order=desc"
+                , subCompanyId, outletsId);
+            var requestjdjiaju = WebRequest.Create("http://opn.jd.com/bill/query.json") as HttpWebRequest;
+            requestjdjiaju.CookieContainer = new CookieContainer();
+            requestjdjiaju.Referer = "http://opn.jd.com/bill/furnishingSearch";
+            requestjdjiaju.CookieContainer.Add(cookie);
+            requestjdjiaju.ContentType = "application/x-www-form-urlencoded";
+            string strjdjiaju = CompanyTaskTool.Post(requestjdjiaju, Encoding.UTF8, out cookies, pageString);
+            Hashtable hashtablejiaju;
+            try
+            {
+                hashtablejiaju = JsonConvert.DeserializeObject<Hashtable>(strjdjiaju);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            if (!hashtablejiaju.ContainsKey("rows"))
+            {
+                return null;
+            }
+            List<TaskModel> taskModeljiaju = new List<TaskModel>();
+            List<Hashtable> hashtablejiajus =
+                JsonConvert.DeserializeObject<List<Hashtable>>(hashtablejiaju["rows"] + "");
+            int ajiaju = 0;
+            foreach (var row in hashtablejiajus)
+            {
+                ajiaju++;
+                TaskModel taskModel = new TaskModel
+                {
+                    Number = ajiaju,
+                    MessageId = row["billNo"] + ""
+                };
+                int.TryParse(row["billWay"] + "", out int type);
+                if (type == 1)
+                {
+                    taskModel.ServerType = "上门安装";
+                }
+                else if (type == 2)
+                {
+                    taskModel.ServerType = "送货服务";
+                }
+                else if (type == 3)
+                {
+                    taskModel.ServerType = "提货送装";
+                }
+                else if (type == 4)
+                {
+                    taskModel.ServerType = "拆卸包装";
+                }
+                else if (type == 5)
+                {
+                    taskModel.ServerType = "退货服务";
+                }
+                else if (type == 6)
+                {
+                    taskModel.ServerType = "送装一体";
+                }
+                else taskModel.ServerType = "";
+                taskModel.Name = row["customerName"] + "";
+                taskModel.Phone = row["customerPhone"] + "";
+                taskModel.OthersPhone = row["customerTel"] + "";
+                taskModel.Address = row["customerAddress"] + "";
+                taskModel.ShopModel = row["productName"] + "";
+                taskModel.ShopSmallclass = row["productCategoryName"] + "";
+                taskModel.ShopBigclass = row["productFirstCategoryName"] + "" + row["productSecondCategoryName"];
+                taskModel.BusinessValue = row["jdOrderId"] + "";
+                taskModel.CustomerValue = "PoP家居服务单";
+                taskModel.Type = 2;
+                taskModeljiaju.Add(taskModel);
+            }
+            return taskModeljiaju;
+
+        }
+
+        /// <summary>
+        /// 京东服务
+        /// </summary>
+        /// <param name="companyTask"></param>
+        /// <returns></returns>
+        private List<TaskModel> GetList_JDPopService(CompanyTask companyTask)
+        {
+            string cookiesstr = companyTask.GetCookies("thor");
+            if (cookiesstr == "")
+            {
+                return null;
+            }
+            Cookie cookie = new Cookie("thor", cookiesstr)
+            {
+                Domain = ".jd.com"
+            };
+            var request2 = WebRequest.Create("http://opn.jd.com/common/inforLinkage/getPerson") as HttpWebRequest;
+            request2.CookieContainer = new CookieContainer();
+            request2.Referer = "http://opn.jd.com/bill/search";
+            request2.CookieContainer.Add(cookie);
+            string str4 = CompanyTaskTool.Post(request2, Encoding.UTF8, out string cookies);
+            Hashtable hashtable2 = new Hashtable();
+            try
+            {
+                hashtable2 = JsonConvert.DeserializeObject<Hashtable>(str4);
+            }
+            catch (Exception)
+            {
+
+                return null;
+            }
+            string outletsId = hashtable2["infoLink"] + "";
+            string subCompanyId = hashtable2["orgNo"] + "";
+            string wareInfoId = hashtable2["wareHouseNo"] + "";
+            var request = WebRequest.Create("http://opn.jd.com/bill/query.json") as HttpWebRequest;
+            request.Host = "opn.jd.com";
+            request.ContentType = "application/x-www-form-urlencoded";
+            request.CookieContainer = new CookieContainer();
+            request.CookieContainer.Add(cookie);
+            request.Referer = "http://opn.jd.com/bill/search";
+            //新订单，已分配，已接收
+            string param = string.Format("eclpBusinessNo=&businessNo=&businessName=&billNosString=&jdOrderIdString=&eclpOrderId=&ldOrderId=&subCompanyId=&operationsCenterId=&outletsNo={0}&billWay=&isAppliance=1&billStatuses=1%2C3%2C5&logisticsStatus=&createDateBegin=&createDateEnd=&deliverTimeStart=&deliverTimeEnd=&reservationDateBegin=&reservationDateEnd=&otherReservationDateBegin=&otherReservationDateEnd=&deliverDateBegin=&deliverDateEnd=&collectParcelTimeBegin=&collectParcelTimeEnd=&shipTimeBegin=&shipTimeEnd=&arrivalTimeBegin=&arrivalTimeEnd=&siteLadeTimeBegin=&siteLadeTimeEnd=&atHomeFinishTimeBegin=&atHomeFinishTimeEnd=&estArrivalTimeBegin=&estArrivalTimeEnd=&logisticsType=&productSku=&outletsMainName=&firstLevelCatoryid=&secondLevelCatoryid=&thirdLevelCatoryid=&productBrandName=&productBrandId=&customerName=&customerPhone=&customerAddress=&feedResult=&businessType=&isEgBuy=0&page=1&rows=10&sort=billId&order=desc"
+               , outletsId);
+            string str = CompanyTaskTool.Post(request, Encoding.UTF8, out cookies, param);
+            Hashtable hashtable;
+            try
+            {
+                hashtable = JsonConvert.DeserializeObject<Hashtable>(str);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
+            if (!hashtable.ContainsKey("rows"))
+            {
+                return null;
+            }
+            List<TaskModel> taskModels = new List<TaskModel>();
+            List<Hashtable> hts = JsonConvert.DeserializeObject<List<Hashtable>>(hashtable["rows"] + "");
+            int ajiaju = 0;
+            foreach (var row in hts)
+            {
+                ajiaju++;
+                TaskModel taskModel = new TaskModel
+                {
+                    Number = ajiaju,
+                    MessageId = row["billNo"] + ""
+                };
+                int.TryParse(row["billWay"] + "", out int type);
+                if (type == 1)
+                {
+                    taskModel.ServerType = "上门安装";
+                }
+                else if (type == 2)
+                {
+                    taskModel.ServerType = "送货服务";
+                }
+                else if (type == 3)
+                {
+                    taskModel.ServerType = "提货送装";
+                }
+                else if (type == 4)
+                {
+                    taskModel.ServerType = "拆卸包装";
+                }
+                else if (type == 5)
+                {
+                    taskModel.ServerType = "退货服务";
+                }
+                else if (type == 6)
+                {
+                    taskModel.ServerType = "送装一体";
+                }
+                else taskModel.ServerType = "";
+                taskModel.Name = row["customerName"] + "";
+                taskModel.Phone = row["customerPhone"] + "";
+                taskModel.OthersPhone = row["customerTel"] + "";
+                taskModel.Address = row["customerAddress"] + "";
+                taskModel.ShopModel = row["productName"] + "";
+                taskModel.ShopSmallclass = row["productCategoryName"] + "";
+                taskModel.ShopBigclass = row["productFirstCategoryName"] + "" + row["productSecondCategoryName"];
+                taskModel.ShopBigclass = taskModel.ShopBigclass.Replace(" ", "");
+                taskModel.BusinessValue = row["jdOrderId"] + "";
+                taskModel.CustomerValue = "PoP家居服务单";
+                taskModel.Type = 2;
+                taskModels.Add(taskModel);
+            }
+            return taskModels;
         }
     }
 }

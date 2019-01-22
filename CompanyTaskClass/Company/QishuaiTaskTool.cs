@@ -21,18 +21,22 @@ namespace CompanyTaskClass.Company
             {
                 return null;
             }
-            string cookies;
-            Cookie cookie = new Cookie();
-            cookie.Name = "ASP.NET_SessionId";
-            cookie.Value = cookiesstr[0];
-            cookie.Domain = "61.164.71.54";
-            cookie.Path = "/";
-            cookie.HttpOnly = true;
-            Cookie cookie2 = new Cookie();
-            cookie2.Name = "SessionID";
-            cookie2.Value = cookiesstr[1];
-            cookie2.Domain = "61.164.71.54";
-            cookie2.Path = "/";
+
+            Cookie cookie = new Cookie
+            {
+                Name = "ASP.NET_SessionId",
+                Value = cookiesstr[0],
+                Domain = "61.164.71.54",
+                Path = "/",
+                HttpOnly = true
+            };
+            Cookie cookie2 = new Cookie
+            {
+                Name = "SessionID",
+                Value = cookiesstr[1],
+                Domain = "61.164.71.54",
+                Path = "/"
+            };
             string url = "http://61.164.71.54:8082/qscrm/Module/Repair/RepairList.aspx";
             var request = WebRequest.Create(url) as HttpWebRequest;
             request.ContentType = "text/xml";
@@ -41,7 +45,7 @@ namespace CompanyTaskClass.Company
             request.CookieContainer.Add(cookie2);
             //<PostDataSet><Repair><RepairCode></RepairCode><SendMan></SendMan><BookPhone></BookPhone><SendDate></SendDate><SendDateEnd></SendDateEnd><SQJCode></SQJCode><OwnerShopID></OwnerShopID><OwnerShopIDText></OwnerShopIDText><Prov></Prov><ProvText></ProvText><AbnormityMan></AbnormityMan><AbnormityManText></AbnormityManText><AuditMan></AuditMan><AuditManText></AuditManText><AuditDate></AuditDate><AuditDateEnd></AuditDateEnd><AskRepairTime></AskRepairTime><AskRepairTimeEnd></AskRepairTimeEnd><MachineNo></MachineNo><CreateTime></CreateTime><CreateTimeEnd></CreateTimeEnd><CreateBy></CreateBy><CreateByText></CreateByText><BrandID></BrandID><BrandIDText></BrandIDText><RecallIsOK></RecallIsOK><ServiceMode></ServiceMode><Status>02</Status><NoMoney></NoMoney><AbnormityStatus></AbnormityStatus><IsSecond></IsSecond><RepairClass></RepairClass><ProductLine></ProductLine></Repair><PageInfo><CurrentPageNumber>1</CurrentPageNumber><Order>RepairID desc</Order></PageInfo></PostDataSet>
             string[] pages = { "<PostDataSet><Repair><RepairCode></RepairCode><SendMan></SendMan><BookPhone></BookPhone><SendDate></SendDate><SendDateEnd></SendDateEnd><SQJCode></SQJCode><OwnerShopID></OwnerShopID><OwnerShopIDText></OwnerShopIDText><Prov></Prov><ProvText></ProvText><AbnormityMan></AbnormityMan><AbnormityManText></AbnormityManText><AuditMan></AuditMan><AuditManText></AuditManText><AuditDate></AuditDate><AuditDateEnd></AuditDateEnd><AskRepairTime></AskRepairTime><AskRepairTimeEnd></AskRepairTimeEnd><MachineNo></MachineNo><CreateTime></CreateTime><CreateTimeEnd></CreateTimeEnd><CreateBy></CreateBy><CreateByText></CreateByText><BrandID></BrandID><BrandIDText></BrandIDText><RecallIsOK></RecallIsOK><ServiceMode></ServiceMode><Status>02</Status><NoMoney></NoMoney><AbnormityStatus></AbnormityStatus><IsSecond></IsSecond><RepairClass></RepairClass><ProductLine></ProductLine></Repair><PageInfo><CurrentPageNumber>1</CurrentPageNumber><Order>RepairID desc</Order></PageInfo></PostDataSet>" };
-            string str2 = CompanyTaskTool.Post(request, Encoding.UTF8, out cookies, pages).Replace("\r\n", "").Replace("\n", "");
+            string str2 = CompanyTaskTool.Post(request, Encoding.UTF8, out string cookies, pages).Replace("\r\n", "").Replace("\n", "");
             var regtable = new Regex("<table id=\"ListData\"(.*?)</table>").Matches(str2);
             if (regtable.Count == 0)
             {
@@ -79,19 +83,22 @@ namespace CompanyTaskClass.Company
         public LoginResultmodel GetLoginResultmodel(JObject @object, CompanyTask companyTask)
         {
             LoginResultmodel QishuaiLoginResult = new LoginResultmodel();
-            string cookies;
-            string str = CompanyTaskTool.Get("http://61.164.71.54:8082/qscrm/", Encoding.UTF8, out cookies);
+            string str = CompanyTaskTool.Get("http://61.164.71.54:8082/qscrm/", Encoding.UTF8, out string cookies);
             //ASP.NET_SessionId=ngmtjd45qsyrgyi4gpgucamt; path=/; domain=61.164.71.54; HttpOnly
-            Cookie cookie = new Cookie();
-            cookie.Name = "ASP.NET_SessionId";
-            cookie.Value = new Regex("ASP.NET_SessionId=(.*?);").Matches(cookies)[0].Groups[1].Value;
-            cookie.Domain = "61.164.71.54";
-            cookie.Path = "/";
-            cookie.HttpOnly = true;
+            Cookie cookie = new Cookie
+            {
+                Name = "ASP.NET_SessionId",
+                Value = new Regex("ASP.NET_SessionId=(.*?);").Matches(cookies)[0].Groups[1].Value,
+                Domain = "61.164.71.54",
+                Path = "/",
+                HttpOnly = true
+            };
             QishuaiLoginResult.cookie = cookie.Value + ",";
             //__VIEWSTATE=%2FwEPDwUKMTE4MTg0MDcxN2RkZ8xqUjiPkc18LmzjwdRZqUx4D70%3D&__EVENTVALIDATION=%2FwEWBQKX6tjdDQLM2PtaAtLF4JEPAsPV24cDAq7jibUNJv2sZe4pUGSvo5rxX%2FcMT3t1a8M%3D&LoginName=qsgzcxcs&x=49&y=32&Password=tr5321258&input1=0170&checkCode=0170
-            List<Cookie> cookieCon = new List<Cookie>();
-            cookieCon.Add(cookie);
+            List<Cookie> cookieCon = new List<Cookie>
+            {
+                cookie
+            };
             string[] page = { "LoginName=" + companyTask.LoginName, "Password=" + companyTask.PassWord, "__VIEWSTATE=%2FwEPDwUKMTE4MTg0MDcxN2RkZ8xqUjiPkc18LmzjwdRZqUx4D70%3D", "__EVENTVALIDATION=%2FwEWBQKX6tjdDQLM2PtaAtLF4JEPAsPV24cDAq7jibUNJv2sZe4pUGSvo5rxX%2FcMT3t1a8M%3D", "x=49", "y=32" };
             string loginstr = CompanyTaskTool.Post("http://61.164.71.54:8082/qscrm/login.aspx", Encoding.UTF8,
                 out cookies,

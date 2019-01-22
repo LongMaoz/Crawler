@@ -39,11 +39,20 @@ namespace WindowsFormsApp1.View
         {
             this.Userinfo = jObject;
             this.GropBox.Text = $@"当前登录帐号：{Userinfo["user"]["CompanyName"]}";
+            this.BtnPullOrder.Text = "一键拉取";
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             //初始化本地数据表
             SqliteDbHelper.InitializeDatabase(Userinfo["user"]["CompanyName"].ToString());
             //获取信息
             list = MainBll.GetCompanys(Userinfo);
+            this.DgrView.DataSource = null;
             this.DgrView.DataSource = list;
+            this.DgrView.Columns["Action"].DisplayIndex = 0;
+            //this.DgrView.Columns["CompanyTypeName"].DisplayIndex = 0;
+            //this.DgrView.Columns["CompanyName"].DisplayIndex = 0;
+            //this.DgrView.Columns["Count"].DisplayIndex = 0;
+            this.DgrView.Columns["LoginState"].DisplayIndex =0;
             this.DgrView.Columns["LoginName"].Visible = false;
             this.DgrView.Columns["PassWord"].Visible = false;
             this.DgrView.Columns["CompanyType"].Visible = false;
@@ -51,12 +60,13 @@ namespace WindowsFormsApp1.View
             this.DgrView.Columns["UserID"].Visible = false;
             this.DgrView.Columns["Cookies"].Visible = false;
             this.DgrView.Columns["FromCompany"].Visible = false;
+            this.DgrView.Columns["CurrentOrg"].Visible = false;
             this.Show();
         }
 
         public void Initialize()
         {
-            this.Text = @"签约厂商";
+            this.Text = @"小A(试用版)  "+UpdateTool.localVersions;
             this.LblBand.Text = @"绑定厂商:";
         }
 
@@ -187,9 +197,9 @@ namespace WindowsFormsApp1.View
         /// </summary>
         /// <param name="companyTask"></param>
         /// <param name="rowindex"></param>
-        public void UpdateDgrView(CompanyTask companyTask, int rowindex)
+        public void UpdateDgrView(CompanyTask companyTask, int rowindex,LoginState loginState)
         {
-            companyTask.LoginState = true;
+            companyTask.LoginState = loginState;
             this.DgrView.InvalidateRow(rowindex);
         }
 
@@ -202,18 +212,42 @@ namespace WindowsFormsApp1.View
         {
             if (this.DgrView.Columns[e.ColumnIndex].HeaderText == @"登录状态") //哪一列
             {
-                if (Boolean.Parse(e.Value.ToString()))
-                {
-                    e.Value = "已登录";
-                    e.CellStyle.ForeColor = Color.Green;
-                }
-                else
+                if (e.Value.ToString() == CompanyTaskClass.Model.LoginState.Notlogin.ToString())
                 {
                     e.Value = "未登录";
+                    e.CellStyle.ForeColor = Color.Red;
+                }
+                if(e.Value.ToString() == CompanyTaskClass.Model.LoginState.Running.ToString())
+                {
+                    e.Value = "运行中";
+                    e.CellStyle.ForeColor = Color.Green;
+                }
+                if (e.Value.ToString() == CompanyTaskClass.Model.LoginState.Pending.ToString())
+                {
+                    e.Value = "暂停拉取";
+                    e.CellStyle.ForeColor = Color.Green;
+                }
+                if (e.Value.ToString() == CompanyTaskClass.Model.LoginState.Error.ToString())
+                {
+                    e.Value = "登录错误";
                     e.CellStyle.ForeColor = Color.Red;
                 }
             }
         }
 
+        private void BtnPullOrder_Click(object sender, EventArgs e)
+        {
+            List<int> orderIndexs = new List<int>();
+            foreach (DataGridViewRow row in this.DgrView.Rows)
+            {
+                if(row.Cells["LoginState"].Value.ToString() == CompanyTaskClass.Model.LoginState.Running.ToString())
+                {
+                    orderIndexs.Add(row.Cells["LoginState"].RowIndex);
+                }
+            }
+            if (orderIndexs.Count == 0){
+                MessageBox.Show("请至少登录一个帐号","提示");
+            }
+        }
     }
 }

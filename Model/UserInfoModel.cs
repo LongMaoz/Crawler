@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CompanyTaskClass.Model;
 
 namespace WindowsFormsApp1.Model
 {
@@ -11,6 +7,8 @@ namespace WindowsFormsApp1.Model
         public string UserName { get; set; }
 
         public string UserPwd { get; set; }
-        
+
+        public UserType UserType { get; set; }
+
     }
 }

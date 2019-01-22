@@ -22,7 +22,7 @@ namespace WindowsFormsApp1.View
         private CompanyTask companyTask;
         private int rowindex;
 
-        public delegate void MainForm(CompanyTask companyTask, int rowIndex);
+        public delegate void MainForm(CompanyTask companyTask, int rowIndex, LoginState loginState);
         public event MainForm UpdateDgrView;
         public Code()
         {
@@ -36,6 +36,8 @@ namespace WindowsFormsApp1.View
 
         public void Initialize()
         {
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.Text = @"登录验证码";
             this.LblCode.Text = @"验证码：";
             this.skinTextBox1.Text = @"";
@@ -58,10 +60,11 @@ namespace WindowsFormsApp1.View
             var loginResult = CompanyTaskManager.Create(companyTask.CompanyType).GetLoginResultmodel(@object, companyTask);
             if (string.IsNullOrEmpty(loginResult.err))
             {
-                this.UpdateDgrView(companyTask, rowindex);
+                this.UpdateDgrView(companyTask, rowindex,LoginState.Running);
             }
             else
             {
+                this.UpdateDgrView(companyTask, rowindex, LoginState.Error);
                 MessageBox.Show(loginResult.err);
             }
             this.Close();

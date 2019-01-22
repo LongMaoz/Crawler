@@ -15,8 +15,10 @@ using CompanyTaskClass.Tool;
 
 namespace WindowsFormsApp1.View
 {
-    public partial class LoginFrm : Skin_Mac , IFrom
+    public partial class LoginFrm : Skin_Mac, IFrom
     {
+        private JObject VesionResult;
+
         public LoginFrm()
         {
             InitializeComponent();
@@ -24,22 +26,39 @@ namespace WindowsFormsApp1.View
 
         public void Initialize()
         {
+            this.FormBorderStyle = FormBorderStyle.Fixed3D;
+            this.MaximizeBox = false;
             this.TxtName.Text = @"";
             this.TxtPwd.Text = @"";
             this.LblName.Text = @"帐号";
             this.LblPwd.Text = @"密码";
             this.Btn_Login.Text = @"登录";
-            if (LoginBll.CheckUpdate())
+            VesionResult = LoginBll.CheckUpdate();
+            if ( VesionResult!=null)
             {
-                //this.Btn_Login.Text = "更新";
-                //this.Btn_Login.Click -= Btn_Login_Click;
-                //this.Btn_Login.Click += Btn_Update;
+                if (UpdateTool.NovatioNecessaria(VesionResult["VesionForbit"].ToString()))
+                {
+                    this.Btn_Login.Text = "需要更新";
+                    this.Btn_Login.Click -= Btn_Login_Click;
+                    this.Btn_Login.Click += Btn_Update;
+                }
+                Btn_Update(null, null);
             }
         }
 
         private void Btn_Update(object sender, EventArgs e)
         {
-            MessageBox.Show("有更新");
+            DialogResult dr = MessageBox.Show(
+                   "发现新版本:  " + VesionResult["VesionNew"] + "\n\r当前版本:  "+UpdateTool.localVersions+
+                   "\n\r更新说明:" + VesionResult["Message"]+ "\n\r是否立即下载",
+                   "更新提示",
+                   MessageBoxButtons.OKCancel,
+                   MessageBoxIcon.Warning
+                   );
+            if (dr == DialogResult.OK)
+            {
+                System.Diagnostics.Process.Start(VesionResult["DownUrl"].ToString());
+            }
         }
 
         private void LoginFrn_Load(object sender, EventArgs e)

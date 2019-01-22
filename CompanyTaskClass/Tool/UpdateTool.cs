@@ -8,14 +8,29 @@ using System.Threading.Tasks;
 
 namespace CompanyTaskClass.Tool
 {
-    public class UpdateTool
+    public static class UpdateTool
     {
-        private string localVersions = "0.1";
-        public JObject CheckUpdate()
+        public static readonly string localVersions = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString().Substring(0, 5);
+        private static readonly string url = "http://www.vk90.com/API/PCUpdateVersion.ashx?action=getNewVersion";
+        public static JObject CheckUpdate()
         {
-            string url = "url"+localVersions;
-            string result = BaiChang.Net.Tekecommunications.Post(url);
-            return  JsonConvert.DeserializeObject<JObject>(result);
+            string result = BaiChang.Net.Tekecommunications.Get(url);
+            return JsonConvert.DeserializeObject<JObject>(result);
+        }
+        public static int SplitVersions(string verSions)
+        {
+            string[] ints =  verSions.Split('.');
+            string temp="";
+            foreach (var item in ints)
+            {
+                temp += item;
+            }
+            return int.Parse(temp);
+        }
+
+        public static bool NovatioNecessaria(string verSions)
+        {
+            return SplitVersions(verSions) > SplitVersions(localVersions);
         }
     }
 }

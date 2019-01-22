@@ -67,18 +67,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Company\GuoMeiManegerTaskTool.cs" />
     <Compile Include="Company\GuoMeiTaskTool.cs" />
     <Compile Include="Company\JDTaskTool.cs" />
+    <Compile Include="Company\KangbaoTaskTool.cs" />
     <Compile Include="Company\QishuaiTaskTool.cs" />
+    <Compile Include="Company\SanlengTaskTool.cs" />
     <Compile Include="Company\XingXingTaskTool.cs" />
     <Compile Include="DAL\TaskReadedDao.cs" />
-    <Compile Include="DelegateLogin.cs" />
     <Compile Include="Interface\ICompanyTaskTool.cs" />
     <Compile Include="Model\CompanyTask.cs" />
     <Compile Include="Model\Enum.cs" />
     <Compile Include="Model\LoginResultmodel.cs" />
+    <Compile Include="Model\LoginState.cs" />
     <Compile Include="Model\TaskModel.cs" />
     <Compile Include="Model\TaskReaded.cs" />
+    <Compile Include="Model\UserType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Session.cs" />
     <Compile Include="SessionMap.cs" />

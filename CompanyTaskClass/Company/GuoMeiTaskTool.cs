@@ -6,11 +6,9 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace CompanyTaskClass.Company
 {
@@ -23,10 +21,14 @@ namespace CompanyTaskClass.Company
             {
                 return null;
             }
-            Cookie cookie = new Cookie("token", cookiestr[1]);
-            cookie.Domain = "gsc.gome.com.cn";
-            List<Cookie> cookieCon = new List<Cookie>();
-            cookieCon.Add(cookie);
+            Cookie cookie = new Cookie("token", cookiestr[1])
+            {
+                Domain = "gsc.gome.com.cn"
+            };
+            List<Cookie> cookieCon = new List<Cookie>
+            {
+                cookie
+            };
             string cookies;
             string str = "";
             List<TaskModel> taskModels = new List<TaskModel>();
@@ -59,17 +61,19 @@ namespace CompanyTaskClass.Company
                         foreach (Hashtable ha in halist)
                         {
                             num++;
-                            TaskModel taskModel = new TaskModel();
-                            taskModel.Number = num;
-                            taskModel.ServerType = "安装单";
-                            taskModel.MessageId = ha["insOrderId"] + "";
-                            taskModel.ShopBigclass = ha["goodBrand"] + "";
-                            taskModel.ShopSmallclass = ha["goodCate"] + "";
-                            taskModel.ShopModel = ha["goodName"] + "";
-                            taskModel.Name = ha["customerName"] + "";
-                            taskModel.Phone = ha["customerPhone"] + "";
-                            taskModel.Address = ha["customerAddr"] + "";
-                            taskModel.OrderTime = ha["bookDayStart"] + " " + ha["bookTimeStart"] + " - " + ha["bookTimeEnd"];
+                            TaskModel taskModel = new TaskModel
+                            {
+                                Number = num,
+                                ServerType = "安装单",
+                                MessageId = ha["insOrderId"] + "",
+                                ShopBigclass = ha["goodBrand"] + "",
+                                ShopSmallclass = ha["goodCate"] + "",
+                                ShopModel = ha["goodName"] + "",
+                                Name = ha["customerName"] + "",
+                                Phone = ha["customerPhone"] + "",
+                                Address = ha["customerAddr"] + "",
+                                OrderTime = ha["bookDayStart"] + " " + ha["bookTimeStart"] + " - " + ha["bookTimeEnd"]
+                            };
                             if (ha.ContainsKey("book"))
                             {
                                 if (ha["book"] != null)
@@ -117,17 +121,19 @@ namespace CompanyTaskClass.Company
                         foreach (Hashtable ha in halist)
                         {
                             num++;
-                            TaskModel taskModel = new TaskModel();
-                            taskModel.Number = num;
-                            taskModel.ServerType = "安装单";
-                            taskModel.MessageId = ha["insOrderId"] + "";
-                            taskModel.ShopBigclass = ha["goodBrand"] + "";
-                            taskModel.ShopSmallclass = ha["goodCate"] + "";
-                            taskModel.ShopModel = ha["goodName"] + "";
-                            taskModel.Name = ha["customerName"] + "";
-                            taskModel.Phone = ha["customerPhone"] + "";
-                            taskModel.Address = ha["customerAddr"] + "";
-                            taskModel.OrderTime = ha["bookDayStart"] + " " + ha["bookTimeStart"] + " - " + ha["bookTimeEnd"];
+                            TaskModel taskModel = new TaskModel
+                            {
+                                Number = num,
+                                ServerType = "安装单",
+                                MessageId = ha["insOrderId"] + "",
+                                ShopBigclass = ha["goodBrand"] + "",
+                                ShopSmallclass = ha["goodCate"] + "",
+                                ShopModel = ha["goodName"] + "",
+                                Name = ha["customerName"] + "",
+                                Phone = ha["customerPhone"] + "",
+                                Address = ha["customerAddr"] + "",
+                                OrderTime = ha["bookDayStart"] + " " + ha["bookTimeStart"] + " - " + ha["bookTimeEnd"]
+                            };
                             if (ha.ContainsKey("book"))
                             {
                                 if (ha["book"] != null)
@@ -146,12 +152,14 @@ namespace CompanyTaskClass.Company
                     }
                 }
             }
+
+            #endregion
+            #region 维修业务待接单
             #endregion
             #region 维修业务待接单
 
-            string cookie1;
             string serviceStr = CompanyTaskTool.Get("https://gsc.gome.com.cn/web/repair/order/query?pageNo=1&pageSize=100&orderState=FIRST_STATION_ASSIGNED", Encoding.UTF8,
-                        out cookie1,
+                        out string cookie1,
                         cookieCon);
             // HttpWebRequest request=WebRequest.Create(url) as HttpWebRequest;
             Hashtable hashtables;
@@ -170,16 +178,18 @@ namespace CompanyTaskClass.Company
                         foreach (Hashtable ha in halist)
                         {
                             num++;
-                            TaskModel taskModel = new TaskModel();
-                            taskModel.Number = num;
-                            taskModel.ServerType = "维修单";
-                            taskModel.MessageId = ha["repOrderId"] + "";
-                            taskModel.ShopBigclass = ha["goodBrand"] + "";
-                            taskModel.ShopSmallclass = ha["goodCate"] + "";
+                            TaskModel taskModel = new TaskModel
+                            {
+                                Number = num,
+                                ServerType = "维修单",
+                                MessageId = ha["repOrderId"] + "",
+                                ShopBigclass = ha["goodBrand"] + "",
+                                ShopSmallclass = ha["goodCate"] + "",
 
-                            taskModel.Name = ha["customerName"] + "";
-                            taskModel.Phone = ha["customerPhone"] + "";
-                            taskModel.Address = ha["customerOutAddr"] + "";
+                                Name = ha["customerName"] + "",
+                                Phone = ha["customerPhone"] + "",
+                                Address = ha["customerOutAddr"] + ""
+                            };
                             if (ha.ContainsKey("good"))
                             {
                                 if (ha["good"] != null)
@@ -219,13 +229,15 @@ namespace CompanyTaskClass.Company
                     }
                 }
             }
+
+            #endregion
+            #region 维修业务已接单
             #endregion
 
             #region 维修业务已接单
 
-            string cookie1s;
             string serviceStrs = CompanyTaskTool.Get("https://gsc.gome.com.cn/web/repair/order/query?pageNo=1&pageSize=100&orderState=FIRST_STATION_ACCEPT", Encoding.UTF8,
-                        out cookie1s,
+                        out string cookie1s,
                         cookieCon);
             // HttpWebRequest request=WebRequest.Create(url) as HttpWebRequest;
             Hashtable hashtable1s;
@@ -244,16 +256,18 @@ namespace CompanyTaskClass.Company
                         foreach (Hashtable ha in halist)
                         {
                             num++;
-                            TaskModel taskModel = new TaskModel();
-                            taskModel.Number = num;
-                            taskModel.ServerType = "维修单";
-                            taskModel.MessageId = ha["repOrderId"] + "";
-                            taskModel.ShopBigclass = ha["goodBrand"] + "";
-                            taskModel.ShopSmallclass = ha["goodCate"] + "";
+                            TaskModel taskModel = new TaskModel
+                            {
+                                Number = num,
+                                ServerType = "维修单",
+                                MessageId = ha["repOrderId"] + "",
+                                ShopBigclass = ha["goodBrand"] + "",
+                                ShopSmallclass = ha["goodCate"] + "",
 
-                            taskModel.Name = ha["customerName"] + "";
-                            taskModel.Phone = ha["customerPhone"] + "";
-                            taskModel.Address = ha["customerOutAddr"] + "";
+                                Name = ha["customerName"] + "",
+                                Phone = ha["customerPhone"] + "",
+                                Address = ha["customerOutAddr"] + ""
+                            };
                             if (ha.ContainsKey("good"))
                             {
                                 if (ha["good"] != null)
@@ -298,14 +312,13 @@ namespace CompanyTaskClass.Company
 
         public LoginResultmodel GetLoginResultmodel(JObject @object, CompanyTask companyTask)
         {
-           string cookies;
-        LoginResultmodel loginResultmodel = new LoginResultmodel();
-        string str =
+            LoginResultmodel loginResultmodel = new LoginResultmodel();
+            string str =
             CompanyTaskTool.Get(
                 "https://gsc.gome.com.cn/web/shark/manager/queryManagerPositionInfo?account=" + companyTask.LoginName +
                 "&_=" +
                 CompanyTaskTool.GetTimeStamp(),
-                Encoding.UTF8, out cookies);
+                Encoding.UTF8, out string cookies);
         var reg = new Regex("\"positionCode\":\"([\\W\\w]*?)\"").Matches(str);
         if (str.IndexOf("\"error\":null") == -1)
         {
@@ -323,11 +336,15 @@ namespace CompanyTaskClass.Company
         {
             if (reg.Count > 0)
             {
-                Cookie cookie = new Cookie("JSESSIONID", @object["GuomeiJSESSIONID"] + "");
-                cookie.Domain = "gsc.gome.com.cn";
-                List<Cookie> CookieCon = new List<Cookie>();
-                CookieCon.Add(cookie);
-                string strgetKey =
+                    Cookie cookie = new Cookie("JSESSIONID", @object["GuomeiJSESSIONID"] + "")
+                    {
+                        Domain = "gsc.gome.com.cn"
+                    };
+                    List<Cookie> CookieCon = new List<Cookie>
+                    {
+                        cookie
+                    };
+                    string strgetKey =
                     CompanyTaskTool.Get(
                         "https://gsc.gome.com.cn/web/shark/manager/getSecretKey?account=" + companyTask.LoginName +
                         "&_=" +
@@ -398,13 +415,14 @@ namespace CompanyTaskClass.Company
         {
             string url = "https://gsc.gome.com.cn/web/shark/manager/verifyCode";
             HttpWebRequest request = WebRequest.Create(url) as HttpWebRequest;
-            string cookiestring;
-            string sessionId="";
-            byte[] bytes = CompanyTaskTool.GetFile(request, Encoding.UTF8, out cookiestring, "");
+            string sessionId = "";
+            byte[] bytes = CompanyTaskTool.GetFile(request, Encoding.UTF8, out string cookiestring, "");
             if (new Regex("JSESSIONID=(.*?);").Matches(cookiestring).Count > 0) sessionId = new Regex("JSESSIONID=(.*?);").Matches(cookiestring)[0].Groups[1].Value;
-            JObject @object = new JObject();
-            @object.Add("GuomeiJSESSIONID", sessionId);
-            @object.Add("img", bytes);
+            JObject @object = new JObject
+            {
+                { "GuomeiJSESSIONID", sessionId },
+                { "img", bytes }
+            };
             return @object;
         }
     }
