@@ -11,6 +11,11 @@ namespace CompanyTaskClass.Company
 {
     public class KangbaoTaskTool : ICompanyTaskTool<CompanyTask>
     {
+        public CompanyTask GetCompanyInfo()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public List<TaskModel> GetList(CompanyTask companyTask)
         {
             string[] strcookies = companyTask.GetCookies("JSESSIONID").Split(',');

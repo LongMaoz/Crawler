@@ -40,6 +40,7 @@
             this.Panel = new CCWin.SkinControl.SkinPanel();
             this.DgrView = new CCWin.SkinControl.SkinDataGridView();
             this.LblBand = new CCWin.SkinControl.SkinLabel();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CompanyTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CompanyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LoginState = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -125,6 +126,7 @@
             this.DgrView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DgrView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgrView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
             this.CompanyTypeName,
             this.CompanyName,
             this.LoginState,
@@ -176,6 +178,14 @@
             this.LblBand.TabIndex = 1;
             this.LblBand.Text = "Demo";
             // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Column1";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.Column1.Visible = false;
+            // 
             // CompanyTypeName
             // 
             this.CompanyTypeName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -183,6 +193,7 @@
             this.CompanyTypeName.HeaderText = "厂商类型";
             this.CompanyTypeName.Name = "CompanyTypeName";
             this.CompanyTypeName.ReadOnly = true;
+            this.CompanyTypeName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // CompanyName
             // 
@@ -191,6 +202,7 @@
             this.CompanyName.HeaderText = "显示名称";
             this.CompanyName.Name = "CompanyName";
             this.CompanyName.ReadOnly = true;
+            this.CompanyName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // LoginState
             // 
@@ -202,6 +214,7 @@
             this.LoginState.HeaderText = "登录状态";
             this.LoginState.Name = "LoginState";
             this.LoginState.ReadOnly = true;
+            this.LoginState.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Count
             // 
@@ -210,6 +223,7 @@
             this.Count.HeaderText = "今日单量";
             this.Count.Name = "Count";
             this.Count.ReadOnly = true;
+            this.Count.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // Action
             // 
@@ -250,6 +264,7 @@
         private CCWin.SkinControl.SkinPanel Panel;
         private CCWin.SkinControl.SkinDataGridView DgrView;
         private CCWin.SkinControl.SkinButton BtnPullOrder;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyTypeName;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyName;
         private System.Windows.Forms.DataGridViewTextBoxColumn LoginState;

@@ -31,10 +31,18 @@
             this.components = new System.ComponentModel.Container();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Btn_AddAccount = new CCWin.SkinControl.SkinButton();
             this.Dgv_Account = new CCWin.SkinControl.SkinDataGridView();
+            this.Btn_AllRemove = new CCWin.SkinControl.SkinButton();
+            this.UserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.UserPwd = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.BtnLogin = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.BtnRemove = new System.Windows.Forms.DataGridViewButtonColumn();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Account)).BeginInit();
             this.SuspendLayout();
             // 
@@ -51,6 +59,7 @@
             this.Btn_AddAccount.TabIndex = 1;
             this.Btn_AddAccount.Text = "skinButton1";
             this.Btn_AddAccount.UseVisualStyleBackColor = false;
+            this.Btn_AddAccount.Click += new System.EventHandler(this.Btn_AddAccount_Click);
             // 
             // Dgv_Account
             // 
@@ -71,15 +80,21 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
             this.Dgv_Account.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.Dgv_Account.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.Dgv_Account.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.UserName,
+            this.UserType,
+            this.UserPwd,
+            this.BtnLogin,
+            this.BtnRemove});
             this.Dgv_Account.ColumnSelectForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(188)))), ((int)(((byte)(240)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.White;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.Dgv_Account.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(59)))), ((int)(((byte)(188)))), ((int)(((byte)(240)))));
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.White;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.Dgv_Account.DefaultCellStyle = dataGridViewCellStyle5;
             this.Dgv_Account.EnableHeadersVisualStyles = false;
             this.Dgv_Account.GridColor = System.Drawing.SystemColors.GradientActiveCaption;
             this.Dgv_Account.HeadFont = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -89,23 +104,93 @@
             this.Dgv_Account.ReadOnly = true;
             this.Dgv_Account.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.Dgv_Account.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.DisableResizing;
-            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.Dgv_Account.RowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.Dgv_Account.RowsDefaultCellStyle = dataGridViewCellStyle6;
             this.Dgv_Account.RowTemplate.Height = 23;
             this.Dgv_Account.Size = new System.Drawing.Size(786, 360);
             this.Dgv_Account.TabIndex = 2;
             this.Dgv_Account.TitleBack = null;
             this.Dgv_Account.TitleBackColorBegin = System.Drawing.Color.White;
             this.Dgv_Account.TitleBackColorEnd = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(196)))), ((int)(((byte)(242)))));
+            this.Dgv_Account.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Account_CellContentClick);
+            // 
+            // Btn_AllRemove
+            // 
+            this.Btn_AllRemove.BackColor = System.Drawing.Color.Transparent;
+            this.Btn_AllRemove.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.Btn_AllRemove.DownBack = null;
+            this.Btn_AllRemove.Location = new System.Drawing.Point(7, 43);
+            this.Btn_AllRemove.MouseBack = null;
+            this.Btn_AllRemove.Name = "Btn_AllRemove";
+            this.Btn_AllRemove.NormlBack = null;
+            this.Btn_AllRemove.Size = new System.Drawing.Size(112, 34);
+            this.Btn_AllRemove.TabIndex = 3;
+            this.Btn_AllRemove.Text = "skinButton1";
+            this.Btn_AllRemove.UseVisualStyleBackColor = false;
+            this.Btn_AllRemove.Click += new System.EventHandler(this.Btn_AllRemove_Click);
+            // 
+            // UserName
+            // 
+            this.UserName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.UserName.DataPropertyName = "UserName";
+            this.UserName.HeaderText = "账号";
+            this.UserName.Name = "UserName";
+            this.UserName.ReadOnly = true;
+            this.UserName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // UserType
+            // 
+            this.UserType.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.UserType.DataPropertyName = "UserType";
+            this.UserType.HeaderText = "账号类型";
+            this.UserType.Name = "UserType";
+            this.UserType.ReadOnly = true;
+            this.UserType.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // UserPwd
+            // 
+            this.UserPwd.DataPropertyName = "UserPwd";
+            this.UserPwd.HeaderText = "密码";
+            this.UserPwd.Name = "UserPwd";
+            this.UserPwd.ReadOnly = true;
+            this.UserPwd.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.UserPwd.Visible = false;
+            // 
+            // BtnLogin
+            // 
+            this.BtnLogin.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.NullValue = "登录";
+            this.BtnLogin.DefaultCellStyle = dataGridViewCellStyle3;
+            this.BtnLogin.FillWeight = 30F;
+            this.BtnLogin.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.BtnLogin.HeaderText = "登录";
+            this.BtnLogin.Name = "BtnLogin";
+            this.BtnLogin.ReadOnly = true;
+            this.BtnLogin.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // BtnRemove
+            // 
+            this.BtnRemove.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.NullValue = "删除";
+            this.BtnRemove.DefaultCellStyle = dataGridViewCellStyle4;
+            this.BtnRemove.FillWeight = 30F;
+            this.BtnRemove.FlatStyle = System.Windows.Forms.FlatStyle.System;
+            this.BtnRemove.HeaderText = "删除";
+            this.BtnRemove.Name = "BtnRemove";
+            this.BtnRemove.ReadOnly = true;
+            this.BtnRemove.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // LoginList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.Btn_AllRemove);
             this.Controls.Add(this.Dgv_Account);
             this.Controls.Add(this.Btn_AddAccount);
             this.Name = "LoginList";
@@ -119,5 +204,11 @@
         #endregion
         private CCWin.SkinControl.SkinButton Btn_AddAccount;
         private CCWin.SkinControl.SkinDataGridView Dgv_Account;
+        private CCWin.SkinControl.SkinButton Btn_AllRemove;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UserPwd;
+        private System.Windows.Forms.DataGridViewButtonColumn BtnLogin;
+        private System.Windows.Forms.DataGridViewButtonColumn BtnRemove;
     }
 }

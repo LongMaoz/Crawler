@@ -1,4 +1,5 @@
 ﻿using CompanyTaskClass.Model;
+using System.Collections.Generic;
 
 namespace WindowsFormsApp1.Model
 {
@@ -10,5 +11,10 @@ namespace WindowsFormsApp1.Model
 
         public UserType UserType { get; set; }
 
+        public string CompanyID { get; set; }
+
+        public string CompanyName { get; set; }
+
+        public List<CompanyTask> CompanyBand { get; set; }
     }
 }

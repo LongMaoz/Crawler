@@ -18,12 +18,13 @@ using CompanyTaskClass.Model;
 using CompanyTaskClass.Interface;
 using CompanyTaskClass.DAL;
 using CompanyTaskClass.Company;
+using Newtonsoft.Json;
 
 namespace WindowsFormsApp1.View
 {
     public partial class MainFrm : Skin_Mac, IFrom
     {
-        private JObject Userinfo;
+        private UserInfoModel Userinfo;
         private List<CompanyTask> list;
         public MainFrm()
         {
@@ -35,17 +36,19 @@ namespace WindowsFormsApp1.View
             Initialize();
         }
 
-        public void Initialize(JObject jObject)
+        public void Initialize(UserInfoModel userInfo)
         {
-            this.Userinfo = jObject;
-            this.GropBox.Text = $@"当前登录帐号：{Userinfo["user"]["CompanyName"]}";
+            this.Userinfo = userInfo;
+            this.GropBox.Text = $@"当前登录帐号：{userInfo.CompanyName}";
             this.BtnPullOrder.Text = "一键拉取";
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             //初始化本地数据表
-            SqliteDbHelper.InitializeDatabase(Userinfo["user"]["CompanyName"].ToString());
+            //SqliteDbHelper.InitializeDatabase(Userinfo["user"]["CompanyName"].ToString());
+            SqliteDbHelper.InitializeDatabase(userInfo.CompanyName);
             //获取信息
-            list = MainBll.GetCompanys(Userinfo);
+            //list = MainBll.GetCompanys(Userinfo);
+            list = userInfo.CompanyBand;
             this.DgrView.DataSource = null;
             this.DgrView.DataSource = list;
             this.DgrView.Columns["Action"].DisplayIndex = 0;
@@ -79,6 +82,7 @@ namespace WindowsFormsApp1.View
         {
             try
             {
+                string jsons = JsonConvert.SerializeObject(list);
                 if (e.ColumnIndex != -1 && e.RowIndex != -1 && DgrView.Columns[e.ColumnIndex].HeaderText == @"操作")
                 {
                     var temp = list[e.RowIndex];
@@ -127,10 +131,10 @@ namespace WindowsFormsApp1.View
         /// <returns></returns>
         public int SupplierAdd(CompanyTask cmp, List<TaskModel> tsms)
         {
-            string companyId = Userinfo["user"]["CompanyID"].ToString();
-            string userName = Userinfo["user"]["UserName"].ToString();
+            string companyId = Userinfo.CompanyID;
+            string userName = Userinfo.UserName;
             string url = @"http://www.vk90.com/Api1/companyapi.ashx?op=supplieradd";
-            var taskReaded = TaskReadedDao.CreateDao(Userinfo["user"]["CompanyName"].ToString());
+            var taskReaded = TaskReadedDao.CreateDao(Userinfo.CompanyName.ToString());
             int num = 0;
             foreach (var tsm in tsms)
             {

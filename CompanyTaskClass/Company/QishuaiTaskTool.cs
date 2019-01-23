@@ -14,6 +14,11 @@ namespace CompanyTaskClass.Company
 {
     public class QishuaiTaskTool : ICompanyTaskTool<CompanyTask>
     {
+        public CompanyTask GetCompanyInfo()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<TaskModel> GetList(CompanyTask companyTask)
         {
             string[] cookiesstr = companyTask.GetCookies("ASP.NET_SessionId,SessionID").Split(',');

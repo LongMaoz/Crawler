@@ -23,7 +23,6 @@ D:\工作目录\项目\WinForm\bin\Debug\BaiChang.pdb
 D:\工作目录\项目\WinForm\bin\Debug\CSkin.xml
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.csprojAssemblyReference.cache
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.Properties.Resources.resources
-D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.LoginFrm.resources
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.MainFrm.resources
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.csproj.GenerateResource.cache
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.csproj.CoreCompileInputs.cache
@@ -44,3 +43,4 @@ D:\工作目录\项目\WinForm\bin\Debug\SQLite.Interop.dll
 D:\工作目录\项目\WinForm\bin\Debug\Geckofx-Core.dll
 D:\工作目录\项目\WinForm\bin\Debug\Geckofx-Winforms.dll
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.LoginList.resources
+D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.Add_Account.resources

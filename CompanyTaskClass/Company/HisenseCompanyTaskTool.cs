@@ -230,5 +230,10 @@ namespace CompanyTaskClass.Company
             }
             return hisenseslist;
         }
+
+        public CompanyTask GetCompanyInfo()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

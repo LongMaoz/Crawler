@@ -1,1 +1,36 @@
-[]
+[{
+    "UserName": "18088888888",
+    "UserPwd": "123456",
+    "UserType": 0,
+    "CompanyBand": [{
+        "ID": 8606,
+        "UserID": 15337,
+        "LoginState": 0,
+        "CompanyName": "安时达",
+        "LoginName": "1212",
+        "PassWord": "121212",
+        "CompanyType": 30,
+        "CompanyTypeName": "安时达",
+        "Cookies": null,
+        "Count": 0,
+        "FromCompany": 30,
+        "CurrentOrg": ""
+    }, {
+        "ID": 8607,
+        "UserID": 15337,
+        "LoginState": 0,
+        "CompanyName": "国美管家",
+        "LoginName": "SHS1116811",
+        "PassWord": "Mm801015",
+        "CompanyType": 56,
+        "CompanyTypeName": "国美管家",
+        "Cookies": null,
+        "Count": 0,
+        "FromCompany": 56,
+        "CurrentOrg": ""
+    }]
+}, {
+    "UserName": "1212",
+    "UserPwd": "1212",
+    "UserType": 0
+}]

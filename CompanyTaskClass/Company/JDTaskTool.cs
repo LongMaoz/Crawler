@@ -17,6 +17,11 @@ namespace CompanyTaskClass.Company
 {
     public class JDTaskTool : ICompanyTaskTool<CompanyTask>
     {
+        public CompanyTask GetCompanyInfo()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<TaskModel> GetList(CompanyTask companyTask)
         {
             switch (companyTask.CurrentOrg)

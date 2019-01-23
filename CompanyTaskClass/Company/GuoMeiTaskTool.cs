@@ -14,6 +14,11 @@ namespace CompanyTaskClass.Company
 {
     public class GuoMeiTaskTool : ICompanyTaskTool<CompanyTask>
     {
+        public CompanyTask GetCompanyInfo()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<TaskModel> GetList(CompanyTask companyTask)
         {
             string[] cookiestr = companyTask.GetCookies("JSESSIONID").Split(',');

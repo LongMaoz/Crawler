@@ -14,6 +14,11 @@ namespace CompanyTaskClass.Company
 {
     public class GuoMeiManegerTaskTool : ICompanyTaskTool<CompanyTask>
     {
+        public CompanyTask GetCompanyInfo()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<TaskModel> GetList(CompanyTask companyTask)
         {
             string url = "http://partner.gomegj.com/order/getOrderList.json";

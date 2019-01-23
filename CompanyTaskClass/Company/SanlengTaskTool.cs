@@ -11,6 +11,11 @@ namespace CompanyTaskClass.Company
 {
     public class SanlengTaskTool : ICompanyTaskTool<CompanyTask>
     {
+        public CompanyTask GetCompanyInfo()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public List<TaskModel> GetList(CompanyTask companyTask)
         {
             string[] cookiecon = companyTask.GetCookies("JSESSIONID").Split(',');

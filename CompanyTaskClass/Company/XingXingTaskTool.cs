@@ -14,6 +14,11 @@ namespace CompanyTaskClass.Company
 {
     public class XingXingTaskTool : ICompanyTaskTool<CompanyTask>
     {
+        public CompanyTask GetCompanyInfo()
+        {
+            throw new NotImplementedException();
+        }
+
         public List<TaskModel> GetList(CompanyTask companyTask)
         {
             string[] strcookies = companyTask.GetCookies("JSESSIONID").Split(',');
