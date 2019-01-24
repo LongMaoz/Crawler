@@ -36,11 +36,11 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.GropBox = new CCWin.SkinControl.SkinGroupBox();
+            this.Btn_AddCompany = new CCWin.SkinControl.SkinButton();
             this.BtnPullOrder = new CCWin.SkinControl.SkinButton();
             this.Panel = new CCWin.SkinControl.SkinPanel();
             this.DgrView = new CCWin.SkinControl.SkinDataGridView();
             this.LblBand = new CCWin.SkinControl.SkinLabel();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CompanyTypeName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.CompanyName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LoginState = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,6 +59,7 @@
             this.GropBox.AutoSize = true;
             this.GropBox.BackColor = System.Drawing.Color.Transparent;
             this.GropBox.BorderColor = System.Drawing.Color.Black;
+            this.GropBox.Controls.Add(this.Btn_AddCompany);
             this.GropBox.Controls.Add(this.BtnPullOrder);
             this.GropBox.Controls.Add(this.Panel);
             this.GropBox.Controls.Add(this.LblBand);
@@ -76,6 +77,22 @@
             this.GropBox.TitleBorderColor = System.Drawing.Color.Black;
             this.GropBox.TitleRectBackColor = System.Drawing.Color.White;
             this.GropBox.TitleRoundStyle = CCWin.SkinClass.RoundStyle.All;
+            // 
+            // Btn_AddCompany
+            // 
+            this.Btn_AddCompany.BackColor = System.Drawing.Color.Transparent;
+            this.Btn_AddCompany.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.Btn_AddCompany.DownBack = null;
+            this.Btn_AddCompany.ForeColor = System.Drawing.Color.Black;
+            this.Btn_AddCompany.Location = new System.Drawing.Point(764, 20);
+            this.Btn_AddCompany.MouseBack = null;
+            this.Btn_AddCompany.Name = "Btn_AddCompany";
+            this.Btn_AddCompany.NormlBack = null;
+            this.Btn_AddCompany.Size = new System.Drawing.Size(138, 32);
+            this.Btn_AddCompany.TabIndex = 4;
+            this.Btn_AddCompany.Text = "skinButton1";
+            this.Btn_AddCompany.UseVisualStyleBackColor = false;
+            this.Btn_AddCompany.Click += new System.EventHandler(this.Btn_AddCompany_Click);
             // 
             // BtnPullOrder
             // 
@@ -126,7 +143,6 @@
             this.DgrView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.DgrView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.DgrView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.Column1,
             this.CompanyTypeName,
             this.CompanyName,
             this.LoginState,
@@ -177,14 +193,6 @@
             this.LblBand.Size = new System.Drawing.Size(70, 27);
             this.LblBand.TabIndex = 1;
             this.LblBand.Text = "Demo";
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Column1";
-            this.Column1.Name = "Column1";
-            this.Column1.ReadOnly = true;
-            this.Column1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-            this.Column1.Visible = false;
             // 
             // CompanyTypeName
             // 
@@ -264,7 +272,7 @@
         private CCWin.SkinControl.SkinPanel Panel;
         private CCWin.SkinControl.SkinDataGridView DgrView;
         private CCWin.SkinControl.SkinButton BtnPullOrder;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private CCWin.SkinControl.SkinButton Btn_AddCompany;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyTypeName;
         private System.Windows.Forms.DataGridViewTextBoxColumn CompanyName;
         private System.Windows.Forms.DataGridViewTextBoxColumn LoginState;

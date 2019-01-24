@@ -11,13 +11,13 @@ namespace WindowsFormsApp1.Controller
 {
     public class LoginListBll
     {
-        private static readonly string fp = System.Windows.Forms.Application.StartupPath + "\\Accounts.json";
+        private static readonly string Fp = System.Windows.Forms.Application.StartupPath + "\\Accounts.json";
 
         public static bool AccountsWriteLine(List<UserInfoModel> list)
         {
             try
             {
-                File.WriteAllText(fp, JsonConvert.SerializeObject(list));
+                File.WriteAllText(Fp, JsonConvert.SerializeObject(list));
                 return true;
             }
             catch (Exception)
@@ -28,8 +28,8 @@ namespace WindowsFormsApp1.Controller
 
         public static List<UserInfoModel> AccountsReadLine()
         {
-            if (File.Exists(fp))
-                return JsonConvert.DeserializeObject<List<UserInfoModel>>(File.ReadAllText(fp));
+            if (File.Exists(Fp))
+                return JsonConvert.DeserializeObject<List<UserInfoModel>>(File.ReadAllText(Fp));
             else
                 return null;
         }

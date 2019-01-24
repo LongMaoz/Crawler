@@ -16,7 +16,11 @@ namespace CompanyTaskClass.Company
     {
         public CompanyTask GetCompanyInfo()
         {
-            throw new NotImplementedException();
+            return new CompanyTask()
+            {
+                CompanyTypeName = "奇帅",
+                CompanyType = 18,
+            };
         }
 
         public List<TaskModel> GetList(CompanyTask companyTask)

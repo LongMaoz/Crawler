@@ -43,4 +43,5 @@ D:\工作目录\项目\WinForm\bin\Debug\SQLite.Interop.dll
 D:\工作目录\项目\WinForm\bin\Debug\Geckofx-Core.dll
 D:\工作目录\项目\WinForm\bin\Debug\Geckofx-Winforms.dll
 D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.LoginList.resources
-D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.Add_Account.resources
+D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.AddAccount.resources
+D:\工作目录\项目\WinForm\obj\Debug\WindowsFormsApp1.View.AddCompany.resources

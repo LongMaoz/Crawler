@@ -1,7 +1,10 @@
 [{
+    "UserID": 15337,
     "UserName": "18088888888",
-    "UserPwd": "123456",
+    "UserPwd": "E10ADC3949BA59ABBE56E057F20F883E",
     "UserType": 0,
+    "CompanyID": "15337",
+    "CompanyName": "测试账号",
     "CompanyBand": [{
         "ID": 8606,
         "UserID": 15337,
@@ -28,9 +31,42 @@
         "Count": 0,
         "FromCompany": 56,
         "CurrentOrg": ""
+    }, {
+        "ID": 0,
+        "UserID": 15337,
+        "LoginState": 0,
+        "CompanyName": "刷刷刷",
+        "LoginName": "sss",
+        "PassWord": "sss",
+        "CompanyType": 25,
+        "CompanyTypeName": "京东",
+        "Cookies": null,
+        "Count": 0,
+        "FromCompany": 25,
+        "CurrentOrg": "popjiaju"
     }]
 }, {
+    "UserID": 0,
     "UserName": "1212",
-    "UserPwd": "1212",
-    "UserType": 0
+    "UserPwd": "1D72310EDC006DADF2190CAAD5802983",
+    "UserType": 0,
+    "CompanyID": null,
+    "CompanyName": null,
+    "CompanyBand": null
+}, {
+    "UserID": 0,
+    "UserName": "1313",
+    "UserPwd": "F09696910BDD874A99CD74C8F05B5C44",
+    "UserType": 0,
+    "CompanyID": null,
+    "CompanyName": null,
+    "CompanyBand": null
+}, {
+    "UserID": 0,
+    "UserName": "1212",
+    "UserPwd": "717D8B3D60D9EEA997B35B02B6A4E867",
+    "UserType": 0,
+    "CompanyID": null,
+    "CompanyName": null,
+    "CompanyBand": null
 }]

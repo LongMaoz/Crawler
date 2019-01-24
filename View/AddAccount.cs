@@ -14,12 +14,12 @@ using CCWin;
 
 namespace WindowsFormsApp1.View
 {
-    public partial class Add_Account : Skin_Mac, IFrom
+    public partial class AddAccount : Skin_Mac, IFrom
     {
         public delegate void LoginList();
         public event LoginList DgvBand;
 
-        public Add_Account()
+        public AddAccount()
         {
             InitializeComponent();
         }
@@ -49,7 +49,7 @@ namespace WindowsFormsApp1.View
                 users.Add(new UserInfoModel()
                 {
                     UserName = TxtName.Text,
-                    UserPwd = TxtPwd.Text,
+                    UserPwd = BaiChang.Security.Secure.Md5(TxtPwd.Text),
                     UserType = CompanyTaskClass.Model.UserType.Weike
                 });
                 if (LoginListBll.AccountsWriteLine(users))

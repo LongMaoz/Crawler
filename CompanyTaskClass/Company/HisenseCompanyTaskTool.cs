@@ -233,7 +233,11 @@ namespace CompanyTaskClass.Company
 
         public CompanyTask GetCompanyInfo()
         {
-            throw new NotImplementedException();
+            return new CompanyTask()
+            {
+                CompanyTypeName = "海信",
+                CompanyType = 4,
+            };
         }
     }
 }

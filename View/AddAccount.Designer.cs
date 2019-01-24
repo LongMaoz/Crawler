@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApp1.View
 {
-    partial class Add_Account
+    partial class AddAccount
     {
         /// <summary>
         /// Required designer variable.
