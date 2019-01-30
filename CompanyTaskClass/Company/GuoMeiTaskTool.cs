@@ -329,7 +329,7 @@ namespace CompanyTaskClass.Company
                 CompanyTaskTool.GetTimeStamp(),
                 Encoding.UTF8, out string cookies);
         var reg = new Regex("\"positionCode\":\"([\\W\\w]*?)\"").Matches(str);
-        if (str.IndexOf("\"error\":null") == -1)
+        if (str.IndexOf("\"error\":null", StringComparison.Ordinal) == -1)
         {
             var err = new Regex("\"error\":\"([\\W\\w]*?)\"").Matches(str);
             if (err.Count > 0)
@@ -349,7 +349,7 @@ namespace CompanyTaskClass.Company
                     {
                         Domain = "gsc.gome.com.cn"
                     };
-                    List<Cookie> CookieCon = new List<Cookie>
+                    List<Cookie> cookieCon = new List<Cookie>
                     {
                         cookie
                     };
@@ -358,7 +358,7 @@ namespace CompanyTaskClass.Company
                         "https://gsc.gome.com.cn/web/shark/manager/getSecretKey?account=" + companyTask.LoginName +
                         "&_=" +
                         CompanyTaskTool.GetTimeStamp(),
-                        Encoding.UTF8, out cookies, CookieCon);
+                        Encoding.UTF8, out cookies, cookieCon);
                 var requets =
                     WebRequest.Create("https://gsc.gome.com.cn/web/shark/manager/loginByPosition") as HttpWebRequest;
                 string[] pageStrings =

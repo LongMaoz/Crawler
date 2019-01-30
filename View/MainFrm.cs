@@ -14,6 +14,7 @@ using WindowsFormsApp1.Controller;
 using System.Net;
 using CompanyTaskClass.Tool;
 using System.Text.RegularExpressions;
+using System.Threading;
 using CompanyTaskClass.Model;
 using CompanyTaskClass.Interface;
 using CompanyTaskClass.DAL;
@@ -28,6 +29,7 @@ namespace WindowsFormsApp1.View
         private int _accountIndex;
         private UserInfoModel _userinfo;
         private List<CompanyTask> _list;
+        private bool pushState = false;
 
         public MainFrm() => InitializeComponent();
 
@@ -41,7 +43,6 @@ namespace WindowsFormsApp1.View
             _userinfo = userInfo;
             _accountIndex = accountIndex;
             GropBox.Text = $@"当前登录帐号：{userInfo.CompanyName}";
-            BtnPullOrder.Text = @"一键拉取";
             FormBorderStyle = FormBorderStyle.Fixed3D;
             MaximizeBox = false;
             //初始化本地数据表
@@ -58,47 +59,73 @@ namespace WindowsFormsApp1.View
         public void Initialize()
         {
             Text = @"小A(试用版)  " + UpdateTool.localVersions;
-            LblBand.Text = @"绑定厂商:";
             Btn_AddCompany.Text = @"添加厂商";
+            this.timer1.Interval = new Random().Next(9000, 12000);
+            this.timer1.Start();
         }
 
         private void MainFrm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            Application.Exit();
+            if (MessageBox.Show(@"是否确认退出程序？", @"退出", MessageBoxButtons.OKCancel, MessageBoxIcon.Question) == DialogResult.OK)
+            {
+                // 关闭所有的线程
+                this.Dispose();
+                Application.Exit();
+            }
+            else
+            {
+                e.Cancel = true;
+            }
         }
 
         private void DgrView_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             try
             {
-                var jsons = JsonConvert.SerializeObject(_list);
                 if (e.ColumnIndex != -1 && e.RowIndex != -1 && DgrView.Columns[e.ColumnIndex].HeaderText == @"操作")
                 {
                     var temp = _list[e.RowIndex];
-                    var companyTaskTool = CompanyTaskManager.Create(temp.CompanyType);
-                    List<TaskModel> result = null;
-                    if (companyTaskTool == null) MessageBox.Show(@"未找到厂商信息");
-
-                    if (companyTaskTool != null) result = companyTaskTool.GetList(temp);
-
-                    if (companyTaskTool != null && result == null)
-                        switch (companyTaskTool.GetLoginType())
-                        {
-                            case LoginType.MustCode:
-                                VerificationCode(temp, e.RowIndex);
-                                break;
-                            case LoginType.NoNeedCode:
-                                NotVerificationCode(companyTaskTool, temp, e.RowIndex);
-                                break;
-                            case LoginType.JavaScriptCode:
-                                VerificationJavaScript(companyTaskTool, temp, e.RowIndex);
-                                break;
-                        }
-                    if (companyTaskTool != null && result != null)
+                    if (DgrView.Rows[e.RowIndex].Cells["Action"].Value.ToString() == "登录" || DgrView.Rows[e.RowIndex].Cells["Action"].Value.ToString() == "重试")
                     {
-                        var sum = SupplierAdd(temp, result);
-                        MessageBox.Show(@"共拉取到" + sum + @"条新数据");
+                        var companyTaskTool = CompanyTaskManager.Create(temp.CompanyType);
+                        List<TaskModel> result = null;
+                        if (companyTaskTool == null) MessageBox.Show(@"未找到厂商信息");
+
+                        if (companyTaskTool != null) result = companyTaskTool.GetList(temp);
+
+                        if (companyTaskTool != null && result == null)
+                            switch (companyTaskTool.GetLoginType())
+                            {
+                                case LoginType.MustCode:
+                                    VerificationCode(temp, e.RowIndex);
+                                    break;
+                                case LoginType.NoNeedCode:
+                                    NotVerificationCode(companyTaskTool, temp, e.RowIndex);
+                                    break;
+                                case LoginType.JavaScriptCode:
+                                    VerificationJavaScript(companyTaskTool, temp, e.RowIndex);
+                                    break;
+                            }
                     }
+                    else if (DgrView.Rows[e.RowIndex].Cells["Action"].Value.ToString() == "暂停")
+                    {
+                        UpdateDgrView(temp, e.RowIndex, CompanyTaskClass.Model.LoginState.Pending);
+                    }
+                    else if (DgrView.Rows[e.RowIndex].Cells["Action"].Value.ToString() == "恢复")
+                    {
+                        UpdateDgrView(temp, e.RowIndex, CompanyTaskClass.Model.LoginState.Running);
+                    }
+                }
+
+                if (e.ColumnIndex != -1 && e.RowIndex != -1 && DgrView.Columns[e.ColumnIndex].HeaderText == @"删除")
+                {
+                    _userinfo.CompanyBand.RemoveAt(e.RowIndex);
+                    _list.RemoveAt(e.RowIndex);
+                    //更新本地文件
+                    List<UserInfoModel> users = LoginListBll.AccountsReadLine();
+                    users[_accountIndex].CompanyBand = _userinfo.CompanyBand;
+                    LoginListBll.AccountsWriteLine(users);
+                    DgrViewBand();
                 }
             }
             catch (Exception ex)
@@ -187,6 +214,22 @@ namespace WindowsFormsApp1.View
         {
             companyTask.LoginState = loginState;
             DgrView.InvalidateRow(rowindex);
+            if (companyTask.LoginState == CompanyTaskClass.Model.LoginState.Notlogin)
+            {
+                DgrView.Rows[rowindex].Cells["Action"].Value = "登录";
+            }
+            if (companyTask.LoginState == CompanyTaskClass.Model.LoginState.Error)
+            {
+                DgrView.Rows[rowindex].Cells["Action"].Value = "重试";
+            }
+            if (companyTask.LoginState == CompanyTaskClass.Model.LoginState.Running)
+            {
+                DgrView.Rows[rowindex].Cells["Action"].Value = "暂停";
+            }
+            if (companyTask.LoginState == CompanyTaskClass.Model.LoginState.Pending)
+            {
+                DgrView.Rows[rowindex].Cells["Action"].Value = "恢复";
+            }
         }
 
         /// <summary>
@@ -201,24 +244,28 @@ namespace WindowsFormsApp1.View
                 if (e.Value.ToString() == CompanyTaskClass.Model.LoginState.Notlogin.ToString())
                 {
                     e.Value = "未登录";
+                    DgrView.Rows[e.RowIndex].Cells["Action"].Value = "登录";
                     e.CellStyle.ForeColor = Color.DarkGray;
                 }
 
                 if (e.Value.ToString() == CompanyTaskClass.Model.LoginState.Running.ToString())
                 {
                     e.Value = "运行中";
+                    DgrView.Rows[e.RowIndex].Cells["Action"].Value = "暂停";
                     e.CellStyle.ForeColor = Color.Green;
                 }
 
                 if (e.Value.ToString() == CompanyTaskClass.Model.LoginState.Pending.ToString())
                 {
                     e.Value = "暂停拉取";
+                    DgrView.Rows[e.RowIndex].Cells["Action"].Value = "恢复";
                     e.CellStyle.ForeColor = Color.DarkOrange;
                 }
 
                 if (e.Value.ToString() == CompanyTaskClass.Model.LoginState.Error.ToString())
                 {
                     e.Value = "登录错误";
+                    DgrView.Rows[e.RowIndex].Cells["Action"].Value = "重试";
                     e.CellStyle.ForeColor = Color.Red;
                 }
             }
@@ -226,11 +273,53 @@ namespace WindowsFormsApp1.View
 
         private void BtnPullOrder_Click(object sender, EventArgs e)
         {
+            List<int> orderIndexs = GetIndex();
+            if (orderIndexs.Count == 0)
+            {
+                MessageBox.Show(@"请至少登录一个帐号", @"提示");
+            }
+            else
+            {
+                this.pushState = !this.pushState;
+                if (this.pushState)
+                {
+                    this.timer1.Interval = new Random().Next(9000, 12000);
+                    this.timer1.Start();
+                }
+                else
+                {
+                    this.timer1.Stop();
+                }
+            }
+        }
+
+        /// <summary>
+        /// 获取已登录的行集
+        /// </summary>
+        /// <returns></returns>
+        private List<int> GetIndex()
+        {
             var orderIndexs = new List<int>();
             foreach (DataGridViewRow row in DgrView.Rows)
                 if (row.Cells["LoginState"].Value.ToString() == CompanyTaskClass.Model.LoginState.Running.ToString()) orderIndexs.Add(row.Cells["LoginState"].RowIndex);
+            return orderIndexs;
+        }
 
-            if (orderIndexs.Count == 0) MessageBox.Show(@"请至少登录一个帐号", @"提示");
+        private int PushOrderAll()
+        {
+            List<int> orderIndexs = GetIndex();
+            int sum = 0;
+            foreach (var index in orderIndexs)
+            {
+                var temp = _list[index];
+                var companyTaskTool = CompanyTaskManager.Create(temp.CompanyType);
+                var result = companyTaskTool.GetList(temp);
+                if (result != null)
+                {
+                    sum += SupplierAdd(temp, result);
+                }
+            }
+            return sum;
         }
 
         private void Btn_AddCompany_Click(object sender, EventArgs e)
@@ -243,19 +332,19 @@ namespace WindowsFormsApp1.View
         private void DgrViewBand()
         {
             DgrView.DataSource = _list.ToArray();
-            DgrView.Columns["Action"].DisplayIndex = 0;
+            //DgrView.Columns["Action"].DisplayIndex = 0;
             //this.DgrView.Columns["CompanyTypeName"].DisplayIndex = 0;
             //this.DgrView.Columns["CompanyName"].DisplayIndex = 0;
             //this.DgrView.Columns["Count"].DisplayIndex = 0;
-            DgrView.Columns["LoginState"].DisplayIndex = 0;
-            DgrView.Columns["LoginName"].Visible = false;
-            DgrView.Columns["PassWord"].Visible = false;
-            DgrView.Columns["CompanyType"].Visible = false;
+            //DgrView.Columns["LoginState"].DisplayIndex = 0;
             DgrView.Columns["ID"].Visible = false;
             DgrView.Columns["UserID"].Visible = false;
             DgrView.Columns["Cookies"].Visible = false;
             DgrView.Columns["FromCompany"].Visible = false;
             DgrView.Columns["CurrentOrg"].Visible = false;
+            DgrView.Columns["LoginName"].Visible = false;
+            DgrView.Columns["PassWord"].Visible = false;
+            DgrView.Columns["CompanyType"].Visible = false;
         }
 
         /// <summary>
@@ -264,14 +353,54 @@ namespace WindowsFormsApp1.View
         /// <param name="companyTask"></param>
         private void AddCompany_AddCompanyInfo(CompanyTask companyTask)
         {
-                companyTask.UserID = _userinfo.UserID;
-                List<UserInfoModel> users = LoginListBll.AccountsReadLine();
-                _userinfo.CompanyBand.Add(companyTask);
-                users[_accountIndex] = _userinfo;
-                LoginListBll.AccountsWriteLine(users);
-                //更新窗体数据
-                _list.Add(companyTask);
-                DgrViewBand();
+            companyTask.UserID = _userinfo.UserID;
+            List<UserInfoModel> users = LoginListBll.AccountsReadLine();
+            _userinfo.CompanyBand.Add(companyTask);
+            users[_accountIndex] = _userinfo;
+            LoginListBll.AccountsWriteLine(users);
+            //更新窗体数据
+            _list.Add(companyTask);
+            DgrViewBand();
+        }
+
+        private void Timer1_Tick(object sender, EventArgs e)
+        {
+            void Method() => PushOrderAll();
+            Thread thread = new Thread(Method);
+            thread.Start();
+            this.LblPullTime.Text = DateTime.Now.ToLongTimeString();
+            notifyIcon1.Text = $@"小A运行中...
+最后拉取时间：{DateTime.Now.ToLongTimeString()}";
+            //随机获取下一次更新的间隔
+            this.timer1.Interval = new Random().Next(90000, 120000);
+        }
+
+        private void MainFrm_SizeChanged(object sender, EventArgs e)
+        {
+            //判断是否选择的是最小化按钮
+            if (WindowState == FormWindowState.Minimized)
+            {
+                //隐藏任务栏区图标
+                //this.ShowInTaskbar = false;
+                //图标显示在托盘区
+                notifyIcon1.Visible = true;
+                notifyIcon1.Text = "小A运行中...";
+            }
+        }
+
+        public void NotifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                //还原窗体显示    
+                WindowState = FormWindowState.Normal;
+                //激活窗体并给予它焦点
+                this.Activate();
+                //任务栏区显示图标
+                this.ShowInTaskbar = true;
+                //托盘区图标隐藏
+                notifyIcon1.Visible = false;
+            }
         }
     }
 }

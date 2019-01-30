@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.Controller;
 using WindowsFormsApp1.Model;
+using CompanyTaskClass;
 
 // ReSharper disable PossibleNullReferenceException
 namespace WindowsFormsApp1.View
@@ -93,12 +94,21 @@ namespace WindowsFormsApp1.View
                 JObject jObject = LoginBll.UserLogin(_users[e.RowIndex]);
                 if (jObject["ret"].Value<int>() == 1)
                 {
-                    this.Hide();
                     user.CompanyName = jObject["user"]["CompanyName"].ToString();
                     user.CompanyID = jObject["user"]["CompanyID"].ToString();
                     user.UserID = jObject["user"]["ID"].Value<int>();
-                    MainFrm mainFrm = new MainFrm();
-                    mainFrm.Initialize(_users[e.RowIndex], e.RowIndex);
+                    Form form;
+                    string key = user.CompanyName + "-" + user.CompanyID + "-" + user.UserID;
+                    form = Application.OpenForms[key];
+                    if (form == null)
+                    {
+                        form = new MainFrm {Name = key};
+                        ((MainFrm)form).Initialize(_users[e.RowIndex], e.RowIndex);
+                    }
+                    else
+                    {
+                        ((MainFrm)form).NotifyIcon1_MouseDoubleClick(null,null);
+                    }
                 }
                 else
                 {

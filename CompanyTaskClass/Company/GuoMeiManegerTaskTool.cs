@@ -120,12 +120,10 @@ namespace CompanyTaskClass.Company
             request.CookieContainer = new CookieContainer();
             request.CookieContainer.Add(cookie);
             string str = CompanyTaskTool.Post(request, Encoding.UTF8, out string cookies, paStrings);
-            Hashtable hashtable;
             List<TaskModel> tasks = new List<TaskModel>();
             try
             {
-                hashtable = JsonConvert.DeserializeObject<Hashtable>(str);
-
+                var hashtable = JsonConvert.DeserializeObject<Hashtable>(str);
                 if (hashtable.ContainsKey("rows"))
                 {
                     List<Hashtable> list = JsonConvert.DeserializeObject<List<Hashtable>>(hashtable["rows"] + "");

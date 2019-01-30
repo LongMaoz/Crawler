@@ -16,11 +16,7 @@ namespace CompanyTaskClass.Company
     {
         public CompanyTask GetCompanyInfo()
         {
-            return new CompanyTask()
-            {
-                CompanyTypeName = "星星",
-                CompanyType = 50,
-            };
+            return new CompanyTask() {CompanyTypeName = "星星", CompanyType = 50,};
         }
 
         public List<TaskModel> GetList(CompanyTask companyTask)
@@ -30,19 +26,10 @@ namespace CompanyTaskClass.Company
             {
                 return null;
             }
-            Cookie cookie = new Cookie("JSESSIONID", strcookies[0])
-            {
-                Domain = "zjxx.etwowin.com.cn"
-            };
-            Cookie cookie2 = new Cookie("token", strcookies[1])
-            {
-                Domain = "zjxx.etwowin.com.cn"
-            };
-            List<Cookie> cookieCon = new List<Cookie>
-            {
-                cookie,
-                cookie2
-            };
+
+            Cookie cookie = new Cookie("JSESSIONID", strcookies[0]) {Domain = "zjxx.etwowin.com.cn"};
+            Cookie cookie2 = new Cookie("token", strcookies[1]) {Domain = "zjxx.etwowin.com.cn"};
+            List<Cookie> cookieCon = new List<Cookie> {cookie, cookie2};
             string str = CompanyTaskTool.Get("http://zjxx.etwowin.com.cn/admin/mysite/list.jhtml?stat=3", Encoding.UTF8,
                 out string cookies, cookieCon);
             var regtable = new Regex("id=\"listTable\"([\\W\\w]*?)</form>").Matches(str);
@@ -55,10 +42,7 @@ namespace CompanyTaskClass.Company
                     var td = new Regex("<td([\\W\\w]*?)>([\\W\\w]*?)</td>").Matches(tr.Groups[2].Value);
                     if (td.Count > 9)
                     {
-                        TaskModel taskModel = new TaskModel
-                        {
-                            ShopModel = td[2].Groups[2].Value.Trim()
-                        };
+                        TaskModel taskModel = new TaskModel {ShopModel = td[2].Groups[2].Value.Trim()};
                         var rega = new Regex("<a([\\w\\W]*?)>([\\W\\w]*?)</a>");
                         taskModel.MessageId = rega.Matches(td[3].Groups[2].Value).Count > 0
                             ? rega.Matches(td[3].Groups[2].Value)[0].Groups[2].Value
@@ -91,7 +75,7 @@ namespace CompanyTaskClass.Company
         {
             var obj = new JObject
             {
-                { "URL", @"http://www.vk90.com/api1/JsDealwith/Etwowin.aspx?id=" }
+                { "URL", @"http://www.vk90.com/api1/JsDealwith/Etwowin.aspx?type=50&" }
             };
             return obj;
         }

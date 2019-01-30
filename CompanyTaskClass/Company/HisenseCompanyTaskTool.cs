@@ -32,8 +32,7 @@ namespace CompanyTaskClass.Company
             gigip = arr[1];
             if (string.IsNullOrEmpty(resultmodel.err))
             {
-                string cookie = companyTask.SetCookies("JSESSIONID", sessid);
-                cookie = companyTask.SetCookies("BIGipServerPOOL_CRM_ALL", gigip);
+                var cookie = companyTask.SetCookies("BIGipServerPOOL_CRM_ALL", gigip);
                 CompanyTaskTool.SaveAccountInfo(companyTask, cookie);
                 return resultmodel;
             }
@@ -80,7 +79,7 @@ namespace CompanyTaskClass.Company
 
             }
             resultmodel.cookie = sessionId + "," + gigip;
-            if (strLdap.IndexOf("\"result\":\"1\"") > 0)
+            if (strLdap.IndexOf("\"result\":\"1\"", StringComparison.Ordinal) > 0)
             {
                 resultmodel.err = "验证码错误！";
                 return resultmodel;
@@ -105,7 +104,7 @@ namespace CompanyTaskClass.Company
                  "j_validate=" + captcha
                 );
 
-            if (strCheck.IndexOf("登录失败") > 0)
+            if (strCheck.IndexOf("登录失败", StringComparison.Ordinal) > 0)
             {
                 resultmodel.err = "用户名不存在或密码错误！";
                 return resultmodel;
@@ -178,11 +177,10 @@ namespace CompanyTaskClass.Company
 
             var requestLink = (HttpWebRequest)WebRequest.Create("http://crm.hisense.com/HisenseCRM/main/pages/indexCRMLink.jsp");
             requestLink.CookieContainer = cookieContainer;
-            string strResultlogin3;
             try
             {
-                strResultlogin3 = CompanyTaskTool.Get(requestLink, Encoding.UTF8, out string cookie);
-                if (strResultlogin3.IndexOf("登&nbsp;&nbsp;录") > -1 && strResultlogin3.IndexOf("重置密码") > -1)
+                var strResultlogin3 = CompanyTaskTool.Get(requestLink, Encoding.UTF8, out string cookie);
+                if (strResultlogin3.IndexOf("登&nbsp;&nbsp;录", StringComparison.Ordinal) > -1 && strResultlogin3.IndexOf("重置密码", StringComparison.Ordinal) > -1)
                     return null;
             }
             catch (Exception)

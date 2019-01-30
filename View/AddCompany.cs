@@ -22,7 +22,6 @@ using CompanyTaskClass.Company;
 using Newtonsoft.Json;
 
 // ReSharper disable PossibleNullReferenceException
-
 namespace WindowsFormsApp1.View
 {
     public partial class AddCompany : Skin_Mac, IFrom
@@ -34,7 +33,6 @@ namespace WindowsFormsApp1.View
         private class CompanyList
         {
             public int Type { get; set; }
-
             public string Name { get; set; }
 
             //分支
@@ -44,9 +42,7 @@ namespace WindowsFormsApp1.View
         private class BranchList
         {
             public string CurrentOrg { get; set; }
-
             public string Name { get; set; }
-
         }
 
         private List<CompanyList> GetCompanyList()
@@ -119,7 +115,7 @@ namespace WindowsFormsApp1.View
                 CompanyTypeName = tool.GetCompanyInfo().CompanyTypeName,
                 CompanyType = tool.GetCompanyInfo().CompanyType,
                 CompanyName = this.TxttempName.Text,
-                CurrentOrg = this.SelectBranch.SelectedValue.ToString()
+                CurrentOrg = this.SelectBranch.SelectedValue == null?"" : this.SelectBranch.SelectedValue.ToString()
             });
             this.Close();
         }
@@ -129,7 +125,8 @@ namespace WindowsFormsApp1.View
             this.SelectBranch.Enabled = GetCompanyList()[this.SelectCompany.SelectedIndex].Branch;
             if (this.SelectBranch.Enabled)
             {
-                this.SelectBranch.DataSource=GetBranchList(GetCompanyList()[this.SelectCompany.SelectedIndex].Type).ToArray();
+                this.SelectBranch.DataSource =
+                    GetBranchList(GetCompanyList()[this.SelectCompany.SelectedIndex].Type).ToArray();
                 this.SelectBranch.ValueMember = "CurrentOrg";
                 this.SelectBranch.DisplayMember = "Name";
             }

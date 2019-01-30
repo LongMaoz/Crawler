@@ -16,11 +16,7 @@ namespace CompanyTaskClass.Company
     {
         public CompanyTask GetCompanyInfo()
         {
-            return new CompanyTask()
-            {
-                CompanyTypeName = "奇帅",
-                CompanyType = 18,
-            };
+            return new CompanyTask() {CompanyTypeName = "奇帅", CompanyType = 18,};
         }
 
         public List<TaskModel> GetList(CompanyTask companyTask)

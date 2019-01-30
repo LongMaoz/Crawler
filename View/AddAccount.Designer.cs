@@ -34,6 +34,8 @@
             this.LblName = new CCWin.SkinControl.SkinLabel();
             this.TxtPwd = new CCWin.SkinControl.SkinTextBox();
             this.TxtName = new CCWin.SkinControl.SkinTextBox();
+            this.LblType = new CCWin.SkinControl.SkinLabel();
+            this.SelectType = new CCWin.SkinControl.SkinComboBox();
             this.SuspendLayout();
             // 
             // Btn_Weike
@@ -41,7 +43,7 @@
             this.Btn_Weike.BackColor = System.Drawing.Color.Transparent;
             this.Btn_Weike.ControlState = CCWin.SkinClass.ControlState.Normal;
             this.Btn_Weike.DownBack = null;
-            this.Btn_Weike.Location = new System.Drawing.Point(215, 193);
+            this.Btn_Weike.Location = new System.Drawing.Point(168, 226);
             this.Btn_Weike.MouseBack = null;
             this.Btn_Weike.Name = "Btn_Weike";
             this.Btn_Weike.NormlBack = null;
@@ -57,7 +59,7 @@
             this.LblPwd.BackColor = System.Drawing.Color.Transparent;
             this.LblPwd.BorderColor = System.Drawing.Color.White;
             this.LblPwd.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.LblPwd.Location = new System.Drawing.Point(123, 139);
+            this.LblPwd.Location = new System.Drawing.Point(76, 172);
             this.LblPwd.Name = "LblPwd";
             this.LblPwd.Size = new System.Drawing.Size(85, 20);
             this.LblPwd.TabIndex = 8;
@@ -70,7 +72,7 @@
             this.LblName.BackColor = System.Drawing.Color.Transparent;
             this.LblName.BorderColor = System.Drawing.Color.White;
             this.LblName.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.LblName.Location = new System.Drawing.Point(123, 87);
+            this.LblName.Location = new System.Drawing.Point(76, 120);
             this.LblName.Name = "LblName";
             this.LblName.Size = new System.Drawing.Size(85, 20);
             this.LblName.TabIndex = 7;
@@ -88,7 +90,7 @@
             this.TxtPwd.IsSystemPasswordChar = true;
             this.TxtPwd.Lines = new string[] {
         "skinTextBox1"};
-            this.TxtPwd.Location = new System.Drawing.Point(215, 131);
+            this.TxtPwd.Location = new System.Drawing.Point(168, 164);
             this.TxtPwd.Margin = new System.Windows.Forms.Padding(0);
             this.TxtPwd.MaxLength = 32767;
             this.TxtPwd.MinimumSize = new System.Drawing.Size(28, 28);
@@ -134,7 +136,7 @@
             this.TxtName.IsSystemPasswordChar = false;
             this.TxtName.Lines = new string[] {
         "skinTextBox1"};
-            this.TxtName.Location = new System.Drawing.Point(215, 79);
+            this.TxtName.Location = new System.Drawing.Point(168, 112);
             this.TxtName.Margin = new System.Windows.Forms.Padding(0);
             this.TxtName.MaxLength = 32767;
             this.TxtName.MinimumSize = new System.Drawing.Size(28, 28);
@@ -167,17 +169,42 @@
             this.TxtName.WaterText = "";
             this.TxtName.WordWrap = true;
             // 
-            // Add_Account
+            // LblType
+            // 
+            this.LblType.AutoSize = true;
+            this.LblType.BackColor = System.Drawing.Color.Transparent;
+            this.LblType.BorderColor = System.Drawing.Color.White;
+            this.LblType.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.LblType.Location = new System.Drawing.Point(76, 71);
+            this.LblType.Name = "LblType";
+            this.LblType.Size = new System.Drawing.Size(85, 20);
+            this.LblType.TabIndex = 10;
+            this.LblType.Text = "skinLabel1";
+            this.LblType.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // SelectType
+            // 
+            this.SelectType.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.SelectType.FormattingEnabled = true;
+            this.SelectType.Location = new System.Drawing.Point(167, 65);
+            this.SelectType.Name = "SelectType";
+            this.SelectType.Size = new System.Drawing.Size(186, 26);
+            this.SelectType.TabIndex = 11;
+            this.SelectType.WaterText = "";
+            // 
+            // AddAccount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 261);
+            this.ClientSize = new System.Drawing.Size(466, 297);
+            this.Controls.Add(this.SelectType);
+            this.Controls.Add(this.LblType);
             this.Controls.Add(this.Btn_Weike);
             this.Controls.Add(this.LblPwd);
             this.Controls.Add(this.LblName);
             this.Controls.Add(this.TxtPwd);
             this.Controls.Add(this.TxtName);
-            this.Name = "Add_Account";
+            this.Name = "AddAccount";
             this.Text = "Add_Account";
             this.Load += new System.EventHandler(this.Add_Account_Load);
             this.ResumeLayout(false);
@@ -192,5 +219,7 @@
         private CCWin.SkinControl.SkinLabel LblName;
         private CCWin.SkinControl.SkinTextBox TxtPwd;
         private CCWin.SkinControl.SkinTextBox TxtName;
+        private CCWin.SkinControl.SkinLabel LblType;
+        private CCWin.SkinControl.SkinComboBox SelectType;
     }
 }

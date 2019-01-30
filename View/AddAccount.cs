@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using WindowsFormsApp1.Controller;
 using WindowsFormsApp1.Model;
 using CCWin;
+using CompanyTaskClass.Model;
 
 namespace WindowsFormsApp1.View
 {
@@ -28,12 +29,17 @@ namespace WindowsFormsApp1.View
         {
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
-            this.Text = @"添加帐号";
+            this.Text = @"添加第三方帐号";
             this.TxtName.Text = @"";
             this.TxtPwd.Text = @"";
-            this.LblName.Text = @"帐号";
-            this.LblPwd.Text = @"密码";
-            this.Btn_Weike.Text = @"添加维客帐号";
+            this.LblName.Text = @"第三方帐号";
+            this.LblPwd.Text = @"第三方密码";
+            this.Btn_Weike.Text = @"确定添加";
+            this.LblType.Text = @"第三方平台";
+            List<KeyNamePair> list = new List<KeyNamePair> {new KeyNamePair((int) UserType.Weike, "维客（VK90.COM）")};
+            this.SelectType.DataSource = list;
+            this.SelectType.ValueMember = "Key";
+            this.SelectType.DisplayMember = "Name";
         }
 
         private void Add_Account_Load(object sender, EventArgs e)
@@ -50,7 +56,7 @@ namespace WindowsFormsApp1.View
                 {
                     UserName = TxtName.Text,
                     UserPwd = BaiChang.Security.Secure.Md5(TxtPwd.Text),
-                    UserType = CompanyTaskClass.Model.UserType.Weike
+                    UserType = (UserType)byte.Parse(this.SelectType.SelectedValue.ToString())
                 });
                 if (LoginListBll.AccountsWriteLine(users))
                 {

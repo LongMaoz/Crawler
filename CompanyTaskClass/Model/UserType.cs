@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 namespace CompanyTaskClass.Model
 {
-    public enum UserType
+    public class KeyNamePair
     {
-        Weike
+        public KeyNamePair(int key, string name)
+        {
+            this.Key = key;
+            this.Name = name;
+        }
+
+        public int Key { set; get; }
+        public string Name { set; get; }
+    }
+
+    public enum UserType : byte
+    {
+        Weike = 1
     }
 }

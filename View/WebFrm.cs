@@ -20,7 +20,7 @@ namespace WindowsFormsApp1.View
         private CompanyTask companyTask;
         private int RowIndex;
         private GeckoWebBrowser geckoWebBrowser;
-        public delegate void MainForm(CompanyTask companyTask, int rowIndex,LoginState loginState);
+        public delegate void MainForm(CompanyTask companyTask, int rowIndex, LoginState loginState);
         public event MainForm UpdateDgrView;
         public WebFrm()
         {
@@ -34,7 +34,7 @@ namespace WindowsFormsApp1.View
 
         public void Initialize(ICompanyTaskTool<CompanyTask> companyTaskTool, CompanyTask companyTask, int rowIndex)
         {
-            this.Text = companyTask.CompanyName+"登录";
+            this.Text = companyTask.CompanyName + @"登录";
             this.companyTaskTool = companyTaskTool;
             this.companyTask = companyTask;
             this.RowIndex = rowIndex;
@@ -46,7 +46,7 @@ namespace WindowsFormsApp1.View
             Xpcom.Initialize("Firefox");
             geckoWebBrowser = new GeckoWebBrowser { Dock = DockStyle.Fill };
             this.Controls.Add(geckoWebBrowser);
-            geckoWebBrowser.Navigate(companyTaskTool.GetVerificationCode()["URL"].ToString() + companyTask.ID);
+            geckoWebBrowser.Navigate(companyTaskTool.GetVerificationCode()["URL"] + $@"username={companyTask.LoginName}&password={companyTask.PassWord}");
             //geckoWebBrowser.Navigate("https://www.vk90.com/api1/jdlogin/test.html");
             //先加载网页，再绑定事件
             geckoWebBrowser.AddMessageEventListener("loginState", LoginState);
@@ -56,17 +56,17 @@ namespace WindowsFormsApp1.View
         {
             int type = companyTask.CompanyType;
             JObject @object = JsonConvert.DeserializeObject<JObject>(result);
-            if(type == 25)
+            if (type == 25)
             {
                 companyTask.SetCookies("thor", @object["thor"].ToString());
                 if (!string.IsNullOrWhiteSpace(@object["thor"].ToString()))
                 {
-                    this.UpdateDgrView(companyTask, RowIndex,CompanyTaskClass.Model.LoginState.Running);
+                    this.UpdateDgrView(companyTask, RowIndex, CompanyTaskClass.Model.LoginState.Running);
                     this.Close();
                     return;
                 }
             }
-            if(type == 40 || type == 45 || type == 50)
+            if (type == 40 || type == 45 || type == 50)
             {
                 companyTask.SetCookies("JSESSIONID", @object["jessionid"].ToString());
                 if (!string.IsNullOrWhiteSpace(@object["jessionid"].ToString()))

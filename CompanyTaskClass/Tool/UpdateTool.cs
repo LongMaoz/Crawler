@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace CompanyTaskClass.Tool
 {
@@ -14,8 +15,17 @@ namespace CompanyTaskClass.Tool
         private static readonly string url = "http://www.vk90.com/API/PCUpdateVersion.ashx?action=getNewVersion";
         public static JObject CheckUpdate()
         {
-            string result = BaiChang.Net.Tekecommunications.Get(url);
-            return JsonConvert.DeserializeObject<JObject>(result);
+            try
+            {
+                string result = BaiChang.Net.Tekecommunications.Get(url);
+                return JsonConvert.DeserializeObject<JObject>(result);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message,"错误",MessageBoxButtons.OK,MessageBoxIcon.Error);
+                Application.Exit();
+                return null;
+            }
         }
         public static int SplitVersions(string verSions)
         {

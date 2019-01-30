@@ -32,6 +32,7 @@ namespace WindowsFormsApp1.Controller
         {
             int localVersions = UpdateTool.SplitVersions(UpdateTool.localVersions);
             var result =UpdateTool.CheckUpdate();
+            if (result == null) return null;
             if (UpdateTool.SplitVersions(result["VesionNew"].ToString()) > localVersions)
             {
                 return result;

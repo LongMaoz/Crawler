@@ -88,7 +88,7 @@ namespace CompanyTaskClass.Company
         {
             var obj = new JObject
             {
-                { "URL", @"http://www.vk90.com/api1/JsDealwith/Etwowin.aspx?id=" }
+                { "URL", @"http://www.vk90.com/api1/JsDealwith/Etwowin.aspx?type=45&" }
             };
             return obj;
         }

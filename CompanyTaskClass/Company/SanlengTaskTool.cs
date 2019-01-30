@@ -13,11 +13,7 @@ namespace CompanyTaskClass.Company
     {
         public CompanyTask GetCompanyInfo()
         {
-            return new CompanyTask()
-            {
-                CompanyTypeName = "三棱",
-                CompanyType = 40,
-            };
+            return new CompanyTask() {CompanyTypeName = "三棱", CompanyType = 40,};
         }
 
         public List<TaskModel> GetList(CompanyTask companyTask)
@@ -79,7 +75,7 @@ namespace CompanyTaskClass.Company
         {
             var obj = new JObject
             {
-                { "URL", @"http://www.vk90.com/api1/JsDealwith/Etwowin.aspx?id=" }
+                { "URL", $@"http://www.vk90.com/api1/JsDealwith/Etwowin.aspx?type=40&" }
             };
             return obj;
         }
