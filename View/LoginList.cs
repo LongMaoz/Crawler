@@ -10,6 +10,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApp1.Controller;
@@ -31,6 +32,7 @@ namespace WindowsFormsApp1.View
 
         public void Initialize()
         {
+            this.Icon = Properties.Resources.logo2;
             this.Text = @"帐号列表";
             this.Btn_AddAccount.Text = @"添加帐号";
             this.Btn_AllRemove.Text = @"清空帐号";

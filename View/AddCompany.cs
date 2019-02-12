@@ -80,6 +80,7 @@ namespace WindowsFormsApp1.View
 
         public void Initialize()
         {
+            this.Icon = Properties.Resources.logo2;
             this.FormBorderStyle = FormBorderStyle.Fixed3D;
             this.MaximizeBox = false;
             this.Text = @"添加厂商";

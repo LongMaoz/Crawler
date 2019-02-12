@@ -43,6 +43,7 @@ namespace WindowsFormsApp1.View
 
         private void WebFrm_Load(object sender, EventArgs e)
         {
+            this.Icon = Properties.Resources.logo2;
             Xpcom.Initialize("Firefox");
             geckoWebBrowser = new GeckoWebBrowser { Dock = DockStyle.Fill };
             this.Controls.Add(geckoWebBrowser);

@@ -30,6 +30,7 @@ namespace WindowsFormsApp1.View
         private UserInfoModel _userinfo;
         private List<CompanyTask> _list;
         private bool pushState = false;
+        private string LastPullTime = "无";
 
         public MainFrm() => InitializeComponent();
 
@@ -58,6 +59,7 @@ namespace WindowsFormsApp1.View
 
         public void Initialize()
         {
+            this.Icon = Properties.Resources.logo2;
             Text = @"小A(试用版)  " + UpdateTool.localVersions;
             Btn_AddCompany.Text = @"添加厂商";
             this.timer1.Interval = new Random().Next(9000, 12000);
@@ -368,9 +370,10 @@ namespace WindowsFormsApp1.View
             void Method() => PushOrderAll();
             Thread thread = new Thread(Method);
             thread.Start();
-            this.LblPullTime.Text = DateTime.Now.ToLongTimeString();
+            LastPullTime = DateTime.Now.ToLongTimeString();
+            this.LblPullTime.Text = LastPullTime;
             notifyIcon1.Text = $@"小A运行中...
-最后拉取时间：{DateTime.Now.ToLongTimeString()}";
+最后拉取时间：{LastPullTime}";
             //随机获取下一次更新的间隔
             this.timer1.Interval = new Random().Next(90000, 120000);
         }
@@ -383,8 +386,10 @@ namespace WindowsFormsApp1.View
                 //隐藏任务栏区图标
                 //this.ShowInTaskbar = false;
                 //图标显示在托盘区
+                notifyIcon1.Icon = Icon.ExtractAssociatedIcon("logo2.ico");
                 notifyIcon1.Visible = true;
-                notifyIcon1.Text = "小A运行中...";
+                notifyIcon1.Text = $@"小A运行中...
+最后拉取时间：{LastPullTime}";
             }
         }
 
