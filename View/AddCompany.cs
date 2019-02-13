@@ -90,6 +90,7 @@ namespace WindowsFormsApp1.View
             this.LblCompany.Text = @"厂商类型";
             this.LbltempName.Text = @"显示名称";
             this.Btn_AddComapny.Text = @"新增";
+            this.Btn_SelectCompany.Text = @"选择厂商";
             this.TxtName.Text = @"";
             this.TxtPwd.Text = @"";
             this.TxttempName.Text = @"";
@@ -136,6 +137,12 @@ namespace WindowsFormsApp1.View
                 this.SelectBranch.DataSource = null;
                 this.SelectBranch.ResetBindings();
             }
+        }
+
+        private void Btn_SelectCompany_Click(object sender, EventArgs e)
+        {
+            CompanyListFrm companyList = new CompanyListFrm();
+            companyList.Show();
         }
     }
 }

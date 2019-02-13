@@ -40,6 +40,7 @@
             this.TxttempName = new CCWin.SkinControl.SkinTextBox();
             this.SelectBranch = new CCWin.SkinControl.SkinComboBox();
             this.LblBranch = new CCWin.SkinControl.SkinLabel();
+            this.Btn_SelectCompany = new CCWin.SkinControl.SkinButton();
             this.SuspendLayout();
             // 
             // Btn_AddComapny
@@ -277,11 +278,27 @@
             this.LblBranch.Text = "skinLabel2";
             this.LblBranch.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // Btn_SelectCompany
+            // 
+            this.Btn_SelectCompany.BackColor = System.Drawing.Color.Transparent;
+            this.Btn_SelectCompany.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.Btn_SelectCompany.DownBack = null;
+            this.Btn_SelectCompany.Location = new System.Drawing.Point(361, 63);
+            this.Btn_SelectCompany.MouseBack = null;
+            this.Btn_SelectCompany.Name = "Btn_SelectCompany";
+            this.Btn_SelectCompany.NormlBack = null;
+            this.Btn_SelectCompany.Size = new System.Drawing.Size(86, 26);
+            this.Btn_SelectCompany.TabIndex = 23;
+            this.Btn_SelectCompany.Text = "skinButton1";
+            this.Btn_SelectCompany.UseVisualStyleBackColor = false;
+            this.Btn_SelectCompany.Click += new System.EventHandler(this.Btn_SelectCompany_Click);
+            // 
             // AddCompany
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(480, 321);
+            this.Controls.Add(this.Btn_SelectCompany);
             this.Controls.Add(this.SelectBranch);
             this.Controls.Add(this.LblBranch);
             this.Controls.Add(this.TxttempName);
@@ -314,5 +331,6 @@
         private CCWin.SkinControl.SkinTextBox TxttempName;
         private CCWin.SkinControl.SkinComboBox SelectBranch;
         private CCWin.SkinControl.SkinLabel LblBranch;
+        private CCWin.SkinControl.SkinButton Btn_SelectCompany;
     }
 }

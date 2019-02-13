@@ -37,12 +37,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             this.Btn_AddAccount = new CCWin.SkinControl.SkinButton();
             this.Dgv_Account = new CCWin.SkinControl.SkinDataGridView();
-            this.Btn_AllRemove = new CCWin.SkinControl.SkinButton();
             this.UserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserPwd = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.BtnLogin = new System.Windows.Forms.DataGridViewButtonColumn();
             this.BtnRemove = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.Btn_AllRemove = new CCWin.SkinControl.SkinButton();
             ((System.ComponentModel.ISupportInitialize)(this.Dgv_Account)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,21 +117,6 @@
             this.Dgv_Account.TitleBackColorEnd = System.Drawing.Color.FromArgb(((int)(((byte)(83)))), ((int)(((byte)(196)))), ((int)(((byte)(242)))));
             this.Dgv_Account.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_Account_CellContentClick);
             // 
-            // Btn_AllRemove
-            // 
-            this.Btn_AllRemove.BackColor = System.Drawing.Color.Transparent;
-            this.Btn_AllRemove.ControlState = CCWin.SkinClass.ControlState.Normal;
-            this.Btn_AllRemove.DownBack = null;
-            this.Btn_AllRemove.Location = new System.Drawing.Point(7, 43);
-            this.Btn_AllRemove.MouseBack = null;
-            this.Btn_AllRemove.Name = "Btn_AllRemove";
-            this.Btn_AllRemove.NormlBack = null;
-            this.Btn_AllRemove.Size = new System.Drawing.Size(112, 34);
-            this.Btn_AllRemove.TabIndex = 3;
-            this.Btn_AllRemove.Text = "skinButton1";
-            this.Btn_AllRemove.UseVisualStyleBackColor = false;
-            this.Btn_AllRemove.Click += new System.EventHandler(this.Btn_AllRemove_Click);
-            // 
             // UserName
             // 
             this.UserName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
@@ -184,6 +169,21 @@
             this.BtnRemove.Name = "BtnRemove";
             this.BtnRemove.ReadOnly = true;
             this.BtnRemove.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // Btn_AllRemove
+            // 
+            this.Btn_AllRemove.BackColor = System.Drawing.Color.Transparent;
+            this.Btn_AllRemove.ControlState = CCWin.SkinClass.ControlState.Normal;
+            this.Btn_AllRemove.DownBack = null;
+            this.Btn_AllRemove.Location = new System.Drawing.Point(7, 43);
+            this.Btn_AllRemove.MouseBack = null;
+            this.Btn_AllRemove.Name = "Btn_AllRemove";
+            this.Btn_AllRemove.NormlBack = null;
+            this.Btn_AllRemove.Size = new System.Drawing.Size(112, 34);
+            this.Btn_AllRemove.TabIndex = 3;
+            this.Btn_AllRemove.Text = "skinButton1";
+            this.Btn_AllRemove.UseVisualStyleBackColor = false;
+            this.Btn_AllRemove.Click += new System.EventHandler(this.Btn_AllRemove_Click);
             // 
             // LoginList
             // 

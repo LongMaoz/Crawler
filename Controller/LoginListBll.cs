@@ -31,7 +31,10 @@ namespace WindowsFormsApp1.Controller
             if (File.Exists(Fp))
                 return JsonConvert.DeserializeObject<List<UserInfoModel>>(File.ReadAllText(Fp));
             else
+            {
+                File.WriteAllText(Fp, JsonConvert.SerializeObject(new List<UserInfoModel>()));
                 return null;
+            }
         }
     }
 }

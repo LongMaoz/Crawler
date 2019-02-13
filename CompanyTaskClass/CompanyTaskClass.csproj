@@ -14,6 +14,7 @@
     <Deterministic>true</Deterministic>
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,6 +33,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="BaiChang">
@@ -67,6 +70,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Company\CompanyListTool.cs" />
     <Compile Include="Company\GuoMeiManegerTaskTool.cs" />
     <Compile Include="Company\GuoMeiTaskTool.cs" />
     <Compile Include="Company\JDTaskTool.cs" />
@@ -91,7 +95,6 @@
     <Compile Include="Company\HisenseCompanyTaskTool.cs" />
     <Compile Include="Tool\SqliteDbHelper.cs" />
     <Compile Include="Tool\SqliteExcutor.cs" />
-    <Compile Include="Tool\UpdateTool.cs" />
     <Compile Include="Tool\VerificationCodeTool.cs" />
   </ItemGroup>
   <ItemGroup>

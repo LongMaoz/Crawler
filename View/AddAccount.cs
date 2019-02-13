@@ -57,7 +57,8 @@ namespace WindowsFormsApp1.View
                 {
                     UserName = TxtName.Text,
                     UserPwd = BaiChang.Security.Secure.Md5(TxtPwd.Text),
-                    UserType = (UserType)byte.Parse(this.SelectType.SelectedValue.ToString())
+                    UserType = (UserType)byte.Parse(this.SelectType.SelectedValue.ToString()),
+                    CompanyBand = new  List<CompanyTask>(),
                 });
                 if (LoginListBll.AccountsWriteLine(users))
                 {

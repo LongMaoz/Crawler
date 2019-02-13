@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CompanyTaskClass", "Company
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BaiChang", "..\..\BaiChang\BaiChang.csproj", "{E6420A1A-CE8D-4257-995B-9E6CB16709D5}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "小A", "小A\小A.vdproj", "{B0B8FADB-81A9-4167-AA4D-33479A11672B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,8 @@ Global
 		{E6420A1A-CE8D-4257-995B-9E6CB16709D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E6420A1A-CE8D-4257-995B-9E6CB16709D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E6420A1A-CE8D-4257-995B-9E6CB16709D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B0B8FADB-81A9-4167-AA4D-33479A11672B}.Debug|Any CPU.ActiveCfg = Debug
+		{B0B8FADB-81A9-4167-AA4D-33479A11672B}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
