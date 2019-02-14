@@ -78,17 +78,27 @@ namespace CompanyTaskClass.Tool
             //request.Proxy = new WebProxy("218.60.8.98:3129");
             request.UserAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36";
 
-            using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
+            try
             {
-                cookies = response.Headers["Set-Cookie"];
-                using (Stream redStream = response.GetResponseStream())
+                using (HttpWebResponse response = request.GetResponse() as HttpWebResponse)
                 {
-                    using (var read = new StreamReader(redStream, encoding))
+                    cookies = response.Headers["Set-Cookie"];
+                    using (Stream redStream = response.GetResponseStream())
                     {
-                        string s = read.ReadToEnd();
-                        return s;
+                        using (var read = new StreamReader(redStream, encoding))
+                        {
+                            string s = read.ReadToEnd();
+                            response.Close();
+                            return s;
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                string error = e.Message;
+                cookies = "";
+                return error;
             }
         }
         /// <summary>

@@ -99,6 +99,8 @@ namespace WindowsFormsApp1.View
                     user.CompanyName = jObject["user"]["CompanyName"].ToString();
                     user.CompanyID = jObject["user"]["CompanyID"].ToString();
                     user.UserID = jObject["user"]["ID"].Value<int>();
+                    //登录记录
+                    LoginBll.UpdateLoginTimeOfPc(user);
                     Form form;
                     string key = user.CompanyName + "-" + user.CompanyID + "-" + user.UserID;
                     form = Application.OpenForms[key];
@@ -114,7 +116,7 @@ namespace WindowsFormsApp1.View
                 }
                 else
                 {
-                    MessageBox.Show($@"{jObject["msg"]}，请检查帐号密码", @"提示", MessageBoxButtons.OK);
+                    MessageBox.Show($@"{jObject["msg"]}", @"提示", MessageBoxButtons.OK);
                 }
             }
             else if (this.Dgv_Account.Columns[e.ColumnIndex].Name == "BtnRemove")

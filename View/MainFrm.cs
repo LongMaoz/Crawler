@@ -374,6 +374,8 @@ namespace WindowsFormsApp1.View
             this.LblPullTime.Text = LastPullTime;
             notifyIcon1.Text = $@"小A运行中...
 最后拉取时间：{LastPullTime}";
+            //更新登录记录
+            LoginBll.UpdateLoginTimeOfPc(_userinfo);
             //随机获取下一次更新的间隔
             this.timer1.Interval = new Random().Next(90000, 120000);
         }
